@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="">
+
+    <Resource
+        name="jdbc/motorinialternatori"
+        auth="Container"
+        type="javax.sql.DataSource"
+        username="root"
+        password="root"
+        driverClassName="com.mysql.cj.jdbc.Driver"
+        url="jdbc:mysql://localhost:8889/motorinialternatori"
+        maxWaitMillis="5000"
+        removeAbandonedOnMaintenance="true"
+        removeAbandonedOnBorrow="true"
+        removeAbandonedTimeout="60"
+        validationQuery="select * from contenuti where id = 0"
+    />
+
+</Context>

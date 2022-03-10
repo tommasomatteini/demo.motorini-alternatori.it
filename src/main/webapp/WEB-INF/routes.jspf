@@ -1,0 +1,24 @@
+<%
+/**
+ * routes.jspf
+ * Infos about current route and parameters. => Solo per i jsp in root!
+ */
+%>
+
+<%@ page import="it.motorinialternatori.demo.core.*" %>
+
+<%
+
+    String[] path = request.getServletPath().split("/");
+    int count = path.length - 1;
+    pageContext.setAttribute("self", path[count]);
+
+
+    /**
+     * If is index.jsp => is home
+     */
+
+    pageContext.setAttribute("is_home", path[1].equals("index.jsp"), PageContext.REQUEST_SCOPE); // a livello di request per il sistema dei template!
+
+
+%>

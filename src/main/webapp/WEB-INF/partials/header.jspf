@@ -1,0 +1,114 @@
+<header>
+
+    <c:if test="${is_home}">
+        <div class="notice d-none d-lg-block">
+            <div class="container-fluid">
+                <h1 class="title"><fmt:message key="slogan"/></h1>
+                <a href="tel:+393346370072" class="phone"><i class="fas fa-phone-alt"></i> +39 334 637 0072</a>
+            </div>
+        </div>
+    </c:if>
+
+    <div class="container-fluid">
+        <nav class="nav corporate-nav justify-content-end d-none d-sm-flex">
+            <a class="nav-link" href="#">Accedi/Registrati</a>
+            <a class="nav-link" href="#">Strumenti utili</a>
+            <a class="nav-link" href="#">Spedizioni</a>
+            <a class="nav-link" href="#">Contatti</a>
+        </nav>
+    </div>
+    <div class="container-fluid pt-3 pt-sm-0">
+        <div class="row pb-1">
+            <div class="col-6 col-sm-4">
+                <a class="logo" href="/"><img src="${commons.assets("img/logo.png")}" alt="motorini-alternatori.it"></a>
+            </div>
+            <div class="col-sm-4 d-none d-sm-block search">
+                <form>
+                    <input class="form-control" type="text" placeholder="Cosa stai cercando?" aria-label="Cerca">
+                </form>
+            </div>
+            <div class="col-6 col-sm-4 services-menu">
+                <a class="user-signup" href="#"  rel="tooltip" title="Registrati">
+                    <span class="material-icons material-icons-outlined">person_outline</span>
+                </a>
+                <a class="shopping-cart" href="#" rel="tooltip" title="Carrello">
+                    <span class="material-icons material-icons-outlined">shopping_cart</span>
+                    <span class="counter">3</span>
+                </a>
+                <div class="dropdown language-select">
+                    <a class="btn dropdown-toggle" href="#" role="button" id="dropdownSelectLang" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="${commons.assets("img/flags/it.svg")}">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownSelectLang">
+                        <a class="dropdown-item" href="#"><img src="${commons.assets("img/flags/fr.svg")}"></a>
+                    </div>
+                </div> <!-- .dropdown -->
+                <button class="hamburger hamburger--squeeze d-sm-none" type="button" aria-label="Menu" aria-controls="navigation">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                </button>
+            </div>
+        </div>
+        <nav class="nav main-nav nav-fill flex-column flex-sm-row" id="navigation">
+            <div class="nav-item highlighted">
+                <a class="nav-link" href="#">Tutte le marche</a>
+                <div class="sub-menu">
+                    <div>
+                        <h5 class="title">Ricambi per tutte le marche</h5>
+                        <sql:query var="resultmarche">
+                            SELECT
+                                m1.codice,
+                                m3.descrizione
+                            FROM
+                                marche m1
+                            INNER JOIN marche_ext m3 ON m1.codice = m3.marca
+                            WHERE
+                                m3.visibile = 'Y'
+                            AND
+                                m3.visibile_home = 'Y'
+                            ORDER BY
+                                descrizione
+                        </sql:query>
+                        <c:forEach var="row" items="${resultmarche.rowsByIndex}">
+                            <a class="brand" href="manufacturer.jsp?id=${row[0]}" title="${row[1]}">
+                                <c:set value="${fn:replace(fn:toLowerCase(row[1]),' ','-')}.png" var="image" />
+                                <img class="img-responsive" src="${commons.storage("images/brands/", image)}" alt="${row[1]}" />
+                            </a>
+                        </c:forEach>
+                    </div>
+                    <div>
+                        <a class="btn btn-primary" href="#">Tutte le marche auto</a>
+                    </div>
+                </div> <!-- .sub-menu -->
+            </div> <!-- .nav-item -->
+            <sql:query var="menuitems">
+                SELECT
+                t1.codice,
+                t1.descrizione_it
+                FROM
+                tipo_ricambi_generico t1
+                WHERE
+                t1.codice = 2
+                OR
+                t1.codice = 4
+                OR
+                t1.codice = 1390
+                OR
+                t1.codice = 295
+                OR
+                t1.codice = 1561
+            </sql:query>
+            <c:forEach var="item" items="${menuitems.rowsByIndex}" varStatus="status">
+                <div class="nav-item">
+                    <a class="nav-link" href="#">${item[1]}</a>
+                </div>
+            </c:forEach>
+            <div class="nav-item d-sm-none d-flex justify-content-around languages">
+                <a href="#"><img src="${commons.assets("img/flags/it.svg")}"></a>
+                <a href="#"><img src="${commons.assets("img/flags/fr.svg")}"></a>
+            </div>
+        </nav>
+    </div>
+
+</header>

@@ -1,0 +1,58 @@
+<aside class="col-lg-3 order-last">
+    <div class="sticky">
+
+        <ul class="nav nav-tabs search-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link search-car-parts active" data-toggle="tab" href="#car-parts-tab" role="tab" aria-controls="car-parts" aria-selected="true">
+                    <span class="d-flex w-100 flex-row">
+                        <span class="material-icons material-icons-outlined">construction</span>
+                        <span class="ml-2">Cerca ricambi</span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content search-tabs-content" id="car-colors-tab">
+            <div class="tab-pane active show">
+                <div class="">
+                    <h5 class="">Ricerca guidata ricambi auto</h5>
+                    <form method="get" class="form" id="formautoricambi" role="form" action="scheda_prodotto_auto.jsp" accept-charset="ISO-8859-1" name="formautoricambi" onsubmit="return caricaRisultati();">
+                        <input type="hidden" name="cat" value="128">
+                        <input type="hidden" name="subcat" value="1">
+                        <div class="form-group">
+                            <label class="sr-only" for="utility_ricambi_state">Marca Auto</label>
+                            <select name="utility_ricambi_state" id="utility_ricambi_state" onchange="update_utilities_ricambi(this.value)" class="form-control">
+                                <option value="0">Marca Auto</option>
+                                <option value="2">ALFA ROMEO</option>
+                                <option value="...">...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="utility_ricambi">Modello Auto</label>
+                            <select name="utility_ricambi" id="utility_ricambi_select" onchange="update_utilitiesanni_ricambi(this.value)" class="form-control">
+                                <option value="0" label="Modello Auto" selected="selected">Modello Auto</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="utilityanni_ricambi">Anno (opzionale)</label>
+                            <select name="utilityanni_ricambi" class="form-control" id="utilityanni_ricambi_select">
+                                <option value="0" label="Anno (opzionale)" selected="selected">Anno di fabbricazione</option>
+                            </select>
+                        </div>
+                    </form>
+                    <button class="btn btn-primary" onclick="javascript:caricaRisultatiRicambi();">Cerca ricambio</button>
+                </div>
+                <hr />
+                <div class="mb-sm-4 mb-md-4">
+                    <h5>Hai dubbi? Ti aiutiamo noi</h5>
+                    <a class="btn btn-primary" href="#">Conattaci</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="customer-care d-none d-sm-none d-md-none d-lg-block">
+            Hai dubbi? chiama i nostri esperti
+            <a href="tel:+390571530262"><img src="${commons.assets("img/customercare-it.png")}"></a>
+        </div>
+
+    </div> <!-- .sticky -->
+</aside> <!-- .aside -->
