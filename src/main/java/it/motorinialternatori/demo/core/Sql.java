@@ -5,6 +5,8 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -24,30 +26,30 @@ public final class Sql {
         }
     }
 
-    public DataSource dataSource = null;
-    public Connection connection = null;
+    private DataSource dataSource = null;
 
-    /**
-     *
-     * @param source ...
-     */
     public Sql(String source) {
-        try {
-            if (context != null) this.dataSource = (DataSource) Sql.context.lookup("java:comp/env/" + source);
-        } catch (NamingException e) {
-            e.printStackTrace(System.out);
-        }
-        try {
-            if (dataSource != null) this.connection = this.dataSource.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace(System.out);
-        }
-        System.out.println("new connection");
+        this.dataSource = this.getDataSource(source);
     }
 
     /**
      *
-     * @return DataSource
+     * @param source ...
+     * @return ...
+     */
+    private DataSource getDataSource(String source) {
+        DataSource dataSource = null;
+        try {
+            dataSource = (DataSource) Sql.context.lookup("java:comp/env/" + source);
+        } catch (NamingException e) {
+            e.printStackTrace(System.out);
+        }
+        return dataSource;
+    }
+
+    /**
+     *
+     * @return ...
      */
     public DataSource getDataSource() {
         return this.dataSource;
@@ -55,10 +57,16 @@ public final class Sql {
 
     /**
      *
-     * @return Connection
+     * @return ...
      */
     public Connection getConnection() {
-        return this.connection;
+        Connection connection = null;
+        try {
+            if (this.dataSource != null) connection = this.dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return connection;
     }
 
 }

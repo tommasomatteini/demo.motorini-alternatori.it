@@ -7,12 +7,32 @@
 
 <%@ page import="it.motorinialternatori.demo.core.*" %>
 <%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.SQLException" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 
 <%
     Sql database = new Sql("jdbc/motorinialternatori");
+
+    /*
     Connection connection = database.getConnection();
+    try {
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM corrieri");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            String name = resultSet.getString("descrizione");
+            System.out.println(name);
+        }
+        connection.close();
+    } catch (SQLException e) {
+        System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    */
+
     pageContext.setAttribute("dataSource", database.getDataSource(), PageContext.REQUEST_SCOPE);
 %>
 <sql:setDataSource dataSource="${dataSource}" />
