@@ -13,9 +13,7 @@ public final class Sql {
 
     private static InitialContext context = null;
 
-    /**
-     *
-     */
+    /* ... */
     static {
         try {
             Sql.context = new InitialContext();
@@ -24,7 +22,7 @@ public final class Sql {
         }
     }
 
-    private DataSource dataSource = null;
+    private final DataSource dataSource;
 
     /**
      *
