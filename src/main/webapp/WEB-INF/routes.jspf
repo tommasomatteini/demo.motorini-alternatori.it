@@ -14,7 +14,7 @@
     pageContext.setAttribute("self", path[count]);
 
 
-    /**
+    /*
      * If is index.jsp => is home
      */
 

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/commons.jspf" %>
 <%@ include file="/WEB-INF/sql.jspf" %>
-<%@ include file="/WEB-INF/routes.jspf" %>
 <!doctype html>
 <html lang="${lang}">
 <head>
@@ -47,7 +46,7 @@
 
     <%@ include file="./../partials/header.jspf" %>
 
-    <c:if test="${!is_home}">
+    <c:if test="${not is_home}">
         <%@ include file="./../partials/breadcrumb.jspf" %>
     </c:if>
 

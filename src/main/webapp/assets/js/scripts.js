@@ -1,14 +1,12 @@
 $(function() {
 
-
-
   // Mega menu
 
-  $('.main-nav').mouseover(function () {
-    $('.blackout').fadeIn('fast');
-  }).mouseleave(function () {
-    $('.blackout').fadeOut('fast');
-  });
+  $(".main-nav").mouseover(function() {
+    $(".blackout").fadeIn("fast")
+  }).mouseleave(function() {
+    $(".blackout").fadeOut("fast")
+  })
 
 
   // Mobile menu
@@ -23,8 +21,7 @@ $(function() {
   // Mobile mega menu
 
   $(".main-nav .nav-item").on('click', function(e) {
-    e.preventDefault();
-    $(this).toggleClass('active');
+    if ($(this).find('.sub-menu').length > 0) $(this).toggleClass('active');
   });
 
 
@@ -148,7 +145,5 @@ $(function() {
     $(this).hide();
     $('.hidden-reviews').fadeIn();
   });
-
-
 
 });
