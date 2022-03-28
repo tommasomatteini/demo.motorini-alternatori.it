@@ -28,6 +28,10 @@ public final class Sql {
 
     private DataSource dataSource = null;
 
+    /**
+     *
+     * @param source ...
+     */
     public Sql(String source) {
         this.dataSource = this.getDataSource(source);
     }
