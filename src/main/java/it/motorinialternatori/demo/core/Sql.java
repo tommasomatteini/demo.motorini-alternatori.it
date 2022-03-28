@@ -22,22 +22,12 @@ public final class Sql {
         }
     }
 
-    private final DataSource dataSource;
-
-    /**
-     *
-     * @param source ...
-     */
-    public Sql(String source) {
-        this.dataSource = this.getDataSource(source);
-    }
-
     /**
      *
      * @param source ...
      * @return ...
      */
-    private DataSource getDataSource(String source) {
+    private static DataSource getDataSource(String source) {
         DataSource dataSource = null;
         try {
             dataSource = (DataSource) Sql.context.lookup("java:comp/env/" + source);
@@ -45,6 +35,16 @@ public final class Sql {
             e.printStackTrace(System.out);
         }
         return dataSource;
+    }
+
+    private final DataSource dataSource;
+
+    /**
+     *
+     * @param source ...
+     */
+    public Sql(String source) {
+        this.dataSource = Sql.getDataSource(source);
     }
 
     /**
