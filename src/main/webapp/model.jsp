@@ -26,8 +26,8 @@
                             modelli.marca,
                             motorizzazioni.modello,
                             motorizzazioni.descrizione_it,
-                            motorizzazioni.anno_inizio,
-                            motorizzazioni.anno_fine,
+                            CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_inizio,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_inizio,
+                            CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_fine,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_fine,
                             motorizzazioni.kw,
                             motorizzazioni.hp,
                             motorizzazioni.codice,
@@ -59,6 +59,7 @@
                                 (t1.codice = 2 OR t1.codice = 4 OR t1.codice = 1390 OR t1.codice = 295 OR t1.codice = 1561)
                         )
                         ORDER BY
+                            motorizzazioni.alimentazione ASC,
                             motorizzazioni.descrizione_it ASC
                         <sql:param value="${param.id_manifacturer}" />
                         <sql:param value="${param.id}" />
@@ -84,22 +85,30 @@
                     </div> <!-- .header -->
 
                     <div class="color-choice">
-                        <h3 class="terthiary-header">Scegli la tua motorizzazione</h3>
+                        <h3 class="h4">Scegli la tua motorizzazione</h3>
                         <div class="row color-choice-list">
 
+                            <c:set var="fuel_type" value="" />
                             <c:forEach var="rowmot" items="${resultmotorizzazioni.rowsByIndex}" varStatus="status">
+                                <c:set var="name" value="${rowmot[4]}" />
+                                <c:set var="description" value="${rowmot[12]}" />
+                                <c:set var="image" value="${rowmot[11]}.png" />
+                                <c:set var="interval">
+                                    <c:if test="${rowmot[5] != '00/0000' and rowmot[6] != '00/0000'}">dal ${rowmot[5]} al ${rowmot[6]}</c:if><c:if test="${rowmot[5] != '00/0000' and rowmot[6] == '00/0000'}">dal ${rowmot[5]}</c:if>
+                                </c:set>
+                                <c:if test="${fuel_type != rowmot[11]}"><h4 class="mt-1 w-100 ml-3 h5">${rowmot[10]}</h4></c:if>
                                 <div class="col-md-6 color-choice-item">
                                     <a href="color_results.html">
-                                        <h6 class="color-choice-name">Absoluterote</h6>
+                                        <h6 class="color-choice-name">${name}</h6>
                                         <div class="color-choice-info">
-                                            <img src="" alt="" />
+                                            <img alt="${name}" class="header-img" src="${commons.storage("images/alimentazione/", image)}" />
                                             <div class="color-choice-description">
-                                                <p>Codice colore originale: <strong>Y3F</strong></p>
-                                                <p>Anno: <strong>1999-2002</strong></p>
+                                                <p>Periodo: <strong>${interval}</strong></p>
                                             </div>
                                         </div>
                                     </a>
                                 </div>
+                                <c:set var="fuel_type" value="${rowmot[11]}" />
                             </c:forEach>
 
                         </div> <!-- .color-choiche -->
