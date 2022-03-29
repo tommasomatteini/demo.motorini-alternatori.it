@@ -2,7 +2,6 @@
 <%@ include file="/WEB-INF/core/commons.jspf" %>
 <%@ include file="/WEB-INF/core/sql.jspf" %>
 <%@ include file="/WEB-INF/core/routes.jspf" %>
-<%@ taglib prefix="ex" uri="/WEB-INF/tags/custom.tld"%>
 
 <layout:extends name="base" >
     <layout:put block="head" type="REPLACE">
