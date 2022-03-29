@@ -15,7 +15,7 @@
         <div class="container-fluid anno-fabbricazione">
             <div class="row">
 
-                <%@ include file="/WEB-INF/layouts/partials/aside.jspf" %>
+                <%@ include file="/WEB-INF/partials/aside.jspf" %>
 
                 <main class="col-lg-9 mb-4" role="main">
 
