@@ -58,6 +58,11 @@
             <artifactId>java-dotenv</artifactId>
             <version>5.2.2</version>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -75,8 +80,7 @@
                     </archive>
                     <webResources>
                         <resource>
-                            <directory>${project.basedir}/src/main/resources
-                            </directory>
+                            <directory>${project.basedir}/src/main/resources</directory>
                         </resource>
                     </webResources>
                 </configuration>
