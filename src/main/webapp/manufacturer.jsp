@@ -15,7 +15,7 @@
         <div class="container-fluid anno-fabbricazione">
             <div class="row">
 
-                <%@ include file="WEB-INF/partials/aside.jspf" %>
+                <%@ include file="/WEB-INF/layouts/partials/aside.jspf" %>
 
                 <sql:query var="resultmodelli">
                     SELECT
