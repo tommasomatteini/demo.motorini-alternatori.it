@@ -308,7 +308,7 @@ header .main-nav .nav-link {
 }
 @media (max-width: 1199px) {
   header .main-nav .nav-link {
-    padding: 0 3px;
+    padding: 0 0.95rem;
   }
 }
 header .main-nav .nav-item:hover {
@@ -833,6 +833,9 @@ aside .customer-care img {
   padding: 7px 0px;
   font-size: 0.9375rem; /* 15px */
   background-color: transparent;
+}
+.product .list-group-item:first-letter {
+  text-transform: capitalize;
 }
 .product .list-group-item:first-child {
   border-top: 0;
@@ -1781,9 +1784,10 @@ footer .social-icon {
 }
 
 .color-main-info .product-image {
-  background-color: #ffffff;
+  background-color: #f3f3f3;
   font-size: 0.90625rem; /* 14.5px */
   padding-bottom: 15px;
+  border-radius: 5px;
   text-align: center;
 }
 
@@ -1808,6 +1812,7 @@ footer .social-icon {
   font-style: italic;
   margin-top: 30px;
   padding: 7px 12px;
+  border-radius: 4px;
 }
 
 /* ALL PRODUCTS */

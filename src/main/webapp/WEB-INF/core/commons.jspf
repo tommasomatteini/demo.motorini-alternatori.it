@@ -54,5 +54,5 @@
 
 
 <%-- sets values for string translation --%>
-<fmt:setLocale value="${lang}" />
+<fmt:setLocale value="${lang}" scope="session" />
 <fmt:setBundle basename="messages" />

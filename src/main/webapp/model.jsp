@@ -64,10 +64,6 @@
                         <sql:param value="${param.id_manifacturer}" />
                         <sql:param value="${param.id}" />
                     </sql:query>
-
-                    <c:set var="name" value="" />
-                    <c:set var="description" value="" />
-                    <c:set var="image" value="" />
                     <c:forEach var="rowmot" items="${resultmotorizzazioni.rowsByIndex}" varStatus="status">
                         <c:set var="name" value="${rowmot[1]} ${rowmot[0]}" />
                         <c:set var="description" value="${rowmot[12]}" />
@@ -88,7 +84,6 @@
                         <h3 class="h4">Scegli la tua motorizzazione</h3>
                         <div class="row color-choice-list">
 
-                            <c:set var="fuel_type" value="" />
                             <c:forEach var="rowmot" items="${resultmotorizzazioni.rowsByIndex}">
                                 <c:set var="name" value="${rowmot[4]}" />
                                 <c:set var="description" value="${rowmot[12]}" />
@@ -109,7 +104,6 @@
                                         motorizzazioni_numero_motore.motorizzazione = ?
                                     <sql:param value="${rowmot[9]}" />
                                 </sql:query>
-                                <c:set var="engine_number" value="" />
                                 <c:forEach var="rowen" items="${resultenginenumber.rowsByIndex}" varStatus="status">
                                     <c:set var="engine_number">${engine_number} ${rowen[0]}<c:if test="${!status.last}">,</c:if> </c:set>
                                 </c:forEach>

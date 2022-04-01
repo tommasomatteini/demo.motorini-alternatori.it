@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/core/commons.jspf" %>
 <%@ include file="/WEB-INF/core/sql.jspf" %>
 <%@ include file="/WEB-INF/core/routes.jspf" %>
-<%@ taglib prefix="ex" uri="/WEB-INF/tags/custom.tld"%>
+<%@ taglib prefix="ex" uri="/WEB-INF/tags/custom.tld" %>
 
 <layout:extends name="base" >
     <layout:put block="head" type="REPLACE">
@@ -193,7 +193,6 @@
                                         LIMIT 1
                                         <sql:param value="${id}" />
                                     </sql:query>
-                                    <c:set var="image" value="" />
                                     <c:forEach var="resultartimage" items="${resultartimages.rowsByIndex}">
                                         <c:set var="image" value="${resultartimage[0]}.jpg" />
                                     </c:forEach>
