@@ -789,10 +789,11 @@ aside .customer-care img {
   margin-top: 20px;
 }
 .product .product-image {
+  background-color: #f3f3f3;
+  font-size: 0.90625rem;
   padding-bottom: 15px;
-  font-size: 0.91875rem; /* 14.7px */
+  border-radius: 5px;
   text-align: center;
-  background-color: #fff;
 }
 .product .product-image img {
   max-width: 100%;
@@ -978,9 +979,12 @@ aside .customer-care img {
   background-color: #fff;
 }
 .product .colors .color {
-  margin-bottom: 10px;
-  padding: 10px 12px 20px;
-  background-color: #fff;
+  display: block;
+  height: 100%;
+  padding: 15px;
+  border: 1px solid #dedede;
+  border-radius: 10px;
+  background-color: #ffffff;
 }
 .product .colors .color .name {
   margin: 2px 0 7px;
@@ -2323,4 +2327,13 @@ footer .social-icon {
   display: block;
   min-width: 120px;
   margin: 0 0 1.5rem 0;
+}
+
+table.table-small {
+  max-width: 480px;
+  font-size: 0.8em;
+}
+table.table-small tr th,
+table.table-small tr td {
+  padding: 0.35rem;
 }

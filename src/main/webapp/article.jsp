@@ -16,344 +16,583 @@
                 <%@ include file="/WEB-INF/partials/aside.jspf" %>
 
                 <main class="col-lg-9" role="main">
-            <h1 class="main-header">Spray per Ritocco Auto AUDI A3 : vernice spray auto Pastello lucido diretto colore originale Y9B BRILLANTSCHWARZ</h1>
-            <div class="row product-main-info">
-                <div class="col-md-3 mb-5">
-                    <div class="product-image">
-                        <img src="samples/vernice-spray-per-ritocco-auto-AUDI-Vedi-VOLKSWAGEN.jpg">
-                        <img src="samples/D030.jpg">
-                        <h5>Y9B BRILLANTSCHWARZ</h5>
-                        Cod. prodotto: VC-AU-Y9B
-                    </div>
-                </div>
-                <div class="col-md-6 mb-5">
-                    <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half"></i>
-                        <a class="reviews" href="#"><strong>4.8</strong> <small>(18 recensioni)</small></a>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>Formato:</strong> Bomboletta spray 400 ml</li>
-                        <li class="list-group-item"><strong>Categoria:</strong> <a href="#">Vernice per carrozzeria auto</a></li>
-                        <li class="list-group-item"><strong>Finitura:</strong> <a href="#">BRILLANTSCHWARZ Y9B</a></li>
-                        <li class="list-group-item"><strong>Codice colore originale:</strong> <a href="#">Y9B</a></li>
-                        <li class="list-group-item"><strong>Marca auto:</strong> <a href="#">Audi (vedi Volkswagen)</a></li>
-                        <li class="list-group-item"><strong>Modelli auto compatibili:</strong>
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_ALLROAD_1900-2020">ALLROAD</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_CABRIO_1900-2020">CABRIO</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_A8%2fS8_1900-2020">A8/S8</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_A2_1900-2020">A2</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_A3%2fS3_1900-2020">A3/S3</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_A4%2fS4_1900-2020">A4/S4</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_TOUAREG_1900-2020">TOUAREG</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_TOURAN_1900-2020">TOURAN</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_POLO_1900-2020">POLO</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_PHAETON_1900-2020">PHAETON</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_PASSAT_1900-2020">PASSAT</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_LUPO_1900-2020">LUPO</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_GOLF_1900-2020">GOLF</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_BEETLE_1900-2020">BEETLE</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_A6%2fS6_1900-2020">A6/S6</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_BORA_1900-2020">BORA</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_TT_1900-2020">TT</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_RS4_1900-2020">RS4</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_A2_1900-2020">A2</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_GOLF+CABRIO_1900-2020">GOLF CABRIO</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_GOL_1900-2020">GOL</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_A5_1900-2020">A5</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_TT_1900-2020">TT</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_ALLROAD_1900-2020">ALLROAD</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_CABRIO_1900-2020">CABRIO</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_A8%2fS8_1900-2020">A8/S8</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_A6%2fS6_1900-2020">A6/S6</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_A3%2fS3_1900-2020">A3/S3</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_A4%2fS4_1900-2020">A4/S4</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_R8_1900-2020">R8</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_POLO_1900-2020">POLO</a>,
-                            <a rel="tag" href="/scheda_prodotto_auto.jsp?id=2152&amp;cat=128&amp;subcat=1&amp;fin=20547&amp;utilityanni=88_CORRADO_1900-2020">CORRADO</a>
-                        </li>
-                    </ul>
-                    <a class="btn btn-primary btn-sm" href="#">Cerca un altro colore auto</a>
-                </div>
-                <div class="col-md-3 mb-5 text-right">
-                    <span class="availability">Disponibilità: <strong class="good">Buona</strong></span> <!-- good, average, poor -->
-                    <span class="price-without-vat">Prezzo unitario € 28,61</span>
-                    <span class="price">€ 50,86</span>
-                    <span class="vat-label">iva inclusa</span>
-                    <a class="btn btn-primary btn-block text-center" href="#"><i class="fas fa-shopping-cart mr-2"></i> Acquista</a>
-                </div>
-            </div> <!-- .row -->
 
-            <h3>Descrizione prodotto</h3>
-            <p class="product-descr">La carrozzeria della tua auto AUDI è danneggiata?<br>
-                Se vuoi riparare professionalmente la vernice auto della tua AUDI A3 scegli NextColor, vernice spray auto per un ritocco perfetto. VerniciSpray produce con cura la vernice spray per auto pastello AUDI, secondo il codice colore originale Y9B BRILLANTSCHWARZ per il tuo modello A3. I colori pastello sono tutti i colori auto non metallizzati.<br>
-                La vernice auto è prodotta su richiesta del cliente.<br>
-                Se conosci già il tuo codice colore ordina subito la tua vernice spray per auto, se non riesci a trovarlo segui la nostra Guida oppure utilizza i pannelli di ricerca a destra.<br>
-                Tutte le nostre vernici pastello sono monostrato, ciò significa che sono già lucide e non dovrai usare altri prodotti!<br>
-                Per un risultato più brillante utilizza la pasta abrasiva Cromar. Altrimenti per lucidare e proteggere la tua vernice auto è sempre un'ottima idea applicare una vernice trasparente.<br>
-                Piccole differenze di colore sono possibili (fare attenzione a non creare stacchi netti di colore con la vecchia vernice auto).<br>
-                Come si usa: Per un ritocco auto perfetto pulire la superficie prima di verniciare, consigliamo un antisiliconico. Agitare bene la vernice spray auto per alcuni minuti. La temperatura della bomboletta spray deve essere di circa 20°/25°C. Spruzzare il prodotto sulla superficie in modo uniforme in strati sottili per prevenire colature ma evitando una distanza eccessiva. Applicare 2-3 mani.<br>
-                Usa l'impugnatura Magnum per un'applicazione perfetta e per verniciare più facilmente con le vernici spray per auto.<br>
-                La copertura di una spray è di circa 1 mq (2 mani).<br>
-                Rimozione vernice con acetone e/o diluente nitro.</p>
+                    <sql:query var="resulttipiricambi">
+                        SELECT
+                            t1.codice,
+                            t1.descrizione_it,
+                            t2.descrizione_prodotto_it
+                        FROM
+                            tipo_ricambi_generico t1,
+                            tipo_ricambi_generico_descrizione t2
+                        WHERE
+                            t2.tipo_ricambi_generico = t1.codice AND
+                            EXISTS (
+                                SELECT
+                                    *
+                                FROM
+                                    motorizzazioni_articoli
+                                WHERE
+                                    t1.codice = motorizzazioni_articoli.articolo_generico
+                                AND
+                                    motorizzazioni_articoli.motorizzazione_s = ?
+                                AND
+                                    t1.codice = ?
+                            )
+                        <sql:param value="${param.code}" />
+                        <sql:param value="${param.category}" />
+                    </sql:query>
+                    <c:forEach var="rowmot" items="${resulttipiricambi.rowsByIndex}">
+                        <c:set var="category_description" value="${rowmot[1]}" />
+                        <c:set var="product_description" value="${rowmot[2]}" />
+                    </c:forEach>
 
-            <h3>Dettagli tecnici</h3>
-            <p class="product-tech-data"><strong>Informazioni Tecniche e Consigli utili:</strong> La vernice spray per auto NextColor pastello è una vernice <strong>monostrato</strong> già lucida, può essere lucidata ulteriormente con prodotti abrasivi. Per un ritocco auto perfetto <strong>proteggere con un trasparente lucido.</strong><br>
-                <a href="/guida_trasparenti.jsp">Consulta la Guida VerniciSpray per la scelta del trasparente protettivo.</a>
-            </p>
+                    <sql:query var="resultmotorizzazione">
+                        SELECT
+                            m2.descrizione_it,
+                            marche.descrizione,
+                            modelli.marca,
+                            motorizzazioni.modello,
+                            motorizzazioni.descrizione_it,
+                            CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_inizio,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_inizio,
+                            CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_fine,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_fine,
+                            motorizzazioni.kw,
+                            motorizzazioni.hp,
+                            motorizzazioni.codice,
+                            alimentazione.descrizione_it,
+                            marche.descrizione,
+                            m2.descrizione_it,
+                            motorizzazioni.descrizione_it,
+                            marche.descrizione,
+                            m2.descrizione_fr,
+                            motorizzazioni.descrizione_fr,
+                            modelli.codice
+                        FROM
+                            marche
+                        INNER JOIN modelli ON marche.codice = modelli.marca
+                        INNER JOIN modelli_ext m2 ON modelli.codice = m2.codice
+                        INNER JOIN motorizzazioni ON modelli.codice = motorizzazioni.modello AND motorizzazioni.codice = ?
+                        INNER JOIN alimentazione ON motorizzazioni.alimentazione = alimentazione.codice
+                        ORDER BY
+                            motorizzazioni.descrizione_it ASC
+                        <sql:param value="${param.code}" />
+                    </sql:query>
+                    <c:forEach var="rowmot" items="${resultmotorizzazione.rowsByIndex}">
+                        <c:set var="manufacturer_id" value="${rowmot[2]}" />
+                        <c:set var="model_id" value="${rowmot[3]}" />
+                        <c:set var="type_code" value="${rowmot[17]}" />
+                        <c:set var="type_name" value="${rowmot[4]}" />
+                        <c:set var="type_name_ext" value="${rowmot[1]} ${rowmot[0]} ${rowmot[4]}" />
+                        <c:set var="description" value="${rowmot[12]}" />
+                        <c:set var="brand" value="${rowmot[11]}" />
+                        <c:set var="model" value="${rowmot[0]}" />
+                        <c:set var="interval">
+                            <c:if test="${rowmot[5] != '00/0000' and rowmot[6] != '00/0000'}">dal ${rowmot[5]} al ${rowmot[6]}</c:if><c:if test="${rowmot[5] != '00/0000' and rowmot[6] == '00/0000'}">dal ${rowmot[5]}</c:if>
+                        </c:set>
+                        <c:set var="hp" value="${rowmot[7]}" />
+                        <c:set var="kw" value="${rowmot[8]}" />
+                        <c:set var="fuel_type" value="${rowmot[10]}" />
+                    </c:forEach>
 
-            <h3>Questo kit è composto da:</h3>
-            <a class="media component" href="">
-                <img src="samples/metallizzati-spray.jpg" alt="...">
-                <div class="media-body">
-                    <h5 class="name">Metallizzati e perlati: bomboletta spray per auto</h5>
-                    Cod.: <span>VC-AU-Y9B</span><br>
-                    Finitura: BRILLANTSCHWARZ Y9B<br>
-                    Codice colore originale: Y9B
-                </div>
-            </a>
-            <a class="media component" href="">
-                <img src="samples/metallizzati-vasetto.jpg" alt="...">
-                <div class="media-body">
-                    <h5 class="name">Trasparente Protettivo K300 spray Monocomponente Lucido</h5>
-                    Cod.: <span>nextcolor-k300</span><br>
-                    Finitura: STANDARD
-                </div>
-            </a>
+                    <sql:query var="resultenginenumber">
+                        SELECT
+                            motorizzazioni_numero_motore.numero_motore
+                        FROM
+                            motorizzazioni_numero_motore
+                        WHERE
+                            motorizzazioni_numero_motore.motorizzazione = ?
+                        <sql:param value="${param.code}" />
+                    </sql:query>
+                    <c:forEach var="rowen" items="${resultenginenumber.rowsByIndex}" varStatus="status">
+                        <c:set var="engine_number">${engine_number} ${rowen[0]}<c:if test="${!status.last}">,</c:if> </c:set>
+                    </c:forEach>
 
-            <hr>
-            <h3>Altri formati disponibili</h3>
-            <div class="row products-list">
-                <div class="col-sm-6 col-md-4 col-lg-3"> <!-- col-10 col-sm-4 col-xl-3 -->
-                    <a class="product-thumb" href="#">
-                        <img src="https://cdn.vernicispray.com/cache_200_1/Kit-Ritocco-Auto-Professionale.jpg" alt="Kit Ritocco Vernice Auto spray Professionale 2K">
-                        <div class="details">
-                            <h6 class="name">Kit ritocco carrozzeria professionale</h6>
-                            <span class="price">da € 39,03<small>iva esclusa</small></span>
-                            <button class="btn btn-primary" href="#">Vai al prodotto</button>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <a class="product-thumb" href="#">
-                        <img src="https://cdn.vernicispray.com/cache_200_1/Vernice-Auto-Ritocco-Carrozzeria-pastello-in-vasetto.jpg" alt="Vernice Ritocco Carrozzeria pastello in vasetto">
-                        <div class="details">
-                            <h6 class="name">Vernice auto</h6>
-                            <span class="price">da € 9,73<small>iva esclusa</small></span>
-                            <button class="btn btn-primary" href="#">Vai al prodotto</button>
-                        </div>
-                    </a>
-                </div>
-            </div><!-- .row.products-list -->
+                    <sql:query var="resultartloc">
+                        SELECT
+                            descrizione, prezzo, prezzo_carcassa, disponibilita
+                        FROM
+                            articoli
+                        WHERE
+                            codice = ?
+                        <sql:param value="${param.article}" />
+                    </sql:query>
+                    <c:forEach var="rown" items="${resultartloc.rowsByIndex}">
 
-            <hr>
-            <h3>Altri colori</h3>
-            <div class="row colors">
-                <div class="col-sm-6 col-xl-4">
-                    <div class="color">
-                        <h5 class="name">Absoluterot</h5>
-                        <div class="media">
-                            <img src="samples/colori/U084.jpg">
-                            <div class="media-body">
-                                Codice colore originale: Y3F<br>
-                                Anno: 1999-2002<br>
-                                Codice prodotto: VCD-AU-Y3F
+                        <c:set var="availability" value="${rown[3]}" />
+                        <c:set var="description" value="${rown[0]}" />
+
+                        <!-- @todo -->
+                        <c:set var="price" value="0" /><!-- ... -->
+                        <c:set var="vat_percentage" value="0" /><!-- ... -->
+                        <!-- /. -->
+
+                        <c:set var="vat" value="${ ( price / 100 ) * vat_percentage }" />
+
+                    </c:forEach>
+
+                    <h1 class="main-header">${category_description} ${param.article} per ${type_name_ext}</h1>
+                    <p>${description}</p>
+                    <div class="row product-main-info">
+                        <div class="col-md-3 mb-4">
+                            <div class="product-image">
+
+                                <sql:query var="resultartimages">
+                                    SELECT
+                                        immagine
+                                    FROM
+                                        immagini_articoli
+                                    WHERE
+                                        articolo = ?
+                                    ORDER BY
+                                        immagini_articoli.immagine ASC
+                                    LIMIT 1
+                                    <sql:param value="${param.article}" />
+                                </sql:query>
+                                <c:forEach var="resultartimage" items="${resultartimages.rowsByIndex}">
+                                    <c:set var="image" value="${resultartimage[0]}.jpg" />
+                                </c:forEach>
+                                <c:if test="${not empty image}">
+                                    <img src="${commons.storage("images/bundles/", image)}" alt="${category_description} ${rowart[0]}">
+                                </c:if>
+                                <c:if test="${empty image}">
+                                    <img src="${commons.storage("images/", "unavailable.jpg")}" alt="${category_description} ${rowart[0]}">
+                                </c:if>
+
+                                <h5>Art. ${param.article}</h5>
+                                EAN:
+
                             </div>
                         </div>
-                    </div> <!-- .color -->
-                </div> <!-- .col -->
-                <div class="col-sm-6 col-xl-4">
-                    <div class="color">
-                        <h5 class="name">Brillantschwarz</h5>
-                        <div class="media">
-                            <img src="samples/colori/VWLY5Y.jpg">
-                            <div class="media-body">
-                                Codice colore originale: Y3F<br>
-                                Anno: 1999-2002<br>
-                                Codice prodotto: VCD-AU-Y3F
+                        <div class="col-md-6">
+
+                            <!--
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half"></i>
+                                <a class="reviews" href="#"><strong>4.8</strong> <small>(18 recensioni)</small></a>
+                            </div>
+                            -->
+
+                            <h2 class="h5">Dettagli tecnici articolo</h2>
+                            <ul class="list-group list-group-flush">
+
+                                <li class="list-group-item"><strong>Categoria prodotto:</strong> ${category_description}</li>
+                                <sql:query var="resultartcrit">
+                                    SELECT
+                                        descrizione_it,
+                                        valore
+                                    FROM
+                                        proprieta_articoli
+                                    WHERE
+                                        articolo = ?
+                                    ORDER BY
+                                        proprieta_articoli.descrizione_it ASC
+                                    <sql:param value="${param.article}" />
+                                </sql:query>
+                                <c:forEach var="rowcrit" items="${resultartcrit.rowsByIndex}">
+                                    <li class="list-group-item"><strong>${rowcrit[0]}<c:if test="${not empty rowcrit[1]}">:</c:if></strong> ${rowcrit[1]}</li>
+                                </c:forEach>
+
+                            </ul>
+
+                            <h2 class="h5 mt-4">Dettagli veicolo</h2>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Veicolo:</strong> <a href="#">${type_name_ext} ${fuel_type} (HP: ${hp}, KW: ${kw})</a></li>
+                                <li class="list-group-item"><strong>Intervallo veicolo:</strong> ${interval}</li>
+                                <sql:query var="resultenginenumber">
+                                    SELECT
+                                        motorizzazioni_numero_motore.numero_motore
+                                    FROM
+                                        motorizzazioni_numero_motore
+                                    WHERE
+                                        motorizzazioni_numero_motore.motorizzazione = ?
+                                    <sql:param value="${param.code}" />
+                                </sql:query>
+                                <c:set var="engine_number" value="" />
+                                <c:forEach var="rowen" items="${resultenginenumber.rowsByIndex}" varStatus="status">
+                                    <c:set var="engine_number">${engine_number} ${rowen[0]}<c:if test="${!status.last}">,</c:if> </c:set>
+                                </c:forEach>
+                                <li class="list-group-item"><strong>Codice motore veicolo:</strong> ${engine_number}</li>
+                            </ul>
+
+                        </div>
+                        <div class="col-md-3 text-right">
+
+                            <c:choose>
+                                <c:when test="${availability > 1}">
+                                    <span class="availability">Disponibilità: <strong class="good">Buona</strong></span>
+                                </c:when>
+                                <c:when test="${availability > 0}">
+                                    <span class="availability">Disponibilità: <strong class="average">Media</strong></span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="availability">Disponibilità: <strong class="poor">Scarsa</strong></span>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <span class="price-without-vat">Prezzo unitario <fmt:formatNumber value="${price}" pattern="0.00" type="currency" /></span>
+                            <span class="price"><fmt:formatNumber value="${price + vat}" type="currency" currencySymbol="€" currencyCode="EUR" /></span>
+                            <span class="vat-label">iva inclusa</span>
+                            <a class="btn btn-primary btn-block text-center mb-2" href="#"><i class="fas fa-shopping-cart mr-2"></i> Acquista</a>
+
+                        </div>
+                    </div> <!-- .row -->
+
+                    <h2 class="mb-3 mt-4">Descrizione prodotto</h2>
+                    <c:set var="product_description" value="${fn:replace(product_description, '@MARCA@', brand)}" />
+                    <c:set var="product_description" value="${fn:replace(product_description, '@MODELLO@', model)}" />
+                    <c:set var="product_description" value="${fn:replace(product_description, '@MOTORIZZAZIONE@', type_name)}" />
+                    <c:set var="product_description" value="${fn:replace(product_description, '@CODICEMOTORE@', engine_number)}" />
+                    <c:set var="product_description" value="${fn:replace(product_description, '@ALIMENTAZIONE@', fuel_type)}" />
+                    <p class="product-descr">${product_description}</p>
+
+                    <h2 class="mb-3 mt-4">OEM</h2>
+                    <sql:query var="resultartoem">
+                        SELECT
+                            oem,
+                            marca_produttore_str
+                        FROM
+                            referenze
+                        WHERE
+                            articolo = ?
+                        ORDER BY
+                            oem ASC
+                        <sql:param value="${param.article}" />
+                    </sql:query>
+                    <table class="table table-striped table-small">
+                        <thead>
+                        <tr>
+                            <th scope="col">OEM</th>
+                            <th scope="col">Produttore</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="rowoem" items="${resultartoem.rowsByIndex}">
+                        <tr>
+                            <th scope="row">${rowoem[0]}</th>
+                            <td>${rowoem[1]}</td>
+                        </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+
+                    <!--
+                    <h2>Commenti</h2>
+                    <div class="reviews">
+
+                        <div class="review">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half"></i>
+                                <div class="author">Domenico</div>
+                                <div class="date">13/09/2019</div>
+                            </div>
+                            <div class="comment">
+                                <h5 class="title">Ottimo prodotto. Ottima comunicazione</h5>
+                                Ho avuto necessità di reperire delle vernici per restauro strumenti musicali e che non trovavo a catalogo, VerniciSpray mi ha sempre risolto il problema con competenza e con una velocità mai trovata in altri siti. Una particolare attenzione alla comunicazione che è a dir poco ineccepibile.
                             </div>
                         </div>
-                    </div> <!-- .color -->
-                </div> <!-- .col -->
-                <div class="col-sm-6 col-xl-4">
-                    <div class="color">
-                        <h5 class="name">SANTORINIBLAU PERLEFFEKT</h5>
-                        <div class="media">
-                            <img src="samples/colori/B397.jpg">
-                            <div class="media-body">
-                                Codice colore originale: Y3F<br>
-                                Anno: 1999-2002<br>
-                                Codice prodotto: VCD-AU-Y3F
+                        <div class="review">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half"></i>
+                                <div class="author">Carlo</div>
+                                <div class="date">06/09/2019</div>
+                            </div>
+                            <div class="comment">
+                                <h5 class="title">Colore perfetto</h5>
+                                Venditore serio, spedizione veloce, e soprattutto colore azzeccato (non tutti ci riescono)
                             </div>
                         </div>
-                    </div> <!-- .color -->
-                </div> <!-- .col -->
-            </div> <!-- .row.colors -->
+                        <div class="review">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <div class="author">Claudio</div>
+                                <div class="date">01/09/2019</div>
+                            </div>
+                            <div class="comment">
+                                <h5 class="title">Copertura ok</h5>
+                                Vernice perfetta con una buona adesione e copertura.
+                            </div>
+                        </div>
 
-            <a class="show-all-colors" href="#">Visualizza tutti i colori per AUDI (VEDI VOLKSWAGEN) A3 <i class="fas fa-arrow-down ml-2"></i></a>
+                        <a class="show-all-reviews" href="#">Visualizza tutti i commenti</a>
 
-            <div class="hidden-colors">
-                <div class="row colors">
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="color">
-                            <h5 class="name">Brillantschwarz</h5>
-                            <div class="media">
-                                <img src="samples/colori/VWLY5Y.jpg">
-                                <div class="media-body">
-                                    Codice colore originale: Y3F<br>
-                                    Anno: 1999-2002<br>
-                                    Codice prodotto: VCD-AU-Y3F
+                        <div class="hidden-reviews">
+                            <div class="review">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <div class="author">Carlo</div>
+                                    <div class="date">06/09/2019</div>
+                                </div>
+                                <div class="comment">
+                                    <h5 class="title">Tinta vernice perfetta.</h5>
+                                    Vernice perfetta per i sensori della mia Panda caffellatte (beige accogliente)
                                 </div>
                             </div>
-                        </div> <!-- .color -->
-                    </div> <!-- .col -->
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="color">
-                            <h5 class="name">SANTORINIBLAU PERLEFFEKT</h5>
-                            <div class="media">
-                                <img src="samples/colori/B397.jpg">
-                                <div class="media-body">
-                                    Codice colore originale: Y3F<br>
-                                    Anno: 1999-2002<br>
-                                    Codice prodotto: VCD-AU-Y3F
+                        </div>
+
+                    </div>
+                    -->
+
+                    <hr>
+                    <h2 class="mb-3 mt-4">Altri veicoli compatibili</h2>
+                    <div class="row colors">
+
+                        <sql:query var="resultcompatibili">
+                            SELECT
+                                marche_ext.descrizione,
+                                modelli.descrizione_it,
+                                modelli_ext.descrizione_estesa_it,
+                                motorizzazioni.descrizione_it,
+                                CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_inizio,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_inizio,
+                                CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_fine,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_fine,
+                                motorizzazioni.kw,
+                                motorizzazioni.hp,
+                                alimentazione.descrizione_it,
+                                marche.descrizione,
+                                modelli.descrizione_it,
+                                marche.codice,
+                                modelli.codice,
+                                motorizzazioni.codice
+                            FROM
+                                articoli
+                            INNER JOIN motorizzazioni_articoli ON articoli.codice = motorizzazioni_articoli.articolo
+                            INNER JOIN motorizzazioni ON motorizzazioni_articoli.motorizzazione_s = motorizzazioni.codice
+                            INNER JOIN modelli ON motorizzazioni.modello = modelli.codice
+                            INNER JOIN modelli_ext ON modelli.codice = modelli_ext.codice
+                            INNER JOIN marche ON modelli.marca = marche.codice
+                            INNER JOIN marche_ext ON marche.codice = marche_ext.marca
+                            INNER JOIN alimentazione ON motorizzazioni.alimentazione = alimentazione.codice
+                            WHERE
+                                articoli.codice = ?
+                            ORDER BY
+                                marche_ext.descrizione ASC,
+                                modelli.descrizione_it ASC,
+                                motorizzazioni.descrizione_it ASC
+                            LIMIT 3
+                            <sql:param value="${param.article}" />
+                        </sql:query>
+
+                        <c:forEach var="rowmot" items="${resultcompatibili.rowsByIndex}">
+
+                            <c:set var="name" value="${rowmot[9]} ${rowmot[10]} ${rowmot[3]}" />
+                            <c:set var="description" value="${rowmot[2]}" />
+                            <c:set var="image" value="${rowmot[12]}.jpg" />
+                            <c:set var="interval">
+                                <c:if test="${rowmot[4] != '00/0000' and rowmot[5] != '00/0000'}">dal ${rowmot[4]} al ${rowmot[5]}</c:if><c:if test="${rowmot[4] != '00/0000' and rowmot[5] == '00/0000'}">dal ${rowmot[4]}</c:if>
+                            </c:set>
+                            <c:set var="hp" value="${rowmot[6]}" />
+                            <c:set var="kw" value="${rowmot[7]}" />
+                            <c:set var="fuel_type_txt" value="${rowmot[8]}" />
+
+                            <sql:query var="resultenginenumber">
+                                SELECT
+                                    motorizzazioni_numero_motore.numero_motore
+                                FROM
+                                    motorizzazioni_numero_motore
+                                WHERE
+                                    motorizzazioni_numero_motore.motorizzazione = ?
+                                <sql:param value="${rowmot[9]}" />
+                            </sql:query>
+                            <c:forEach var="rowen" items="${resultenginenumber.rowsByIndex}" varStatus="status">
+                                <c:set var="engine_number">${engine_number} ${rowen[0]}<c:if test="${!status.last}">,</c:if> </c:set>
+                            </c:forEach>
+                            <div class="col-sm-6 col-xl-4 mb-4">
+                                <div class="color">
+                                    <h5 class="name"><a href="#">${name}</a></h5>
+                                    <div class="media">
+                                        <img class="img-responsive" src="${commons.storage("images/models/", image)}">
+                                        <div class="media-body">
+                                            <p class="mb-1">Periodo: <strong>${interval}</strong></p>
+                                            <p class="mb-1">Alimentazione: <strong>${fuel_type_txt}</strong></p>
+                                            <p class="mb-1">Codice motore: <strong>${engine_number}</strong></p>
+                                        </div>
+                                    </div>
+                                </div> <!-- .color -->
+                            </div> <!-- .col -->
+                        </c:forEach>
+
+                    </div> <!-- .row.colors -->
+                    <a class="show-all-colors" href="#">Visualizza tutti i veicoli compatibili <i class="fas fa-arrow-down ml-1"></i></a>
+                    <div class="hidden-colors">
+                        <div class="row colors">
+
+                            <sql:query var="resultcompatibili">
+                                SELECT
+                                    marche_ext.descrizione,
+                                    modelli.descrizione_it,
+                                    modelli_ext.descrizione_estesa_it,
+                                    motorizzazioni.descrizione_it,
+                                    CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_inizio,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_inizio,
+                                    CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_fine,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_fine,
+                                    motorizzazioni.kw,
+                                    motorizzazioni.hp,
+                                    alimentazione.descrizione_it,
+                                    marche.descrizione,
+                                    modelli.descrizione_it,
+                                    marche.codice,
+                                    modelli.codice,
+                                    motorizzazioni.codice
+                                FROM
+                                    articoli
+                                INNER JOIN motorizzazioni_articoli ON articoli.codice = motorizzazioni_articoli.articolo
+                                INNER JOIN motorizzazioni ON motorizzazioni_articoli.motorizzazione_s = motorizzazioni.codice
+                                INNER JOIN modelli ON motorizzazioni.modello = modelli.codice
+                                INNER JOIN modelli_ext ON modelli.codice = modelli_ext.codice
+                                INNER JOIN marche ON modelli.marca = marche.codice
+                                INNER JOIN marche_ext ON marche.codice = marche_ext.marca
+                                INNER JOIN alimentazione ON motorizzazioni.alimentazione = alimentazione.codice
+                                WHERE
+                                    articoli.codice = ?
+                                ORDER BY
+                                    marche_ext.descrizione ASC,
+                                    modelli.descrizione_it ASC,
+                                    motorizzazioni.descrizione_it ASC
+                                LIMIT 999999
+                                OFFSET 3
+                                <sql:param value="${param.article}" />
+                            </sql:query>
+
+                            <c:forEach var="rowmot" items="${resultcompatibili.rowsByIndex}">
+
+                                <c:set var="name" value="${rowmot[9]} ${rowmot[10]} ${rowmot[3]}" />
+                                <c:set var="description" value="${rowmot[2]}" />
+                                <c:set var="image" value="${rowmot[12]}.jpg" />
+                                <c:set var="interval">
+                                    <c:if test="${rowmot[4] != '00/0000' and rowmot[5] != '00/0000'}">dal ${rowmot[4]} al ${rowmot[5]}</c:if><c:if test="${rowmot[4] != '00/0000' and rowmot[5] == '00/0000'}">dal ${rowmot[4]}</c:if>
+                                </c:set>
+                                <c:set var="hp" value="${rowmot[6]}" />
+                                <c:set var="kw" value="${rowmot[7]}" />
+                                <c:set var="fuel_type_txt" value="${rowmot[8]}" />
+
+                                <sql:query var="resultenginenumber">
+                                    SELECT
+                                    motorizzazioni_numero_motore.numero_motore
+                                    FROM
+                                    motorizzazioni_numero_motore
+                                    WHERE
+                                    motorizzazioni_numero_motore.motorizzazione = ?
+                                    <sql:param value="${rowmot[9]}" />
+                                </sql:query>
+                                <c:forEach var="rowen" items="${resultenginenumber.rowsByIndex}" varStatus="status">
+                                    <c:set var="engine_number">${engine_number} ${rowen[0]}<c:if test="${!status.last}">,</c:if> </c:set>
+                                </c:forEach>
+                                <div class="col-sm-6 col-xl-4 mb-4">
+                                    <div class="color">
+                                        <h5 class="name"><a href="#">${name}</a></h5>
+                                        <div class="media">
+                                            <img class="img-responsive" src="${commons.storage("images/models/", image)}">
+                                            <div class="media-body">
+                                                <p class="mb-1">Periodo: <strong>${interval}</strong></p>
+                                                <p class="mb-1">Alimentazione: <strong>${fuel_type_txt}</strong></p>
+                                                <p class="mb-1">Codice motore: <strong>${engine_number}</strong></p>
+                                            </div>
+                                        </div>
+                                    </div> <!-- .color -->
+                                </div> <!-- .col -->
+                            </c:forEach>
+
+                        </div> <!-- .row.colors -->
+                    </div> <!-- .hidden-colors -->
+
+                    <hr>
+                    <h2>Prodotti simili</h2>
+                    <div class="row products-list">
+
+                        <sql:query var="resultmodelli">
+                            SELECT
+                                marche.descrizione,
+                                modelli_ext.descrizione_it,
+                                motorizzazioni.descrizione_it,
+                                motorizzazioni.anno_inizio,
+                                motorizzazioni.anno_fine,
+                                tipo_ricambi_generico.descrizione_it,
+                                marche.codice,
+                                modelli.codice,
+                                motorizzazioni_articoli.motorizzazione_s,
+                                motorizzazioni_articoli.articolo_generico,
+                                articoli.codice,
+                                articoli.descrizione,
+                                articoli.prezzo,
+                                articoli.prezzo_carcassa,
+                                articoli.disponibilita
+                            FROM
+                                motorizzazioni_articoli
+                            INNER JOIN articoli on articoli.codice = motorizzazioni_articoli.articolo
+                            INNER JOIN tipo_ricambi_generico ON motorizzazioni_articoli.articolo_generico = tipo_ricambi_generico.codice
+                            INNER JOIN tipo_ricambi_generico_descrizione ON tipo_ricambi_generico.codice = tipo_ricambi_generico_descrizione.tipo_ricambi_generico
+                            INNER JOIN motorizzazioni ON motorizzazioni_articoli.motorizzazione_s = motorizzazioni.codice
+                            INNER JOIN modelli ON motorizzazioni.modello = modelli.codice
+                            INNER JOIN modelli_ext ON modelli.codice = modelli_ext.codice
+                            INNER JOIN marche ON modelli.marca = marche.codice
+                            INNER JOIN marche_ext ON marche.codice = marche_ext.marca
+                            WHERE
+                                motorizzazioni_articoli.motorizzazione_s = ? AND
+                                motorizzazioni_articoli.articolo_generico = ? AND
+                                articoli.fornitore = '4528' AND
+                                articoli.codice <> ?
+                            LIMIT 4
+                            <sql:param value="${param.code}" />
+                            <sql:param value="${param.category}" />
+                            <sql:param value="${param.article}" />
+                        </sql:query>
+                        <c:forEach var="rowmot" items="${resultmodelli.rowsByIndex}" varStatus="status">
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                                <div class="product-thumb">
+                                    <c:set var="id" value="${rowmot[10]}" />
+                                    <c:set var="price" value="${rowmot[12]}" />
+                                    <c:set var="description" value="${rowmot[11]}" />
+                                    <sql:query var="resultartimages">
+                                        SELECT
+                                            immagine
+                                        FROM
+                                            immagini_articoli
+                                        WHERE
+                                            articolo = ?
+                                        ORDER BY immagini_articoli.immagine ASC
+                                        LIMIT 1
+                                        <sql:param value="${id}" />
+                                    </sql:query>
+                                    <c:forEach var="resultartimage" items="${resultartimages.rowsByIndex}">
+                                        <c:set var="image" value="${resultartimage[0]}.jpg" />
+                                    </c:forEach>
+                                    <c:if test="${not empty image}">
+                                        <img src="${commons.storage("images/bundles/", image)}" alt="${id} ${description}">
+                                    </c:if>
+                                    <c:if test="${empty image}">
+                                        <img src="${commons.storage("images/", "unavailable.jpg")}" alt="${id} ${description}">
+                                    </c:if>
+                                    <div class="details">
+                                        <h6 class="name">${rowmot[5]} ${id}</h6>
+                                        <p class="excerpt">
+                                            <strong>${description}</strong><br/>
+                                            Compatibile con ${rowmot[0]} ${rowmot[1]} ${rowmot[2]} (${fn:substring(rowmot[3], 4, 7)}-${fn:substring(rowmot[3], 0, 4)}<c:if test="${!empty rowmot[4]}">-${fn:substring(rowmot[4], 4, 7)}-${fn:substring(rowmot[4], 0, 4)})</c:if>
+                                        </p>
+                                        <span class="price">da € ${price}<small>iva esclusa</small></span>
+                                        <button class="btn btn-primary" href="#">Vai al prodotto</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div> <!-- .color -->
-                    </div> <!-- .col -->
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="color">
-                            <h5 class="name">Absoluterot</h5>
-                            <div class="media">
-                                <img src="samples/colori/U084.jpg">
-                                <div class="media-body">
-                                    Codice colore originale: Y3F<br>
-                                    Anno: 1999-2002<br>
-                                    Codice prodotto: VCD-AU-Y3F
-                                </div>
-                            </div>
-                        </div> <!-- .color -->
-                    </div> <!-- .col -->
-                </div> <!-- .row.colors -->
-            </div> <!-- .hidden-colors -->
+                        </c:forEach>
 
-            <hr>
-            <h3>Prodotti correlati</h3>
-            <div class="row products-list">
-                <div class="col-sm-6 col-md-4 col-lg-3"> <!-- col-10 col-sm-4 col-xl-3 -->
-                    <a class="product-thumb" href="#">
-                        <img src="https://cdn.vernicispray.com/cache_200_1/Kit-Ritocco-Auto-Professionale.jpg" alt="Kit Ritocco Vernice Auto spray Professionale 2K">
-                        <div class="details">
-                            <h6 class="name">Kit ritocco carrozzeria professionale</h6>
-                            <span class="price">da € 39,03<small>iva esclusa</small></span>
-                            <button class="btn btn-primary" href="#">Vai al prodotto</button>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <a class="product-thumb" href="#">
-                        <img src="https://cdn.vernicispray.com/cache_200_1/Vernice-Auto-Ritocco-Carrozzeria-pastello-in-vasetto.jpg" alt="Vernice Ritocco Carrozzeria pastello in vasetto">
-                        <div class="details">
-                            <h6 class="name">Vernice auto ritocco carrozzeria pastello in vasetto</h6>
-                            <span class="price">da € 9,73<small>iva esclusa</small></span>
-                            <button class="btn btn-primary" href="#">Vai al prodotto</button>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <a class="product-thumb" href="#">
-                        <img src="https://cdn.vernicispray.com/cache_200_1/VC-.jpg" alt="Vernice Spray Auto ritocco carrozzeria Pastello">
-                        <div class="details">
-                            <h6 class="name">Vernice auto spray ritocco carrozzeria pastello</h6>
-                            <span class="price">da € 13,30<small>iva esclusa</small></span>
-                            <button class="btn btn-primary" href="#">Vai al prodotto</button>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <a class="product-thumb" href="#">
-                        <img src="https://cdn.vernicispray.com/cache_200_1/Vernice-Auto-Ritocco-Carrozzeria-pastello-in-vasetto.jpg" alt="Vernice Ritocco Carrozzeria pastello in vasetto">
-                        <div class="details">
-                            <h6 class="name">Vernice auto ritocco carrozzeria pastello in vasetto</h6>
-                            <span class="price">da € 9,73<small>iva esclusa</small></span>
-                            <button class="btn btn-primary" href="#">Vai al prodotto</button>
-                        </div>
-                    </a>
-                </div>
-            </div><!-- .row.products-list -->
+                    </div><!-- .row.products-list -->
 
-            <hr>
-            <h3>Commenti</h3>
-            <div class="reviews">
-
-                <div class="review">
-                    <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half"></i>
-                        <div class="author">Domenico</div>
-                        <div class="date">13/09/2019</div>
-                    </div>
-                    <div class="comment">
-                        <h5 class="title">Ottimo prodotto. Ottima comunicazione</h5>
-                        Ho avuto necessità di reperire delle vernici per restauro strumenti musicali e che non trovavo a catalogo, VerniciSpray mi ha sempre risolto il problema con competenza e con una velocità mai trovata in altri siti. Una particolare attenzione alla comunicazione che è a dir poco ineccepibile.
-                    </div>
-                </div> <!-- .review -->
-                <div class="review">
-                    <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half"></i>
-                        <div class="author">Carlo</div>
-                        <div class="date">06/09/2019</div>
-                    </div>
-                    <div class="comment">
-                        <h5 class="title">Colore perfetto</h5>
-                        Venditore serio, spedizione veloce, e soprattutto colore azzeccato (non tutti ci riescono)
-                    </div>
-                </div> <!-- .review -->
-                <div class="review">
-                    <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <div class="author">Claudio</div>
-                        <div class="date">01/09/2019</div>
-                    </div>
-                    <div class="comment">
-                        <h5 class="title">Copertura ok</h5>
-                        Vernice perfetta con una buona adesione e copertura.
-                    </div>
-                </div> <!-- .review -->
-
-                <a class="show-all-reviews" href="#">Visualizza tutti i commenti</a>
-
-                <div class="hidden-reviews">
-                    <div class="review">
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <div class="author">Carlo</div>
-                            <div class="date">06/09/2019</div>
-                        </div>
-                        <div class="comment">
-                            <h5 class="title">Tinta vernice perfetta.</h5>
-                            Vernice perfetta per i sensori della mia Panda caffellatte (beige accogliente)
-                        </div>
-                    </div> <!-- .review -->
-                </div> <!-- .hidden-reviews -->
-
-            </div> <!-- .reviews -->
-
-        </main>
+                </main>
 
             </div>
         </div>

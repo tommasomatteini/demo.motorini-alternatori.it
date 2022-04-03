@@ -20,7 +20,7 @@
     <div class="container-fluid pt-3 pt-sm-0">
         <div class="row pb-1">
             <div class="col-6 col-sm-4">
-                <a class="logo" href="/"><img src="${commons.assets("img/logo.png")}" alt="motorini-alternatori.it"></a>
+                <a class="logo" href="index.jsp"><img src="${commons.assets("img/logo.png")}" alt="motorini-alternatori.it"></a>
             </div>
             <div class="col-sm-4 d-none d-sm-block search">
                 <form>

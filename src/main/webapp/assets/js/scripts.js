@@ -9,6 +9,7 @@ $(function() {
   })
 
 
+
   // Mobile menu
 
   var $hamburger = $('.hamburger');
@@ -18,11 +19,13 @@ $(function() {
   });
 
 
+
   // Mobile mega menu
 
   $(".main-nav .nav-item").on('click', function(e) {
     if ($(this).find('.sub-menu').length > 0) $(this).toggleClass('active');
   });
+
 
 
   // Tooltips
@@ -103,6 +106,7 @@ $(function() {
   }
 
 
+
   // Same height on products list
 
   function resizeProductThumbs() {
@@ -119,8 +123,9 @@ $(function() {
       $('.product-thumb .excerpt', this).css('min-height', maxDescHeight);
     });
   }
-
   resizeProductThumbs();
+
+
 
   $(window).on('resize', function() {
     resizeProductThumbs();
@@ -145,5 +150,47 @@ $(function() {
     $(this).hide();
     $('.hidden-reviews').fadeIn();
   });
+
+
+
+  // Aside search
+
+  const aside_form = jQuery('#form_autoricambi');
+  if (aside_form .length > 0) {
+
+    window.addEventListener("pageshow", () => {
+      aside_form[0].reset();
+    });
+
+    const manufacturers_input = jQuery('select#form_autoricambi_manufacturers');
+    const manufacturers = new Request('api/manufacturers');
+    fetch(manufacturers)
+      .then(response => response.json())
+      .then(data => {
+        for(let i = 0; i < data.length; i++) {
+          manufacturers_input.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+        }
+        manufacturers_input.attr('disabled', false);
+      })
+      .catch(console.error);
+    manufacturers_input.on('change', function () {
+      const value = jQuery(this).val();
+      const models_input = jQuery('select#form_autoricambi_models');
+      const models = new Request('api/models/' + value);
+      fetch(models)
+          .then(response => response.json())
+          .then(data => {
+            for(let i = 0; i < data.length; i++) {
+              models_input.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+            }
+            models_input.attr('disabled', false);
+          })
+          .catch(console.error);
+    })
+
+
+  }
+
+
 
 });

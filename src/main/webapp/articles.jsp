@@ -192,7 +192,7 @@
                                     </c:forEach>
 
                                     <div class="product">
-                                        <h3><a href="article.jsp?manufacturer=${param.manufacturer}&model=${param.model}&article=${rowart[0]}">${category_description} ${rowart[0]} <small>per ${type_name_ext}</small></a></h3>
+                                        <h3><a href="article.jsp?manufacturer=${param.manufacturer}&model=${param.model}&code=${param.code}&category=${param.category}&article=${rowart[0]}">${category_description} ${rowart[0]} <small>per ${type_name_ext}</small></a></h3>
                                         <p>${description}</p>
                                         <div class="row product-main-info">
                                             <div class="col-md-3 mb-5">
@@ -222,6 +222,7 @@
 
                                                     <h5>Art. ${rowart[0]}</h5>
                                                     EAN:
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6 mb-5">
@@ -275,7 +276,7 @@
                                                 <span class="price-without-vat">Prezzo unitario <fmt:formatNumber value="${price}" pattern="0.00" type="currency" /></span>
                                                 <span class="price"><fmt:formatNumber value="${price + vat}" type="currency" currencySymbol="€" currencyCode="EUR" /></span>
                                                 <span class="vat-label">iva inclusa</span>
-                                                <a class="btn btn-outline-secondary btn-block text-center mb-2" href="article.jsp?manufacturer=${param.manufacturer}&model=${param.model}&article=${rowart[0]}"><i class="fas fa-info-circle mr-2"></i> Dettagli articolo</a>
+                                                <a class="btn btn-outline-secondary btn-block text-center mb-2" href="article.jsp?manufacturer=${param.manufacturer}&model=${param.model}&code=${param.code}&category=${param.category}&article=${rowart[0]}"><i class="fas fa-info-circle mr-2"></i> Dettagli articolo</a>
                                                 <a class="btn btn-primary btn-block text-center mb-2" href="#"><i class="fas fa-shopping-cart mr-2"></i> Acquista</a>
                                             </div>
                                         </div> <!-- .row -->
