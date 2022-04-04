@@ -115,7 +115,7 @@ public class VehicleModelsServlet extends HttpServlet {
             id = params.get(0);
         } catch(Exception exception) {}
 
-        if (Math.isInteger(id)) {
+        if (id != null && Math.isInteger(id)) {
 
             Gson gson = new GsonBuilder().registerTypeAdapter(java.time.YearMonth.class, YearMonthSerializer.INSTANCE).create();
             String jsonString = gson.toJson(getVehicleModels(Integer.parseInt(id)));

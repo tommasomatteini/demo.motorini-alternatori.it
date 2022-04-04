@@ -15,6 +15,7 @@
 
         <div class="container-fluid home">
             <div class="row">
+
                 <aside class="col-lg-3">
                     <ul class="nav nav-tabs search-tabs" role="tablist">
                         <li class="nav-item">
@@ -30,36 +31,33 @@
                         <div class="tab-pane active show">
                             <div class="">
                                 <h5 class="">Ricerca guidata ricambi auto</h5>
-                                <form method="get" class="form" id="formautoricambi" role="form" action="scheda_prodotto_auto.jsp" accept-charset="ISO-8859-1" name="formautoricambi" onsubmit="return caricaRisultati();">
-                                    <input type="hidden" name="cat" value="128">
-                                    <input type="hidden" name="subcat" value="1">
+                                <form method="get" class="form" id="form_autoricambi" role="form" action="type.jsp" accept-charset="UTF-8" name="form_autoricambi" autocomplete="off">
+                                    <input type="hidden" >
                                     <div class="form-group">
-                                        <label class="sr-only" for="utility_ricambi_state">Marca Auto</label>
-                                        <select name="utility_ricambi_state" id="utility_ricambi_state" onchange="update_utilities_ricambi(this.value)" class="form-control">
-                                            <option value="0">Marca Auto</option>
-                                            <option value="2">ALFA ROMEO</option>
-                                            <option value="...">...</option>
+                                        <label class="sr-only" for="form_autoricambi_manufacturers">Marca</label>
+                                        <select name="manufacturer" id="form_autoricambi_manufacturers" class="form-control" disabled>
+                                            <option value="-1">Marca</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label class="sr-only" for="utility_ricambi">Modello Auto</label>
-                                        <select name="utility_ricambi" id="utility_ricambi_select" onchange="update_utilitiesanni_ricambi(this.value)" class="form-control">
-                                            <option value="0" label="Modello Auto" selected="selected">Modello Auto</option>
+                                        <label class="sr-only" for="form_autoricambi_models">Modello</label>
+                                        <select name="model" id="form_autoricambi_models" class="form-control" disabled>
+                                            <option value="-1">Modello</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label class="sr-only" for="utilityanni_ricambi">Anno (opzionale)</label>
-                                        <select name="utilityanni_ricambi" class="form-control" id="utilityanni_ricambi_select">
-                                            <option value="0" label="Anno (opzionale)" selected="selected">Anno di fabbricazione</option>
+                                        <label class="sr-only" for="form_autoricambi_type">Motorizzazione</label>
+                                        <select name="code" class="form-control" id="form_autoricambi_type" disabled>
+                                            <option value="-1">Motorizzazione</option>
                                         </select>
                                     </div>
+                                    <button class="btn btn-primary" disabled>Cerca ricambio</button>
                                 </form>
-                                <button class="btn btn-primary" onclick="javascript:caricaRisultatiRicambi();">Cerca ricambio</button>
                             </div>
                             <hr />
                             <div class="mb-sm-4 mb-md-4">
                                 <h5>Hai dubbi? Ti aiutiamo noi</h5>
-                                <a class="btn btn-primary" href="#">Conattaci</a>
+                                <a class="btn btn-primary" href="#">Contattaci</a>
                             </div>
                         </div>
                     </div>
@@ -174,12 +172,9 @@
                                         <sql:param value="${rowmot[8]}" />
                                         <sql:param value="${rowmot[9]}" />
                                     </sql:query>
-                                    <c:set var="id" value="" />
-                                    <c:set var="price" value="" />
-                                    <c:set var="description" value="" />
                                     <c:forEach var="resultarticolo" items="${resultarticoli.rowsByIndex}">
                                         <c:set var="id" value="${resultarticolo[0]}" />
-                                        <c:set var="price" value="${resultarticolo[3]}" />
+                                        <c:set var="price" value="${resultarticolo[3]}" /><!-- @TODO -->
                                         <c:set var="description" value="${resultarticolo[2]}" />
                                     </c:forEach>
                                     <sql:query var="resultartimages">
@@ -206,10 +201,10 @@
                                         <h6 class="name">${rowmot[5]} ${id}</h6>
                                         <p class="excerpt">
                                             <strong>${description}</strong><br/>
-                                            Compatibile con ${rowmot[0]} ${rowmot[1]} ${rowmot[2]} (${fn:substring(rowmot[3], 4, 7)}-${fn:substring(rowmot[3], 0, 4)}<c:if test="${!empty rowmot[4]}">-${fn:substring(rowmot[4], 4, 7)}-${fn:substring(rowmot[4], 0, 4)})</c:if>
+                                            Compatibile con <strong>${rowmot[0]} ${rowmot[1]} ${rowmot[2]} (${fn:substring(rowmot[3], 4, 7)}-${fn:substring(rowmot[3], 0, 4)}<c:if test="${!empty rowmot[4]}">/${fn:substring(rowmot[4], 4, 7)}-${fn:substring(rowmot[4], 0, 4)}</c:if>)</strong>
                                         </p>
-                                        <span class="price">da € ${price}<small>iva esclusa</small></span>
-                                        <button class="btn btn-primary" href="#">Vai al prodotto</button>
+                                        <span class="price">€ 0,00<small>iva esclusa</small></span>
+                                        <a class="btn btn-primary" href="article.jsp?manufacturer=${rowmot[6]}&model=${rowmot[7]}&code=${rowmot[8]}&category=${rowmot[9]}&article=${id}">Vai al prodotto</a>
                                     </div>
                                 </div>
                             </div>

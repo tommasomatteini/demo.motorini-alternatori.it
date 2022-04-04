@@ -1,26 +1,29 @@
 package it.motorinialternatori.demo.models;
 
 import java.time.YearMonth;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  */
-public class VehicleModel {
+public class VehicleType {
 
-    private final VehicleManufacturer vehicleManufacturer;
+    private final VehicleModel vehicleModel;
     private final int id;
     private final String name;
     private YearMonth from = null;
     private YearMonth to = null;
+    private Map<String, String> properties = new HashMap<String, String>();
 
     /**
      *
-     * @param vehicleManufacturer ...
+     * @param vehicleModel ...
      * @param id ...
      * @param name ...
      */
-    public VehicleModel(VehicleManufacturer vehicleManufacturer, int id, String name) {
-        this.vehicleManufacturer = vehicleManufacturer;
+    public VehicleType(VehicleModel vehicleModel, int id, String name) {
+        this.vehicleModel = vehicleModel;
         this.id = id;
         this.name = name;
     }
@@ -61,10 +64,17 @@ public class VehicleModel {
 
     /**
      *
+     * @param key ...
+     * @param value ...
+     */
+    public void setProperty(String key, String value) { properties.put(key, value); }
+
+    /**
+     *
      * @return ...
      */
-    public VehicleManufacturer getVehicleManufacturer(){
-        return this.vehicleManufacturer;
+    public VehicleModel getVehicleModel(){
+        return this.vehicleModel;
     }
 
     /**
@@ -97,6 +107,15 @@ public class VehicleModel {
      */
     public YearMonth getTo() {
         return this.to;
+    }
+
+    /**
+     *
+     * @param key ...
+     * @return ...
+     */
+    public String getProperty(String key) {
+        return this.properties.get(key);
     }
 
 }

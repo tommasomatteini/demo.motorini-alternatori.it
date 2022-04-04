@@ -162,32 +162,83 @@ $(function() {
       aside_form[0].reset();
     });
 
-    const manufacturers_input = jQuery('select#form_autoricambi_manufacturers');
+    const manufacturers_input = jQuery('#form_autoricambi select#form_autoricambi_manufacturers');
+    const models_input = jQuery('#form_autoricambi select#form_autoricambi_models');
+    const types_input = jQuery('#form_autoricambi select#form_autoricambi_type');
+    const submit_button = jQuery('#form_autoricambi button');
+
     const manufacturers = new Request('api/manufacturers');
     fetch(manufacturers)
       .then(response => response.json())
       .then(data => {
+        manufacturers_input.find("option.items").remove();
         for(let i = 0; i < data.length; i++) {
-          manufacturers_input.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+          manufacturers_input.append('<option class="items" value="' + data[i].id + '">' + data[i].name + '</option>');
         }
         manufacturers_input.attr('disabled', false);
       })
       .catch(console.error);
+
     manufacturers_input.on('change', function () {
       const value = jQuery(this).val();
-      const models_input = jQuery('select#form_autoricambi_models');
-      const models = new Request('api/models/' + value);
-      fetch(models)
+      if (value > 0) {
+        const models = new Request('api/models/' + value);
+        fetch(models)
           .then(response => response.json())
           .then(data => {
-            for(let i = 0; i < data.length; i++) {
-              models_input.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+            console.log('models', data)
+            models_input.find("option.items").remove();
+            types_input.find("option.items").remove();
+            types_input.attr('disabled', true);
+            submit_button.attr('disabled', true);
+            for (let i = 0; i < data.length; i++) {
+              const from = data[i].from ? moment(data[i].from, "YYYY-MM") : null;
+              const to = data[i].to ? moment(data[i].to, "YYYY-MM") : null;
+              const interval = to ? ( from.format('MM/YYYY') + '-' + to.format('MM/YYYY') ) : ( from.format('MM/YYYY') );
+              models_input.append('<option class="items" value="' + data[i].id + '">' + data[i].name + ' (' + interval + ')</option>');
             }
             models_input.attr('disabled', false);
           })
           .catch(console.error);
-    })
+      } else {
+        models_input.find("option.items").remove();
+        models_input.attr('disabled', true);
+        types_input.find("option.items").remove();
+        types_input.attr('disabled', true);
+        submit_button.attr('disabled', true);
+      }
+    });
 
+    models_input.on('change', function () {
+      const value = jQuery(this).val();
+      if (value > 0) {
+        const types = new Request('api/types/' + value);
+        fetch(types)
+          .then(response => response.json())
+          .then(data => {
+            console.log('types', data)
+            types_input.find("option.items").remove();
+            for (let i = 0; i < data.length; i++) {
+              const from = data[i].from ? moment(data[i].from, "YYYY-MM") : null;
+              const to = data[i].to ? moment(data[i].to, "YYYY-MM") : null;
+              const interval = to ? ( from.format('MM/YYYY') + '-' + to.format('MM/YYYY') ) : ( from.format('MM/YYYY') );
+              types_input.append('<option class="items" value="' + data[i].id + '">' + data[i].name + ' ' + data[i].properties.fuel_type + ' (HP ' + data[i].properties.hp + ', KW ' + data[i].properties.kw + ') (' + interval + ')</option>');
+            }
+            types_input.attr('disabled', false);
+          })
+          .catch(console.error);
+      } else {
+        types_input.find("option.items").remove();
+        types_input.attr('disabled', true);
+        submit_button.attr('disabled', true);
+      }
+    });
+
+    types_input.on('change', function () {
+      const value = jQuery(this).val();
+      if (value > 0) submit_button.attr('disabled', false);
+      else submit_button.attr('disabled', true);
+    });
 
   }
 

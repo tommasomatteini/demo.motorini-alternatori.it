@@ -126,6 +126,7 @@
     <script src="${commons.assets("js/jquery-3.4.1.min.js")}"></script>
     <script src="${commons.assets("js/bootstrap.bundle.min.js")}"></script>
     <script src="${commons.assets("js/owl.carousel.min.js")}"></script>
+    <script src="${commons.assets("js/moment.min.js")}"></script>
     <script src="${commons.assets("js/scripts.js")}"></script>
 
 </html>
