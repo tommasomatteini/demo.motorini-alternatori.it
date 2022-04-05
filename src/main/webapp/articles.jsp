@@ -88,7 +88,7 @@
                         <c:set var="brand" value="${rowmot[11]}" />
                         <c:set var="model" value="${rowmot[0]}" />
                         <c:set var="interval">
-                            <c:if test="${rowmot[5] != '00/0000' and rowmot[6] != '00/0000'}">dal ${rowmot[5]} al ${rowmot[6]}</c:if><c:if test="${rowmot[5] != '00/0000' and rowmot[6] == '00/0000'}">dal ${rowmot[5]}</c:if>
+                            <c:if test="${rowmot[5] != null and rowmot[6] != null}">dal ${rowmot[5]} al ${rowmot[6]}</c:if><c:if test="${rowmot[5] != null and rowmot[6] == null}">dal ${rowmot[5]}</c:if>
                         </c:set>
                         <c:set var="hp" value="${rowmot[7]}" />
                         <c:set var="kw" value="${rowmot[8]}" />
@@ -124,7 +124,7 @@
                             <div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item"><strong>Categoria prodotto:</strong> ${category_description}</li>
-                                    <li class="list-group-item"><strong>Veicolo:</strong> <a href="#">${type_name_ext} ${fuel_type} <small>(HP: ${hp}, KW: ${kw})</small></a></li>
+                                    <li class="list-group-item"><strong>Veicolo:</strong> <a href="type.jsp?code=${param.code}">${type_name_ext} ${fuel_type} <small>(HP: ${hp}, KW: ${kw})</small></a></li>
                                     <li class="list-group-item"><strong>Intervallo veicolo:</strong> ${interval}</li>
                                     <sql:query var="resultenginenumber">
                                         SELECT

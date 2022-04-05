@@ -87,7 +87,7 @@
                         <c:set var="brand" value="${rowmot[11]}" />
                         <c:set var="model" value="${rowmot[0]}" />
                         <c:set var="interval">
-                            <c:if test="${rowmot[5] != '00/0000' and rowmot[6] != '00/0000'}">dal ${rowmot[5]} al ${rowmot[6]}</c:if><c:if test="${rowmot[5] != '00/0000' and rowmot[6] == '00/0000'}">dal ${rowmot[5]}</c:if>
+                            <c:if test="${rowmot[5] != null and rowmot[6] != null}">dal ${rowmot[5]} al ${rowmot[6]}</c:if><c:if test="${rowmot[5] != null and rowmot[6] == null}">dal ${rowmot[5]}</c:if>
                         </c:set>
                         <c:set var="hp" value="${rowmot[7]}" />
                         <c:set var="kw" value="${rowmot[8]}" />
@@ -200,7 +200,7 @@
 
                             <h2 class="h5 mt-4">Dettagli veicolo</h2>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><strong>Veicolo:</strong> <a href="#">${type_name_ext} ${fuel_type} (HP: ${hp}, KW: ${kw})</a></li>
+                                <li class="list-group-item"><strong>Veicolo:</strong> <a href="type.jsp?code=${param.code}">${type_name_ext} ${fuel_type} (HP: ${hp}, KW: ${kw})</a></li>
                                 <li class="list-group-item"><strong>Intervallo veicolo:</strong> ${interval}</li>
                                 <sql:query var="resultenginenumber">
                                     SELECT
@@ -350,7 +350,7 @@
                     -->
 
                     <hr>
-                    <h2 class="mb-3 mt-4">Altri veicoli compatibili</h2>
+                    <h2 class="mb-0 mt-4">Altri veicoli compatibili</h2>
                     <div class="row colors">
 
                         <sql:query var="resultcompatibili">
@@ -394,7 +394,7 @@
                             <c:set var="description" value="${rowmot[2]}" />
                             <c:set var="image" value="${rowmot[12]}.jpg" />
                             <c:set var="interval">
-                                <c:if test="${rowmot[4] != '00/0000' and rowmot[5] != '00/0000'}">dal ${rowmot[4]} al ${rowmot[5]}</c:if><c:if test="${rowmot[4] != '00/0000' and rowmot[5] == '00/0000'}">dal ${rowmot[4]}</c:if>
+                                <c:if test="${rowmot[4] != null and rowmot[5] != null}">dal ${rowmot[4]} al ${rowmot[5]}</c:if><c:if test="${rowmot[4] != null and rowmot[5] == null}">dal ${rowmot[4]}</c:if>
                             </c:set>
                             <c:set var="hp" value="${rowmot[6]}" />
                             <c:set var="kw" value="${rowmot[7]}" />
@@ -412,9 +412,9 @@
                             <c:forEach var="rowen" items="${resultenginenumber.rowsByIndex}" varStatus="status">
                                 <c:set var="engine_number">${engine_number} ${rowen[0]}<c:if test="${!status.last}">,</c:if> </c:set>
                             </c:forEach>
-                            <div class="col-sm-6 col-xl-4 mb-4">
+                            <div class="col-sm-6 col-xl-4 mt-3">
                                 <div class="color">
-                                    <h5 class="name"><a href="#">${name}</a></h5>
+                                    <h5 class="name"><a href="article.jsp?manufacturer=${rowmot[11]}&model=${rowmot[12]}&code=${rowmot[13]}&category=${param.category}&article=${param.article}">${name} <small>(HP ${hp}, KW ${kw})</small></a></h5>
                                     <div class="media">
                                         <img class="img-responsive" src="${commons.storage("images/models/", image)}">
                                         <div class="media-body">
@@ -428,169 +428,173 @@
                         </c:forEach>
 
                     </div> <!-- .row.colors -->
-                    <a class="show-all-colors" href="#">Visualizza tutti i veicoli compatibili <i class="fas fa-arrow-down ml-1"></i></a>
-                    <div class="hidden-colors">
-                        <div class="row colors">
 
-                            <sql:query var="resultcompatibili">
-                                SELECT
-                                    marche_ext.descrizione,
-                                    modelli.descrizione_it,
-                                    modelli_ext.descrizione_estesa_it,
-                                    motorizzazioni.descrizione_it,
-                                    CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_inizio,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_inizio,
-                                    CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_fine,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_fine,
-                                    motorizzazioni.kw,
-                                    motorizzazioni.hp,
-                                    alimentazione.descrizione_it,
-                                    marche.descrizione,
-                                    modelli.descrizione_it,
-                                    marche.codice,
-                                    modelli.codice,
-                                    motorizzazioni.codice
-                                FROM
-                                    articoli
-                                INNER JOIN motorizzazioni_articoli ON articoli.codice = motorizzazioni_articoli.articolo
-                                INNER JOIN motorizzazioni ON motorizzazioni_articoli.motorizzazione_s = motorizzazioni.codice
-                                INNER JOIN modelli ON motorizzazioni.modello = modelli.codice
-                                INNER JOIN modelli_ext ON modelli.codice = modelli_ext.codice
-                                INNER JOIN marche ON modelli.marca = marche.codice
-                                INNER JOIN marche_ext ON marche.codice = marche_ext.marca
-                                INNER JOIN alimentazione ON motorizzazioni.alimentazione = alimentazione.codice
-                                WHERE
-                                    articoli.codice = ?
-                                ORDER BY
-                                    marche_ext.descrizione ASC,
-                                    modelli.descrizione_it ASC,
-                                    motorizzazioni.descrizione_it ASC
-                                LIMIT 999999
-                                OFFSET 3
-                                <sql:param value="${param.article}" />
-                            </sql:query>
+                    <sql:query var="resultcompatibili">
+                        SELECT
+                            marche_ext.descrizione,
+                            modelli.descrizione_it,
+                            modelli_ext.descrizione_estesa_it,
+                            motorizzazioni.descrizione_it,
+                            CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_inizio,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_inizio,
+                            CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_fine,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_fine,
+                            motorizzazioni.kw,
+                            motorizzazioni.hp,
+                            alimentazione.descrizione_it,
+                            marche.descrizione,
+                            modelli.descrizione_it,
+                            marche.codice,
+                            modelli.codice,
+                            motorizzazioni.codice
+                        FROM
+                            articoli
+                        INNER JOIN motorizzazioni_articoli ON articoli.codice = motorizzazioni_articoli.articolo
+                        INNER JOIN motorizzazioni ON motorizzazioni_articoli.motorizzazione_s = motorizzazioni.codice
+                        INNER JOIN modelli ON motorizzazioni.modello = modelli.codice
+                        INNER JOIN modelli_ext ON modelli.codice = modelli_ext.codice
+                        INNER JOIN marche ON modelli.marca = marche.codice
+                        INNER JOIN marche_ext ON marche.codice = marche_ext.marca
+                        INNER JOIN alimentazione ON motorizzazioni.alimentazione = alimentazione.codice
+                        WHERE
+                            articoli.codice = ?
+                        ORDER BY
+                            marche_ext.descrizione ASC,
+                            modelli.descrizione_it ASC,
+                            motorizzazioni.descrizione_it ASC
+                        LIMIT 999999
+                        OFFSET 3
+                        <sql:param value="${param.article}" />
+                    </sql:query>
+                    <c:if test="${resultcompatibili.rowCount > 0}">
+                        <a class="show-all-colors" href="#">Visualizza tutti i veicoli compatibili<i class="fas fa-arrow-down ml-1"></i></a>
+                        <div class="hidden-colors">
+                            <div class="row colors">
 
-                            <c:forEach var="rowmot" items="${resultcompatibili.rowsByIndex}">
+                                <c:forEach var="rowmot" items="${resultcompatibili.rowsByIndex}">
 
-                                <c:set var="name" value="${rowmot[9]} ${rowmot[10]} ${rowmot[3]}" />
-                                <c:set var="description" value="${rowmot[2]}" />
-                                <c:set var="image" value="${rowmot[12]}.jpg" />
-                                <c:set var="interval">
-                                    <c:if test="${rowmot[4] != '00/0000' and rowmot[5] != '00/0000'}">dal ${rowmot[4]} al ${rowmot[5]}</c:if><c:if test="${rowmot[4] != '00/0000' and rowmot[5] == '00/0000'}">dal ${rowmot[4]}</c:if>
-                                </c:set>
-                                <c:set var="hp" value="${rowmot[6]}" />
-                                <c:set var="kw" value="${rowmot[7]}" />
-                                <c:set var="fuel_type_txt" value="${rowmot[8]}" />
+                                    <c:set var="name" value="${rowmot[9]} ${rowmot[10]} ${rowmot[3]}" />
+                                    <c:set var="description" value="${rowmot[2]}" />
+                                    <c:set var="image" value="${rowmot[12]}.jpg" />
+                                    <c:set var="interval">
+                                        <c:if test="${rowmot[4] != null and rowmot[5] != null}">dal ${rowmot[4]} al ${rowmot[5]}</c:if><c:if test="${rowmot[4] != null and rowmot[5] == null}">dal ${rowmot[4]}</c:if>
+                                    </c:set>
+                                    <c:set var="hp" value="${rowmot[6]}" />
+                                    <c:set var="kw" value="${rowmot[7]}" />
+                                    <c:set var="fuel_type_txt" value="${rowmot[8]}" />
 
-                                <sql:query var="resultenginenumber">
-                                    SELECT
-                                    motorizzazioni_numero_motore.numero_motore
-                                    FROM
-                                    motorizzazioni_numero_motore
-                                    WHERE
-                                    motorizzazioni_numero_motore.motorizzazione = ?
-                                    <sql:param value="${rowmot[9]}" />
-                                </sql:query>
-                                <c:forEach var="rowen" items="${resultenginenumber.rowsByIndex}" varStatus="status">
-                                    <c:set var="engine_number">${engine_number} ${rowen[0]}<c:if test="${!status.last}">,</c:if> </c:set>
-                                </c:forEach>
-                                <div class="col-sm-6 col-xl-4 mb-4">
-                                    <div class="color">
-                                        <h5 class="name"><a href="#">${name}</a></h5>
-                                        <div class="media">
-                                            <img class="img-responsive" src="${commons.storage("images/models/", image)}">
-                                            <div class="media-body">
-                                                <p class="mb-1">Periodo: <strong>${interval}</strong></p>
-                                                <p class="mb-1">Alimentazione: <strong>${fuel_type_txt}</strong></p>
-                                                <p class="mb-1">Codice motore: <strong>${engine_number}</strong></p>
-                                            </div>
-                                        </div>
-                                    </div> <!-- .color -->
-                                </div> <!-- .col -->
-                            </c:forEach>
-
-                        </div> <!-- .row.colors -->
-                    </div> <!-- .hidden-colors -->
-
-                    <hr>
-                    <h2>Prodotti simili</h2>
-                    <div class="row products-list">
-
-                        <sql:query var="resultmodelli">
-                            SELECT
-                                marche.descrizione,
-                                modelli_ext.descrizione_it,
-                                motorizzazioni.descrizione_it,
-                                motorizzazioni.anno_inizio,
-                                motorizzazioni.anno_fine,
-                                tipo_ricambi_generico.descrizione_it,
-                                marche.codice,
-                                modelli.codice,
-                                motorizzazioni_articoli.motorizzazione_s,
-                                motorizzazioni_articoli.articolo_generico,
-                                articoli.codice,
-                                articoli.descrizione,
-                                articoli.prezzo,
-                                articoli.prezzo_carcassa,
-                                articoli.disponibilita
-                            FROM
-                                motorizzazioni_articoli
-                            INNER JOIN articoli on articoli.codice = motorizzazioni_articoli.articolo
-                            INNER JOIN tipo_ricambi_generico ON motorizzazioni_articoli.articolo_generico = tipo_ricambi_generico.codice
-                            INNER JOIN tipo_ricambi_generico_descrizione ON tipo_ricambi_generico.codice = tipo_ricambi_generico_descrizione.tipo_ricambi_generico
-                            INNER JOIN motorizzazioni ON motorizzazioni_articoli.motorizzazione_s = motorizzazioni.codice
-                            INNER JOIN modelli ON motorizzazioni.modello = modelli.codice
-                            INNER JOIN modelli_ext ON modelli.codice = modelli_ext.codice
-                            INNER JOIN marche ON modelli.marca = marche.codice
-                            INNER JOIN marche_ext ON marche.codice = marche_ext.marca
-                            WHERE
-                                motorizzazioni_articoli.motorizzazione_s = ? AND
-                                motorizzazioni_articoli.articolo_generico = ? AND
-                                articoli.fornitore = '4528' AND
-                                articoli.codice <> ?
-                            LIMIT 4
-                            <sql:param value="${param.code}" />
-                            <sql:param value="${param.category}" />
-                            <sql:param value="${param.article}" />
-                        </sql:query>
-                        <c:forEach var="rowmot" items="${resultmodelli.rowsByIndex}" varStatus="status">
-                            <div class="col-sm-6 col-md-4 col-lg-3">
-                                <div class="product-thumb">
-                                    <c:set var="id" value="${rowmot[10]}" />
-                                    <c:set var="price" value="${rowmot[12]}" />
-                                    <c:set var="description" value="${rowmot[11]}" />
-                                    <sql:query var="resultartimages">
+                                    <sql:query var="resultenginenumber">
                                         SELECT
-                                            immagine
+                                            motorizzazioni_numero_motore.numero_motore
                                         FROM
-                                            immagini_articoli
+                                            motorizzazioni_numero_motore
                                         WHERE
-                                            articolo = ?
-                                        ORDER BY immagini_articoli.immagine ASC
-                                        LIMIT 1
-                                        <sql:param value="${id}" />
+                                            motorizzazioni_numero_motore.motorizzazione = ?
+                                        <sql:param value="${rowmot[9]}" />
                                     </sql:query>
-                                    <c:forEach var="resultartimage" items="${resultartimages.rowsByIndex}">
-                                        <c:set var="image" value="${resultartimage[0]}.jpg" />
+                                    <c:forEach var="rowen" items="${resultenginenumber.rowsByIndex}" varStatus="status">
+                                        <c:set var="engine_number">${engine_number} ${rowen[0]}<c:if test="${!status.last}">,</c:if> </c:set>
                                     </c:forEach>
-                                    <c:if test="${not empty image}">
-                                        <img src="${commons.storage("images/bundles/", image)}" alt="${id} ${description}">
-                                    </c:if>
-                                    <c:if test="${empty image}">
-                                        <img src="${commons.storage("images/", "unavailable.jpg")}" alt="${id} ${description}">
-                                    </c:if>
-                                    <div class="details">
-                                        <h6 class="name">${rowmot[5]} ${id}</h6>
-                                        <p class="excerpt">
-                                            <strong>${description}</strong><br/>
-                                            Compatibile con ${rowmot[0]} ${rowmot[1]} ${rowmot[2]} (${fn:substring(rowmot[3], 4, 7)}-${fn:substring(rowmot[3], 0, 4)}<c:if test="${!empty rowmot[4]}">-${fn:substring(rowmot[4], 4, 7)}-${fn:substring(rowmot[4], 0, 4)})</c:if>
-                                        </p>
-                                        <span class="price">da € ${price}<small>iva esclusa</small></span>
-                                        <button class="btn btn-primary" href="#">Vai al prodotto</button>
+                                    <div class="col-sm-6 col-xl-4 mt-3">
+                                        <div class="color">
+                                            <h5 class="name"><a href="article.jsp?manufacturer=${rowmot[11]}&model=${rowmot[12]}&code=${rowmot[13]}&category=${param.category}&article=${param.article}">${name} <small>(HP ${hp}, KW ${kw})</small></a></h5>
+                                            <div class="media">
+                                                <img class="img-responsive" src="${commons.storage("images/models/", image)}">
+                                                <div class="media-body">
+                                                    <p class="mb-1">Periodo: <strong>${interval}</strong></p>
+                                                    <p class="mb-1">Alimentazione: <strong>${fuel_type_txt}</strong></p>
+                                                    <p class="mb-1">Codice motore: <strong>${engine_number}</strong></p>
+                                                </div>
+                                            </div>
+                                        </div> <!-- .color -->
+                                    </div> <!-- .col -->
+                                </c:forEach>
+
+                            </div> <!-- .row.colors -->
+                        </div> <!-- .hidden-colors -->
+                    </c:if>
+
+                    <sql:query var="resultmodelli">
+                        SELECT
+                            marche.descrizione,
+                            modelli_ext.descrizione_it,
+                            motorizzazioni.descrizione_it,
+                            motorizzazioni.anno_inizio,
+                            motorizzazioni.anno_fine,
+                            tipo_ricambi_generico.descrizione_it,
+                            marche.codice,
+                            modelli.codice,
+                            motorizzazioni_articoli.motorizzazione_s,
+                            motorizzazioni_articoli.articolo_generico,
+                            articoli.codice,
+                            articoli.descrizione,
+                            articoli.prezzo,
+                            articoli.prezzo_carcassa,
+                            articoli.disponibilita
+                        FROM
+                            motorizzazioni_articoli
+                        INNER JOIN articoli on articoli.codice = motorizzazioni_articoli.articolo
+                        INNER JOIN tipo_ricambi_generico ON motorizzazioni_articoli.articolo_generico = tipo_ricambi_generico.codice
+                        INNER JOIN tipo_ricambi_generico_descrizione ON tipo_ricambi_generico.codice = tipo_ricambi_generico_descrizione.tipo_ricambi_generico
+                        INNER JOIN motorizzazioni ON motorizzazioni_articoli.motorizzazione_s = motorizzazioni.codice
+                        INNER JOIN modelli ON motorizzazioni.modello = modelli.codice
+                        INNER JOIN modelli_ext ON modelli.codice = modelli_ext.codice
+                        INNER JOIN marche ON modelli.marca = marche.codice
+                        INNER JOIN marche_ext ON marche.codice = marche_ext.marca
+                        WHERE
+                            motorizzazioni_articoli.motorizzazione_s = ? AND
+                            motorizzazioni_articoli.articolo_generico = ? AND
+                            articoli.fornitore = '4528' AND
+                            articoli.codice <> ?
+                        LIMIT 4
+                        <sql:param value="${param.code}" />
+                        <sql:param value="${param.category}" />
+                        <sql:param value="${param.article}" />
+                    </sql:query>
+                    <c:if test="${resultmodelli.rowCount > 0}">
+                        <hr>
+                        <h2 class="mb-0">Prodotti simili</h2>
+                        <div class="row products-list">
+
+                            <c:forEach var="rowmot" items="${resultmodelli.rowsByIndex}" varStatus="status">
+                                <div class="col-sm-6 col-md-4 col-lg-3 mt-3">
+                                    <div class="product-thumb">
+                                        <c:set var="id" value="${rowmot[10]}" />
+                                        <c:set var="price" value="${rowmot[12]}" />
+                                        <c:set var="description" value="${rowmot[11]}" />
+                                        <sql:query var="resultartimages">
+                                            SELECT
+                                                immagine
+                                            FROM
+                                                immagini_articoli
+                                            WHERE
+                                                articolo = ?
+                                            ORDER BY immagini_articoli.immagine ASC
+                                            LIMIT 1
+                                            <sql:param value="${id}" />
+                                        </sql:query>
+                                        <c:forEach var="resultartimage" items="${resultartimages.rowsByIndex}">
+                                            <c:set var="image" value="${resultartimage[0]}.jpg" />
+                                        </c:forEach>
+                                        <c:if test="${not empty image}">
+                                            <img src="${commons.storage("images/bundles/", image)}" alt="${id} ${description}">
+                                        </c:if>
+                                        <c:if test="${empty image}">
+                                            <img src="${commons.storage("images/", "unavailable.jpg")}" alt="${id} ${description}">
+                                        </c:if>
+                                        <div class="details">
+                                            <h6 class="name">${rowmot[5]} ${id}</h6>
+                                            <p class="excerpt">
+                                                <strong>${description}</strong><br/>
+                                                Compatibile con ${rowmot[0]} ${rowmot[1]} ${rowmot[2]} (${fn:substring(rowmot[3], 4, 7)}-${fn:substring(rowmot[3], 0, 4)}<c:if test="${!empty rowmot[4]}">/${fn:substring(rowmot[4], 4, 7)}-${fn:substring(rowmot[4], 0, 4)})</c:if>
+                                            </p>
+                                            <span class="price">€ 0,00<small>iva esclusa</small></span>
+                                            <a class="btn btn-primary" href="article.jsp?manufacturer=${param.manifacturer}&model=${param.model}&code=${param.code}&category=${param.category}&article=${id}">Vai al prodotto</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </c:forEach>
+                            </c:forEach>
 
-                    </div><!-- .row.products-list -->
+                        </div><!-- .row.products-list -->
+                    </c:if>
 
                 </main>
 

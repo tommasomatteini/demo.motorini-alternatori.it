@@ -2,7 +2,6 @@
 <%@ include file="/WEB-INF/core/commons.jspf" %>
 <%@ include file="/WEB-INF/core/sql.jspf" %>
 <%@ include file="/WEB-INF/core/routes.jspf" %>
-<%@ taglib prefix="ex" uri="/WEB-INF/tags/custom.tld"%>
 
 <layout:extends name="base" >
     <layout:put block="head" type="REPLACE">
@@ -89,7 +88,7 @@
                                 <c:set var="description" value="${rowmot[12]}" />
                                 <c:set var="image" value="${rowmot[11]}.png" />
                                 <c:set var="interval">
-                                    <c:if test="${rowmot[5] != '00/0000' and rowmot[6] != '00/0000'}">dal ${rowmot[5]} al ${rowmot[6]}</c:if><c:if test="${rowmot[5] != '00/0000' and rowmot[6] == '00/0000'}">dal ${rowmot[5]}</c:if>
+                                    <c:if test="${rowmot[5] != null and rowmot[6] != null}">dal ${rowmot[5]} al ${rowmot[6]}</c:if><c:if test="${rowmot[5] != null and rowmot[6] == null}">dal ${rowmot[5]}</c:if>
                                 </c:set>
                                 <c:set var="hp" value="${rowmot[7]}" />
                                 <c:set var="kw" value="${rowmot[8]}" />

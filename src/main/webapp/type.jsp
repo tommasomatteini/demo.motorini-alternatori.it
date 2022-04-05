@@ -58,7 +58,7 @@
                         <c:set var="brand" value="${rowmot[11]}" />
                         <c:set var="model" value="${rowmot[0]}" />
                         <c:set var="interval">
-                            <c:if test="${rowmot[5] != '00/0000' and rowmot[6] != '00/0000'}">dal ${rowmot[5]} al ${rowmot[6]}</c:if><c:if test="${rowmot[5] != '00/0000' and rowmot[6] == '00/0000'}">dal ${rowmot[5]}</c:if>
+                            <c:if test="${rowmot[5] != null and rowmot[6] != null}">dal ${rowmot[5]} al ${rowmot[6]}</c:if><c:if test="${rowmot[5] != null and rowmot[6] == null}">dal ${rowmot[5]}</c:if>
                         </c:set>
                         <c:set var="hp" value="${rowmot[7]}" />
                         <c:set var="kw" value="${rowmot[8]}" />
@@ -79,9 +79,9 @@
                             <h2 class="terthiary-header mb-2">Informazioni</h2>
                             <div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><strong>Marca:</strong> <a href="#">${brand}</a></li>
-                                    <li class="list-group-item"><strong>Modello:</strong> <a href="#">${model}</a></li>
-                                    <li class="list-group-item"><strong>Motorizzazione:</strong> <a href="#">${type_name}</a></li>
+                                    <li class="list-group-item"><strong>Marca:</strong> <a href="manufacturer.jsp?id=${manufacturer_id}">${brand}</a></li>
+                                    <li class="list-group-item"><strong>Modello:</strong> <a href="model.jsp?id=${model_id}&id_manifacturer=${manufacturer_id}">${model}</a></li>
+                                    <li class="list-group-item"><strong>Motorizzazione:</strong> <a href="type.jsp?code=${param.code}">${type_name}</a></li>
                                     <li class="list-group-item"><strong>Intervallo:</strong> ${interval}</li>
                                     <li class="list-group-item"><strong>Potenza:</strong> HP: ${hp}, KW: ${kw}</li>
                                     <li class="list-group-item"><strong>Alimentazione:</strong> ${fuel_type}</li>

@@ -2,7 +2,6 @@
 <%@ include file="/WEB-INF/core/commons.jspf" %>
 <%@ include file="/WEB-INF/core/sql.jspf" %>
 <%@ include file="/WEB-INF/core/routes.jspf" %>
-<%@ taglib prefix="ex" uri="/WEB-INF/tags/custom.tld" %>
 
 <layout:extends name="base" >
     <layout:put block="head" type="REPLACE">
@@ -113,7 +112,7 @@
                     </div>
 
                     <p>Ogni marca auto ha il suo ricambio carrozzeria che si adatta perfettamente. La marca, il modello e l'anno di immatricolazione sono le uniche informazioni che ti occorrono per individuare il tuo componente di carrozzeria compatibile per la tua auto senza avere nessun dubbio!</p>
-                    <a class="btn btn-primary" href="#">Tutte le marche</a>
+                    <a class="btn btn-primary" href="manufacturers.jsp">Tutte le marche</a>
 
                     <hr>
 

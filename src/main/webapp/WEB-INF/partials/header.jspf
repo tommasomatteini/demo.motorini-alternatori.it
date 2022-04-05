@@ -78,32 +78,34 @@
                         </c:forEach>
                     </div>
                     <div>
-                        <a class="btn btn-primary" href="#">Tutte le marche auto</a>
+                        <a class="btn btn-primary" href="manufacturers.jsp">Tutte le marche auto</a>
                     </div>
                 </div> <!-- .sub-menu -->
             </div> <!-- .nav-item -->
+            <!--
             <sql:query var="menuitems">
                 SELECT
-                t1.codice,
-                t1.descrizione_it
+                    t1.codice,
+                    t1.descrizione_it
                 FROM
-                tipo_ricambi_generico t1
+                    tipo_ricambi_generico t1
                 WHERE
-                t1.codice = 2
+                    t1.codice = 2
                 OR
-                t1.codice = 4
+                    t1.codice = 4
                 OR
-                t1.codice = 1390
+                    t1.codice = 1390
                 OR
-                t1.codice = 295
+                    t1.codice = 295
                 OR
-                t1.codice = 1561
+                    t1.codice = 1561
             </sql:query>
             <c:forEach var="item" items="${menuitems.rowsByIndex}" varStatus="status">
                 <div class="nav-item">
                     <a class="nav-link" href="#">${item[1]}</a>
                 </div>
             </c:forEach>
+            -->
             <div class="nav-item d-sm-none d-flex justify-content-around languages">
                 <a href="#"><img src="${commons.assets("img/flags/it.svg")}"></a>
                 <a href="#"><img src="${commons.assets("img/flags/fr.svg")}"></a>
