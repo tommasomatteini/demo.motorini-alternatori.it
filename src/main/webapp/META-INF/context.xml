@@ -8,7 +8,7 @@
         username="root"
         password="root"
         driverClassName="com.mysql.cj.jdbc.Driver"
-        url="jdbc:mysql://localhost:8889/motorinialternatori"
+        url="jdbc:mysql://localhost:8889/motorinialternatori?zeroDateTimeBehavior=convertToNull"
         maxWaitMillis="5000"
         removeAbandonedOnMaintenance="true"
         removeAbandonedOnBorrow="true"

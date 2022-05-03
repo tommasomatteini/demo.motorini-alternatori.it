@@ -50,15 +50,15 @@ public class VehicleTypeServlet extends HttpServlet {
                 " marche_ext.descrizione AS name_manufacturer, " +
                 " modelli.codice AS id_model, " +
                 " modelli_ext.descrizione_it AS name_model, " +
-                " STR_TO_DATE(CONCAT(modelli.anno_inizio, 1), '%Y%m%d') AS date_from_model, " +
-                " STR_TO_DATE(CONCAT(modelli.anno_fine,1), '%Y%m%d') AS date_to_model, " +
+                " IF(modelli.anno_inizio IS NULL OR modelli.anno_inizio = '', NULL, STR_TO_DATE(CONCAT(modelli.anno_inizio, 1), '%Y%m%d')) AS date_from_model, " +
+                " IF(modelli.anno_fine IS NULL OR modelli.anno_fine = '', NULL, STR_TO_DATE(CONCAT(modelli.anno_fine,1), '%Y%m%d')) AS date_to_model, " +
                 " motorizzazioni.codice AS id, " +
                 " motorizzazioni.descrizione_it AS name, " +
                 " motorizzazioni.kw AS kw, " +
                 " motorizzazioni.hp AS hp, " +
                 " alimentazione.descrizione_it AS fuel_type, " +
-                " STR_TO_DATE(CONCAT(modelli.anno_inizio, 1), '%Y%m%d') AS date_from, " +
-                " STR_TO_DATE(CONCAT(modelli.anno_fine,1), '%Y%m%d') AS date_to " +
+                " IF(modelli.anno_inizio IS NULL OR modelli.anno_inizio = '', NULL, STR_TO_DATE(CONCAT(modelli.anno_inizio, 1), '%Y%m%d')) AS date_from, " +
+                " IF(modelli.anno_fine IS NULL OR modelli.anno_fine = '', NULL, STR_TO_DATE(CONCAT(modelli.anno_fine,1), '%Y%m%d')) AS date_to " +
                 "FROM " +
                 " marche " +
                 "INNER JOIN modelli ON marche.codice = modelli.marca " +

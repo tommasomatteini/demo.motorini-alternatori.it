@@ -25,18 +25,24 @@
                     <h1>Tutte le marche</h1>
                     <p>Ogni marca auto ha il suo ricambio carrozzeria che si adatta perfettamente. La marca, il modello e l'anno di immatricolazione sono le uniche informazioni che ti occorrono per individuare il tuo componente di carrozzeria compatibile per la tua auto senza avere nessun dubbio!</p>
 
-                    <sql:query var="resultmarche">
-                        SELECT
-                            m1.codice,
-                            m3.descrizione
-                        FROM
-                            marche m1
-                        INNER JOIN marche_ext m3 ON m1.codice = m3.marca
-                        WHERE
-                            m3.visibile = 'Y'
-                        ORDER BY
-                            descrizione
-                    </sql:query>
+                    <cache:results lang="${lang}" name="resultmarche" var="resultmarche" />
+                    <c:if test="${resultmarche == null}">
+                        <pre>query!</pre>
+                        <sql:query var="resultmarche">
+                            SELECT
+                                m1.codice,
+                                m3.descrizione
+                            FROM
+                                marche m1
+                            INNER JOIN marche_ext m3 ON m1.codice = m3.marca
+                            WHERE
+                                m3.visibile = 'Y'
+                            ORDER BY
+                                descrizione
+                        </sql:query>
+                        <cache:results lang="${lang}" name="resultmarche" value="${resultmarche}" />
+                    </c:if>
+
                     <div class="brands-box">
                         <c:forEach var="row" items="${resultmarche.rowsByIndex}">
                             <a class="brand" href="manufacturer.jsp?id=${row[0]}" title="${row[1]}">

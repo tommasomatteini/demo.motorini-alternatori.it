@@ -45,8 +45,8 @@ public class VehicleModelsServlet extends HttpServlet {
                 " modelli.codice AS id, " +
                 " marche_ext.descrizione AS name_manufacturer, " +
                 " modelli_ext.descrizione_it AS name, " +
-                " STR_TO_DATE(CONCAT(modelli.anno_inizio, 1), '%Y%m%d') AS date_from, " +
-                " STR_TO_DATE(CONCAT(modelli.anno_fine,1), '%Y%m%d') AS date_to " +
+                " IF(modelli.anno_inizio IS NULL OR modelli.anno_inizio = '', NULL, STR_TO_DATE(CONCAT(modelli.anno_inizio, 1), '%Y%m%d')) AS date_from, " +
+                " IF(modelli.anno_fine IS NULL OR modelli.anno_fine = '', NULL, STR_TO_DATE(CONCAT(modelli.anno_fine,1), '%Y%m%d')) AS date_to " +
                 "FROM " +
                 " marche " +
                 "INNER JOIN modelli ON ( marche.codice = modelli.marca AND marche.codice = ? ) " +

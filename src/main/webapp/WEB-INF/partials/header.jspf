@@ -56,21 +56,25 @@
                 <div class="sub-menu">
                     <div>
                         <h5 class="title">Ricambi per tutte le marche</h5>
-                        <sql:query var="resultmarche">
-                            SELECT
-                                m1.codice,
-                                m3.descrizione
-                            FROM
-                                marche m1
-                            INNER JOIN marche_ext m3 ON m1.codice = m3.marca
-                            WHERE
-                                m3.visibile = 'Y'
-                            AND
-                                m3.visibile_home = 'Y'
-                            ORDER BY
-                                descrizione
-                        </sql:query>
-                        <c:forEach var="row" items="${resultmarche.rowsByIndex}">
+                        <cache:results lang="${lang}" name="header_resultmarche" var="header_resultmarche" />
+                        <c:if test="${header_resultmarche == null}">
+                            <sql:query var="header_resultmarche">
+                                SELECT
+                                    m1.codice,
+                                    m3.descrizione
+                                FROM
+                                    marche m1
+                                INNER JOIN marche_ext m3 ON m1.codice = m3.marca
+                                WHERE
+                                    m3.visibile = 'Y'
+                                AND
+                                    m3.visibile_home = 'Y'
+                                ORDER BY
+                                    descrizione
+                            </sql:query>
+                            <cache:results lang="${lang}" name="header_resultmarche" value="${header_resultmarche}" />
+                        </c:if>
+                        <c:forEach var="row" items="${header_resultmarche.rowsByIndex}">
                             <a class="brand" href="manufacturer.jsp?id=${row[0]}" title="${row[1]}">
                                 <c:set value="${fn:replace(fn:toLowerCase(row[1]),' ','-')}.png" var="image" />
                                 <img class="img-responsive" src="${commons.storage("images/brands/", image)}" alt="${row[1]}" />
@@ -83,28 +87,9 @@
                 </div> <!-- .sub-menu -->
             </div> <!-- .nav-item -->
             <!--
-            <sql:query var="menuitems">
-                SELECT
-                    t1.codice,
-                    t1.descrizione_it
-                FROM
-                    tipo_ricambi_generico t1
-                WHERE
-                    t1.codice = 2
-                OR
-                    t1.codice = 4
-                OR
-                    t1.codice = 1390
-                OR
-                    t1.codice = 295
-                OR
-                    t1.codice = 1561
-            </sql:query>
-            <c:forEach var="item" items="${menuitems.rowsByIndex}" varStatus="status">
                 <div class="nav-item">
-                    <a class="nav-link" href="#">${item[1]}</a>
+                    <a class="nav-link" href="#"></a>
                 </div>
-            </c:forEach>
             -->
             <div class="nav-item d-sm-none d-flex justify-content-around languages">
                 <a href="#"><img src="${commons.assets("img/flags/it.svg")}"></a>
