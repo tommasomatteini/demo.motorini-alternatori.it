@@ -291,7 +291,6 @@ jQuery(function() {
                 fuel_type = data[i].properties.fuel_type;
               }
               types_input.attr('disabled', false);
-              submit_button.attr('disabled', false);
             }
           })
           .catch(console.error);
