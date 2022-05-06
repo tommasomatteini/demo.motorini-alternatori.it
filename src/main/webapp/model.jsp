@@ -3,6 +3,47 @@
 <%@ include file="/WEB-INF/core/sql.jspf" %>
 <%@ include file="/WEB-INF/core/routes.jspf" %>
 
+<%@ taglib prefix="utils" uri="/WEB-INF/tlds/utils.tld" %>
+
+<c:if test="${not empty param.id_marca and not empty param.id_modello}">
+    <cache:results lang="${lang}" name="models__${param.id_marca}_${param.id_modello}" var="models" />
+    <c:if test="${empty models}">
+        <sql:query var="models">
+            SELECT
+                veicoli_marche.id AS id_marca,
+                veicoli_marche.description AS marca_description,
+                veicoli_modelli.id AS id_modello,
+                veicoli_modelli.description AS modello_description,
+                '' AS _from,
+                '' AS _to,
+                veicoli_modelli_description.description AS modello_description_full
+            FROM
+                tecdoc.veicoli_modelli
+            JOIN tecdoc.veicoli_marche ON veicoli_modelli.id_marca = veicoli_marche.id
+            LEFT JOIN motorinialternatori_main.veicoli_modelli_description ON veicoli_modelli.id = veicoli_modelli_description.id_modello
+            WHERE
+                veicoli_marche.id = ? AND veicoli_modelli.id = ?
+            LIMIT 1
+            <sql:param value="${param.id_marca}" />
+            <sql:param value="${param.id_modello}" />
+        </sql:query>
+        <cache:results lang="${lang}" name="models__${param.id_marca}_${param.id_modello}" value="${models}" />
+    </c:if>
+</c:if>
+<c:forEach var="rowmod" items="${models.rowsByIndex}" varStatus="status">
+    <c:set var="id_marca" value="${rowmod[0]}" />
+    <c:set var="name_marca" value="${rowmod[1]}" />
+    <c:set var="id" value="${rowmod[2]}" />
+    <c:set var="name" value="${rowmod[3]}" />
+    <c:set var="description" value="${rowmod[6]}" />
+</c:forEach>
+
+<utils:hashMap var="breadcrumbList">
+    <utils:hashMapItem key="Marche auto" value="manufacturers.jsp" />
+    <utils:hashMapItem key="${name_marca}" value="manufacturer.jsp?id_marca=${id_marca}" />
+    <utils:hashMapItem key="${name}" value="model.jsp?id_marca=${id_marca}&id_modello=${id}" />
+</utils:hashMap>
+
 <layout:extends name="base" >
     <layout:put block="head" type="REPLACE">
         <meta name="description" content="{{description}}">
@@ -18,63 +59,33 @@
 
                 <main class="col-lg-9 mb-4" role="main">
 
-                    <sql:query var="resultmotorizzazioni">
-                        SELECT
-                            m2.descrizione_it,
-                            m3.descrizione,
-                            modelli.marca,
-                            motorizzazioni.modello,
-                            motorizzazioni.descrizione_it,
-                            CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_inizio,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_inizio,
-                            CAST(DATE_FORMAT(STR_TO_DATE(CONCAT(motorizzazioni.anno_fine,1), '%Y%m%d'), '%m/%Y') AS CHAR) AS anno_fine,
-                            motorizzazioni.kw,
-                            motorizzazioni.hp,
-                            motorizzazioni.codice,
-                            alimentazione.descrizione_it,
-                            motorizzazioni.alimentazione,
-                            m2.descrizione_estesa_it,
-                            m3.descrizione,
-                            m2.descrizione_it,
-                            m3.descrizione,
-                            m2.descrizione_fr,
-                            modelli.codice
-                        FROM
-                            marche
-                        INNER JOIN modelli ON marche.codice = modelli.marca AND marche.codice = ?
-                        INNER JOIN modelli_ext m2 ON modelli.codice = m2.codice
-                        INNER JOIN marche_ext m3 ON marche.codice = m3.marca
-                        INNER JOIN motorizzazioni ON modelli.codice = motorizzazioni.modello AND modelli.codice = ?
-                        INNER JOIN alimentazione ON motorizzazioni.alimentazione = alimentazione.codice
-                        WHERE EXISTS (
-                            SELECT
-                                *
-                            FROM
-                                tipo_ricambi_generico t1, motorizzazioni_articoli
-                            WHERE
-                                t1.codice = motorizzazioni_articoli.articolo_generico
-                            AND
-                                motorizzazioni_articoli.motorizzazione_s = motorizzazioni.codice
-                            AND
-                                (t1.codice = 2 OR t1.codice = 4 OR t1.codice = 1390 OR t1.codice = 295 OR t1.codice = 1561)
-                        )
-                        ORDER BY
-                            motorizzazioni.alimentazione ASC,
-                            motorizzazioni.descrizione_it ASC
-                        <sql:param value="${param.id_manifacturer}" />
-                        <sql:param value="${param.id}" />
-                    </sql:query>
-                    <c:forEach var="rowmot" items="${resultmotorizzazioni.rowsByIndex}" varStatus="status">
-                        <c:set var="name" value="${rowmot[1]} ${rowmot[0]}" />
-                        <c:set var="description" value="${rowmot[12]}" />
-                        <c:set var="image" value="${rowmot[17]}.jpg" />
-                    </c:forEach>
-
-                    <h1 class="main-header">${name}</h1>
+                    <h1 class="main-header">${name_marca} ${name}</h1>
                     <div class="row header">
                         <div class="col-md-9 header-text">
                             <p>${description}</p>
                         </div>
                         <div class="col-md-3 header-image-container">
+
+                            <c:if test="${not empty id}">
+                                <cache:results lang="${lang}" name="modelimages_${id}" var="modelimages" />
+                                <c:if test="${empty modelimages}">
+                                    <sql:query var="modelimages">
+                                        SELECT
+                                            veicoli_modelli_media.filename AS filename,
+                                            veicoli_modelli_media.ext AS ext
+                                        FROM
+                                            motorinialternatori_main.veicoli_modelli_media
+                                        WHERE
+                                            veicoli_modelli_media.id_modello = ?
+                                        <sql:param value="${id}" />
+                                    </sql:query>
+                                    <cache:results lang="${lang}" name="modelimages_${id}" value="${modelimages}" />
+                                </c:if>
+                            </c:if>
+                            <c:forEach var="rowimg" items="${modelimages.rowsByIndex}">
+                                <c:set var="image" value="${rowimg[0]}.${rowimg[1]}" />
+                            </c:forEach>
+
                             <img alt="${name}" class="header-img" src="${commons.storage("images/models/", image)}" />
                         </div>
                     </div> <!-- .header -->
@@ -83,45 +94,104 @@
                         <h3 class="h4">Scegli la tua motorizzazione</h3>
                         <div class="row color-choice-list">
 
-                            <c:forEach var="rowmot" items="${resultmotorizzazioni.rowsByIndex}">
-                                <c:set var="name" value="${rowmot[4]}" />
-                                <c:set var="description" value="${rowmot[12]}" />
-                                <c:set var="image" value="${rowmot[11]}.png" />
-                                <c:set var="interval">
-                                    <c:if test="${rowmot[5] != null and rowmot[6] != null}">dal ${rowmot[5]} al ${rowmot[6]}</c:if><c:if test="${rowmot[5] != null and rowmot[6] == null}">dal ${rowmot[5]}</c:if>
-                                </c:set>
-                                <c:set var="hp" value="${rowmot[7]}" />
-                                <c:set var="kw" value="${rowmot[8]}" />
-                                <c:set var="fuel_type_txt" value="${rowmot[10]}" />
+                            <c:if test="${not empty id}">
+                                <cache:results lang="${lang}" name="model_${id}_types" var="types" />
+                                <c:if test="${empty types}">
+                                    <sql:query var="types">
+                                        SELECT
+                                            veicoli_tipi.id AS id_tipo,
+                                            veicoli_tipi.description AS tipo_description,
+                                            veicoli_modelli.id AS id_modello,
+                                            veicoli_modelli.description AS modello_description,
+                                            veicoli_marche.id AS id_marca,
+                                            veicoli_marche.description AS marca_description,
+                                            '' AS _from,
+                                            '' AS _to,
+                                            CAST(veicoli_tipi.engine_hp AS UNSIGNED) AS hp,
+                                            CAST(veicoli_tipi.engine_kw AS UNSIGNED) AS kw,
+                                            veicoli_tipi.fuel_type AS fuel_type,
+                                            veicoli_tipi.id_fuel_type AS id_fuel_type
+                                        FROM
+                                            tecdoc.veicoli_tipi
+                                        JOIN tecdoc.veicoli_modelli ON veicoli_tipi.id_modello = veicoli_modelli.id
+                                        JOIN tecdoc.veicoli_marche ON veicoli_modelli.id_marca = veicoli_marche.id
+                                        WHERE
+                                            veicoli_marche.id = ? AND veicoli_modelli.id = ?
+                                        ORDER BY
+                                            fuel_type ASC
+                                        <sql:param value="${id_marca}" />
+                                        <sql:param value="${id}" />
+                                    </sql:query>
+                                    <cache:results lang="${lang}" name="model_${id}_types" value="${types}" />
+                                </c:if>
+                            </c:if>
 
-                                <sql:query var="resultenginenumber">
-                                    SELECT
-                                        motorizzazioni_numero_motore.numero_motore
-                                    FROM
-                                        motorizzazioni_numero_motore
-                                    WHERE
-                                        motorizzazioni_numero_motore.motorizzazione = ?
-                                    <sql:param value="${rowmot[9]}" />
-                                </sql:query>
-                                <c:forEach var="rowen" items="${resultenginenumber.rowsByIndex}" varStatus="status">
-                                    <c:set var="engine_number">${engine_number} ${rowen[0]}<c:if test="${!status.last}">,</c:if> </c:set>
+                            <c:set var="fuel_type_id" value="" />
+                            <c:forEach var="rowtyp" items="${types.rowsByIndex}">
+                                <c:set var="name" value="${rowtyp[1]}" />
+                                <c:set var="fuel_type" value="${rowtyp[10]}" />
+                                <c:set var="hp" value="${rowtyp[8]}" />
+                                <c:set var="kw" value="${rowtyp[9]}" />
+
+                                <cache:results lang="${lang}" name="type_${rowtyp[0]}_enginenumbers" var="enginenumbers" />
+                                <c:if test="${empty enginenumbers}">
+                                    <sql:query var="enginenumbers">
+                                        SELECT
+                                            veicoli_motorizzazioni.code
+                                        FROM
+                                            tecdoc.veicoli_motorizzazioni
+                                        WHERE
+                                            veicoli_motorizzazioni.id_tipo = ?
+                                        GROUP BY
+                                            veicoli_motorizzazioni.code
+                                        <sql:param value="${rowtyp[0]}" />
+                                    </sql:query>
+                                    <cache:results lang="${lang}" name="type_${rowtyp[0]}_enginenumbers" value="${enginenumbers}" />
+                                </c:if>
+
+                                <c:set var="engine_numbers" value="" />
+                                <c:forEach var="rowen" items="${enginenumbers.rowsByIndex}" varStatus="status">
+                                    <c:set var="engine_numbers">${engine_numbers}<c:if test="${!status.first}">,</c:if> ${rowen[0]} </c:set>
                                 </c:forEach>
+                                <c:set var="enginenumbers" value="" /><%-- svuoto la variabile per il loop --%>
 
-                                <c:if test="${fuel_type != rowmot[11]}"><h4 class="mt-1 w-100 ml-3 h5">${rowmot[10]}</h4></c:if>
+                                <c:if test="${fuel_type_id != rowtyp[10]}"><h4 class="mt-1 w-100 ml-3 h5">${fuel_type}</h4></c:if>
                                 <div class="col-md-6 color-choice-item">
-                                    <a href="type.jsp?code=${rowmot[9]}">
+                                    <a href="type.jsp?id_marca=${rowtyp[4]}&id_modello=${rowtyp[2]}&id_tipo=${rowtyp[0]}">
                                         <h6 class="color-choice-name">${name} <small>(HP: ${hp}, KW: ${kw})</small></h6>
                                         <div class="color-choice-info">
-                                            <img alt="${name}" class="header-img" src="${commons.storage("images/alimentazione/", image)}" />
+
+                                            <cache:results lang="${lang}" name="fueltypeimages__${rowtyp[11]}" var="fueltypeimages" />
+                                            <c:if test="${empty fueltypeimages}">
+                                                <sql:query var="fueltypeimages">
+                                                    SELECT
+                                                        fuel_type_media.filename AS filename,
+                                                        fuel_type_media.ext AS ext,
+                                                        fuel_type_media.alt AS alt
+                                                    FROM
+                                                        motorinialternatori_main.fuel_type_media
+                                                    WHERE
+                                                        fuel_type_media.id_fuel_type = ?
+                                                    <sql:param value="${rowtyp[11]}" />
+                                                </sql:query>
+                                                <cache:results lang="${lang}" name="fueltypeimages__${rowtyp[11]}" value="${fueltypeimages}" />
+                                            </c:if>
+                                            <c:forEach var="rowimg" items="${fueltypeimages.rowsByIndex}">
+                                                <c:set var="image" value="${rowimg[0]}.${rowimg[1]}" />
+                                                <c:set var="image_alt" value="${rowimg[2]}" />
+                                            </c:forEach>
+                                            <c:set var="fueltypeimages" value="" /><%-- svuoto la variabile per il loop --%>
+
+                                            <img alt="${image_alt}" class="header-img" src="${commons.storage("images/alimentazione/", image)}" />
                                             <div class="color-choice-description">
                                                 <p>Periodo: <strong>${interval}</strong></p>
-                                                <p>Alimentazione: <strong>${fuel_type_txt}</strong></p>
-                                                <p>Codice motore: <strong>${engine_number}</strong></p>
+                                                <p>Alimentazione: <strong>${fuel_type}</strong></p>
+                                                <p>Codice motore: <strong>${engine_numbers}</strong></p>
                                             </div>
                                         </div>
                                     </a>
                                 </div>
-                                <c:set var="fuel_type" value="${rowmot[11]}" />
+                                <c:set var="fuel_type_id" value="${rowtyp[10]}" />
                             </c:forEach>
 
                         </div> <!-- .color-choiche -->

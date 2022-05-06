@@ -57,26 +57,23 @@
                     <div>
                         <h5 class="title">Ricambi per tutte le marche</h5>
                         <cache:results lang="${lang}" name="header_resultmarche" var="header_resultmarche" />
-                        <c:if test="${header_resultmarche == null}">
+                        <c:if test="${empty header_resultmarche}">
                             <sql:query var="header_resultmarche">
                                 SELECT
-                                    m1.codice,
-                                    m3.descrizione
+                                    veicoli_marche.id AS id,
+                                    veicoli_marche.description AS description,
+                                    veicoli_marche_media.filename AS filename,
+                                    veicoli_marche_media.ext AS ext
                                 FROM
-                                    marche m1
-                                INNER JOIN marche_ext m3 ON m1.codice = m3.marca
-                                WHERE
-                                    m3.visibile = 'Y'
-                                AND
-                                    m3.visibile_home = 'Y'
-                                ORDER BY
-                                    descrizione
+                                    motorinialternatori_main.veicoli_marche_visibility
+                                JOIN veicoli_marche_media ON veicoli_marche_visibility.id_marca = veicoli_marche_media.id_marca
+                                JOIN tecdoc.veicoli_marche ON veicoli_marche.id = veicoli_marche_visibility.id_marca AND veicoli_marche_visibility.visible_home = 1
                             </sql:query>
                             <cache:results lang="${lang}" name="header_resultmarche" value="${header_resultmarche}" />
                         </c:if>
                         <c:forEach var="row" items="${header_resultmarche.rowsByIndex}">
-                            <a class="brand" href="manufacturer.jsp?id=${row[0]}" title="${row[1]}">
-                                <c:set value="${fn:replace(fn:toLowerCase(row[1]),' ','-')}.png" var="image" />
+                            <a class="brand" href="manufacturer.jsp?id_marca=${row[0]}" title="${row[1]}">
+                                <c:set value="${row[2]}.${row[3]}" var="image" />
                                 <img class="img-responsive" src="${commons.storage("images/brands/", image)}" alt="${row[1]}" />
                             </a>
                         </c:forEach>

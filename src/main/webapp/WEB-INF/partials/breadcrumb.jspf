@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.jsp"><i class="fas fa-home"></i></a></li>
             <c:forEach items="${breadcrumbList}" var="item" varStatus="loop">
-                <li class="breadcrumb-item <c:if test="loop.last">active</c:if>" <c:if test="loop.last">aria-current="page"</c:if>><a href="${item.value}">${item.key}</a></li>
+                <li class="breadcrumb-item <c:if test="${loop.last}">active</c:if>" <c:if test="${loop.last}">aria-current="page"</c:if>><a href="${item.value}">${item.key}</a></li>
             </c:forEach>
         </ol>
     </nav>

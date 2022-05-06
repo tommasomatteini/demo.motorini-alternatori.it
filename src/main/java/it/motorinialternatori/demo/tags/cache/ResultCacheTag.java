@@ -13,16 +13,12 @@ public class ResultCacheTag extends BodyTagSupport {
 
     Cache<String, Result> cache;
 
-    private String name;
+    private String name = null;
     private String var = null;
 
     private int duration = 60*60;
 
     private int size = 10000;
-
-    private String lang = null;
-
-    private String group = null;
 
     private String cache_name = "result_cache_tag";
 
@@ -106,19 +102,15 @@ public class ResultCacheTag extends BodyTagSupport {
                     .build();
             pageContext.setAttribute(this.cache_name, this.cache, PageContext.APPLICATION_SCOPE);
         }
-        return super.doStartTag();
-    }
-
-    /**
-     *
-     * @return ...
-     * @throws JspException ...
-     */
-    @Override
-    public int doEndTag() throws JspException {
-        if (this.value != null) this.cache.put(this.name, this.value);
-        if (this.var != null) pageContext.setAttribute(this.var, this.cache.getIfPresent(this.name), PageContext.REQUEST_SCOPE);
-        return super.doEndTag();
+        if (this.name != null) {
+            if (this.var == null && this.value != null) {
+                this.cache.put(this.name, this.value);
+            } else {
+                Result payload = this.cache.getIfPresent(this.name);
+                pageContext.setAttribute(this.var, payload, PageContext.PAGE_SCOPE);
+            }
+        }
+        return SKIP_BODY;
     }
 
 }

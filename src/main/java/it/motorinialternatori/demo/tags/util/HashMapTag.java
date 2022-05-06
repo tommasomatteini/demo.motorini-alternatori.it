@@ -3,13 +3,12 @@ package it.motorinialternatori.demo.tags.util;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTagSupport;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class HashMapTag extends BodyTagSupport {
 
     private String var;
-    private final Map<String, Object> data = new HashMap<>();
+    private LinkedHashMap<String, Object> data = null;
 
     /**
      *
@@ -38,12 +37,30 @@ public class HashMapTag extends BodyTagSupport {
 
     /**
      *
+     */
+    public LinkedHashMap<String, Object> getData() {
+        return this.data;
+    }
+
+    /**
+     *
+     * @return ...
+     * @throws JspException ...
+     */
+    @Override
+    public int doStartTag() throws JspException {
+        this.data = new LinkedHashMap<>();
+        return super.doStartTag();
+    }
+
+    /**
+     *
      * @return ...
      * @throws JspException ...
      */
     @Override
     public int doEndTag() throws JspException {
-        pageContext.setAttribute(this.var, this.data, PageContext.REQUEST_SCOPE);
+        pageContext.setAttribute(this.var, this.data.clone(), PageContext.REQUEST_SCOPE);
         return super.doEndTag();
     }
 

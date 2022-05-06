@@ -10,6 +10,7 @@ public class VehicleModel {
     private final VehicleManufacturer vehicleManufacturer;
     private final int id;
     private final String name;
+    private String series;
     private YearMonth from = null;
     private YearMonth to = null;
 
@@ -23,6 +24,14 @@ public class VehicleModel {
         this.vehicleManufacturer = vehicleManufacturer;
         this.id = id;
         this.name = name;
+    }
+
+    /**
+     *
+     * @param name ...
+     */
+    public void setSeries(String name) {
+        this.series = name;
     }
 
     /**
@@ -81,6 +90,14 @@ public class VehicleModel {
      */
     public String getName(){
         return this.name;
+    }
+
+    /**
+     *
+     * @return ...
+     */
+    public String getSeries(){
+        return this.series;
     }
 
     /**

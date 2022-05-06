@@ -19,6 +19,7 @@
         <body-content>empty</body-content>
         <attribute>
             <name>key</name>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
             <name>value</name>

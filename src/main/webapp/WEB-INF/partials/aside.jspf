@@ -19,19 +19,19 @@
                         <input type="hidden" >
                         <div class="form-group">
                             <label class="sr-only" for="form_autoricambi_manufacturers">Marca</label>
-                            <select name="manufacturer" id="form_autoricambi_manufacturers" class="form-control" disabled>
+                            <select name="id_marca" id="form_autoricambi_manufacturers" class="form-control" disabled>
                                 <option value="-1">Marca</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for="form_autoricambi_models">Modello</label>
-                            <select name="model" id="form_autoricambi_models" class="form-control" disabled>
+                            <select name="id_modello" id="form_autoricambi_models" class="form-control" disabled>
                                 <option value="-1">Modello</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for="form_autoricambi_type">Motorizzazione</label>
-                            <select name="code" class="form-control" id="form_autoricambi_type" disabled>
+                            <select name="id_tipo" class="form-control" id="form_autoricambi_type" disabled>
                                 <option value="-1">Motorizzazione</option>
                             </select>
                         </div>

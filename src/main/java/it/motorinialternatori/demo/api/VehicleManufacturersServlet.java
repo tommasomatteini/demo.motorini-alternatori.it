@@ -27,22 +27,16 @@ public class VehicleManufacturersServlet extends HttpServlet {
         Connection connection = database.getConnection();
         try {
             String sql = "SELECT " +
-                " marche.codice AS id, " +
-                " marche_ext.descrizione AS name " +
+                " id, " +
+                " description " +
                 "FROM " +
-                " marche " +
-                "INNER JOIN marche_ext ON marche.codice = marche_ext.marca " +
-                "WHERE " +
-                " marche_ext.visibile = 'Y' " +
-                "AND " +
-                " marche_ext.visibile_home = 'Y' " +
-                "ORDER BY " +
-                " marche_ext.descrizione ";
+                " tecdoc.veicoli_marche " +
+                "JOIN motorinialternatori_main.veicoli_marche_visibility ON veicoli_marche.id = veicoli_marche_visibility.id_marca AND veicoli_marche_visibility.visible = 1";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
+                String name = resultSet.getString("description");
                 this.vehicleManufacturers.add(new VehicleManufacturer(id, name));
             }
             connection.close();

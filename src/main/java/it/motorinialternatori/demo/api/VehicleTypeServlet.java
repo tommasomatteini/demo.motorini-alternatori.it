@@ -46,61 +46,51 @@ public class VehicleTypeServlet extends HttpServlet {
 
         try {
             String sql = "SELECT " +
-                " marche.codice AS id_manufacturer, " +
-                " marche_ext.descrizione AS name_manufacturer, " +
-                " modelli.codice AS id_model, " +
-                " modelli_ext.descrizione_it AS name_model, " +
-                " IF(modelli.anno_inizio IS NULL OR modelli.anno_inizio = '', NULL, STR_TO_DATE(CONCAT(modelli.anno_inizio, 1), '%Y%m%d')) AS date_from_model, " +
-                " IF(modelli.anno_fine IS NULL OR modelli.anno_fine = '', NULL, STR_TO_DATE(CONCAT(modelli.anno_fine,1), '%Y%m%d')) AS date_to_model, " +
-                " motorizzazioni.codice AS id, " +
-                " motorizzazioni.descrizione_it AS name, " +
-                " motorizzazioni.kw AS kw, " +
-                " motorizzazioni.hp AS hp, " +
-                " alimentazione.descrizione_it AS fuel_type, " +
-                " IF(modelli.anno_inizio IS NULL OR modelli.anno_inizio = '', NULL, STR_TO_DATE(CONCAT(modelli.anno_inizio, 1), '%Y%m%d')) AS date_from, " +
-                " IF(modelli.anno_fine IS NULL OR modelli.anno_fine = '', NULL, STR_TO_DATE(CONCAT(modelli.anno_fine,1), '%Y%m%d')) AS date_to " +
-                "FROM " +
-                " marche " +
-                "INNER JOIN modelli ON marche.codice = modelli.marca " +
-                "INNER JOIN modelli_ext ON modelli.codice = modelli_ext.codice " +
-                "INNER JOIN marche_ext ON marche.codice = marche_ext.marca " +
-                "INNER JOIN motorizzazioni ON modelli.codice = motorizzazioni.modello AND modelli.codice = ? " +
-                "INNER JOIN alimentazione ON motorizzazioni.alimentazione = alimentazione.codice " +
-                "WHERE EXISTS (" +
-                " SELECT " +
-                "  * " +
-                " FROM " +
-                "  tipo_ricambi_generico, motorizzazioni_articoli " +
-                " WHERE " +
-                "  tipo_ricambi_generico.codice = motorizzazioni_articoli.articolo_generico " +
-                " AND " +
-                "  motorizzazioni_articoli.motorizzazione_s = motorizzazioni.codice " +
-                " AND " +
-                "  (tipo_ricambi_generico.codice = 2 OR tipo_ricambi_generico.codice = 4 OR tipo_ricambi_generico.codice = 1390 OR tipo_ricambi_generico.codice = 295 OR tipo_ricambi_generico.codice = 1561) " +
-                ")" +
-                "ORDER BY " +
-                " motorizzazioni.alimentazione ASC, " +
-                " motorizzazioni.descrizione_it ASC;";
+                    " veicoli_tipi.id AS id, " +
+                    " veicoli_tipi.description AS name, " +
+                    " IF(veicoli_tipi._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._from, '%Y-%m-01')) AS _from, " +
+                    " IF(veicoli_tipi._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._to, '%Y-%m-01')) AS _to, " +
+                    " CAST(veicoli_tipi.engine_hp AS UNSIGNED) AS hp, " +
+                    " CAST(veicoli_tipi.engine_kw AS UNSIGNED) AS kw, " +
+                    " veicoli_tipi.fuel_type AS fuel_type, " +
+                    " veicoli_modelli.id AS id_modello, " +
+                    " veicoli_modelli.description AS name_modello, " +
+                    " IF(veicoli_modelli._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._from, '%Y-%m-01')) AS _from__modello, " +
+                    " IF(veicoli_modelli._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._to, '%Y-%m-01')) AS _to__modello, " +
+                    " veicoli_serie.name AS name_serie, " +
+                    " veicoli_marche.id AS id_marca, " +
+                    " veicoli_marche.description AS name_marca " +
+                    "FROM " +
+                    " tecdoc.veicoli_tipi\n" +
+                    "JOIN tecdoc.veicoli_modelli ON veicoli_modelli.id = veicoli_tipi.id_modello " +
+                    "JOIN tecdoc.veicoli_serie ON veicoli_modelli.id = veicoli_serie.id_modello " +
+                    "JOIN tecdoc.veicoli_marche ON veicoli_modelli.id_marca = veicoli_marche.id " +
+                    "WHERE " +
+                    " veicoli_tipi.id_modello = ? " +
+                    "ORDER BY " +
+                    " fuel_type, name";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
 
-                VehicleManufacturer vehicleManufacturer = new VehicleManufacturer(resultSet.getInt("id_manufacturer"), resultSet.getString("name_manufacturer"));
-                VehicleModel vehicleModel = new VehicleModel(vehicleManufacturer, resultSet.getInt("id_model"), resultSet.getString("name_model"));
+                VehicleManufacturer vehicleManufacturer = new VehicleManufacturer(resultSet.getInt("id_marca"), resultSet.getString("name_marca"));
+                VehicleModel vehicleModel = new VehicleModel(vehicleManufacturer, resultSet.getInt("id_modello"), resultSet.getString("name_modello"));
 
-                Date from_model = resultSet.getDate("date_from_model");
+                Date from_model = resultSet.getDate("_from__modello");
                 if (from_model != null) vehicleModel.setFrom(YearMonth.from(Time.tsToLocalDate(from_model.getTime()))); // Must be converted to LocalDate: the extraction to YearMonth is only permitted if the temporal object has an ISO chronology, or can be converted to a LocalDate; see https://docs.oracle.com/javase/8/docs/api/java/time/YearMonth.html#from-java.time.temporal.TemporalAccessor-
 
-                Date to_model = resultSet.getDate("date_to_model");
+                Date to_model = resultSet.getDate("_to__modello");
                 if (to_model != null) vehicleModel.setTo(YearMonth.from(Time.tsToLocalDate(to_model.getTime())));
+
+                vehicleModel.setSeries(resultSet.getString("name_serie"));
 
                 VehicleType vehicleType = new VehicleType(vehicleModel, resultSet.getInt("id"), resultSet.getString("name"));
 
-                Date from = resultSet.getDate("date_from");
+                Date from = resultSet.getDate("_from");
                 if (from != null) vehicleType.setFrom(YearMonth.from(Time.tsToLocalDate(from.getTime())));
 
-                Date to = resultSet.getDate("date_to");
+                Date to = resultSet.getDate("_to");
                 if (to != null) vehicleType.setTo(YearMonth.from(Time.tsToLocalDate(to.getTime())));
 
                 vehicleType.setProperty("hp", resultSet.getString("hp"));

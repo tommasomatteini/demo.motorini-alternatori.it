@@ -11,14 +11,5 @@
 
 <fmt:message key="slogan" var="test_slogan"/><br/>
 
-<custom:Hello message="pluto" var="test">
-    <custom:HelloItem name="Prima" value="${test_slogan}" />
-    <custom:HelloItem name="Secondo" value="Test" />
-</custom:Hello>
-
-<c:forEach items="${test}" var="item" varStatus="loop">
-    <pre>${item}</pre>
-</c:forEach>
-
 </body>
 </html>

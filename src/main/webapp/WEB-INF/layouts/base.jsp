@@ -123,6 +123,8 @@
 
     <div class="blackout"></div>
 
+    <%@ include file="./../partials/search-popup.jspf" %>
+
     <script src="${commons.assets("js/jquery-3.4.1.min.js")}"></script>
     <script src="${commons.assets("js/bootstrap.bundle.min.js")}"></script>
     <script src="${commons.assets("js/owl.carousel.min.js")}"></script>
