@@ -186,46 +186,49 @@
                                 </c:if>
                             </c:if>
 
-                            <h2 class="terthiary-header mt-2">Prodotti disponibili per ${name_full}</h2>
-                            <div class="color-choice mt-0">
-                                <div class="row color-choice-list">
-                                    <c:forEach var="rowcat" items="${categories.rowsByIndex}" varStatus="status">
-                                        <div class="col-md-6 color-choice-item">
-                                            <a href="articles.jsp?id_marca=${id_marca}&id_modello=${id_modello}&id_tipo=${id}&id_categoria=${rowcat[0]}">
-                                                <div class="color-choice-info">
+                            <c:if test="${categories.rowCount > 0}">
+                                <h2 class="terthiary-header mt-2">Prodotti disponibili per ${name_full}</h2>
+                                <div class="color-choice mt-0">
+                                    <div class="row color-choice-list">
+                                        <c:forEach var="rowcat" items="${categories.rowsByIndex}" varStatus="status">
+                                            <div class="col-md-6 color-choice-item">
+                                                <a href="articles.jsp?id_marca=${id_marca}&id_modello=${id_modello}&id_tipo=${id}&id_categoria=${rowcat[0]}">
+                                                    <div class="color-choice-info">
 
-                                                    <cache:results lang="${lang}" name="categoryimages__${rowcat[0]}" var="categoryimages" />
-                                                    <c:if test="${empty categoryimages}">
-                                                        <sql:query var="categoryimages">
-                                                            SELECT
-                                                                filename,
-                                                                ext
-                                                            FROM
-                                                                motorinialternatori_main.categorie_media
-                                                            WHERE
-                                                                id_categoria = ?
-                                                            ORDER BY
-                                                                filename ASC
-                                                            LIMIT 1
-                                                            <sql:param value="${rowcat[0]}" />
-                                                        </sql:query>
-                                                        <cache:results lang="${lang}" name="categoryimages__${rowcat[0]}" value="${categoryimages}" />
-                                                    </c:if>
-                                                    <c:forEach var="rowimg" items="${categoryimages.rowsByIndex}">
-                                                        <c:set var="image" value="${rowimg[0]}.${rowimg[1]}" />
-                                                    </c:forEach>
-                                                    <c:set var="categoryimages" value="" /><%-- svuoto la variabile per il loop --%>
+                                                        <cache:results lang="${lang}" name="categoryimages__${rowcat[0]}" var="categoryimages" />
+                                                        <c:if test="${empty categoryimages}">
+                                                            <sql:query var="categoryimages">
+                                                                SELECT
+                                                                    filename,
+                                                                    ext
+                                                                FROM
+                                                                    motorinialternatori_main.categorie_media
+                                                                WHERE
+                                                                    id_categoria = ?
+                                                                ORDER BY
+                                                                    filename ASC
+                                                                LIMIT 1
+                                                                <sql:param value="${rowcat[0]}" />
+                                                            </sql:query>
+                                                            <cache:results lang="${lang}" name="categoryimages__${rowcat[0]}" value="${categoryimages}" />
+                                                        </c:if>
+                                                        <c:forEach var="rowimg" items="${categoryimages.rowsByIndex}">
+                                                            <c:set var="image" value="${rowimg[0]}.${rowimg[1]}" />
+                                                        </c:forEach>
+                                                        <c:set var="categoryimages" value="" /><%-- svuoto la variabile per il loop --%>
 
-                                                    <img src="${commons.storage("images/categories/", image)}" alt="${rowcat[1]}" />
-                                                    <div class="color-choice-description">
-                                                        <p>${rowcat[1]}</p>
+                                                        <img src="${commons.storage("images/categories/", image)}" alt="${rowcat[1]}" />
+                                                        <div class="color-choice-description">
+                                                            <p>${rowcat[1]}</p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </c:forEach>
-                                </div> <!-- .color-choiche -->
-                            </div>
+                                                </a>
+                                            </div>
+                                        </c:forEach>
+                                    </div> <!-- .color-choiche -->
+                                </div>
+                            </c:if>
+
                         </div>
                     </div> <!-- .color-main-info -->
 

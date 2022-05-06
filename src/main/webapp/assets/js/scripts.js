@@ -1,4 +1,10 @@
-$(function() {
+window.search_modal = {
+  manufacturers_input_val: null,
+  models_input_val: null,
+  types_input_val: null
+};
+
+jQuery(function() {
 
   // Mega menu
 
@@ -209,6 +215,19 @@ $(function() {
     const types_input = jQuery('#form_autoricambi select#form_autoricambi_type');
     const submit_button = jQuery('#form_autoricambi button');
 
+    const manufacturers = new Request('api/manufacturers');
+    fetch(manufacturers)
+        .then(response => response.json())
+        .then(data => {
+          console.log("data")
+          manufacturers_input.find("option.items").remove();
+          for (let i = 0; i < data.length; i++) {
+            manufacturers_input.append('<option class="items" value="' + data[i].id + '">' + data[i].name + '</option>');
+          }
+          manufacturers_input.attr('disabled', false);
+        })
+        .catch(console.error);
+
     manufacturers_input.on('change', function () {
       const value = jQuery(this).val();
       if (value > 0) {
@@ -221,16 +240,21 @@ $(function() {
             types_input.find("option.items, optgroup.items").remove();
             types_input.attr('disabled', true);
             submit_button.attr('disabled', true);
-            let series = null;
-            for (let i = 0; i < data.length; i++) {
-              if (series !== data[i].series) models_input.append('<optgroup class="items" label="' + data[i].series + '" />')
-              const from = data[i].from ? moment(data[i].from, "YYYY-MM") : null;
-              const to = data[i].to ? moment(data[i].to, "YYYY-MM") : null;
-              const interval = to ? ( from.format('MM/YYYY') + '-' + to.format('MM/YYYY') ) : ( from.format('MM/YYYY') );
-              models_input.append('<option class="items" value="' + data[i].id + '">&#160;' + data[i].name + ' (' + interval + ')</option>');
-              series = data[i].series;
+            if (data && data.length > 0) {
+              let series = null;
+              for (let i = 0; i < data.length; i++) {
+                if (series !== data[i].series) models_input.append('<optgroup class="items" label="' + data[i].series + '" />')
+                const from = data[i].from ? moment(data[i].from, "YYYY-MM") : null;
+                const to = data[i].to ? moment(data[i].to, "YYYY-MM") : null;
+                let interval = '';
+                if (to && from) interval = from.format('MM/YYYY') + '-' + to.format('MM/YYYY');
+                if (!to && from) interval = from.format('MM/YYYY');
+                if (interval !== '') interval = '(' + interval + ')';
+                models_input.append('<option class="items" value="' + data[i].id + '">&#160;' + data[i].name + ' ' + interval + '</option>');
+                series = data[i].series;
+              }
+              models_input.attr('disabled', false);
             }
-            models_input.attr('disabled', false);
           })
           .catch(console.error);
       } else {
@@ -250,17 +274,25 @@ $(function() {
           .then(response => response.json())
           .then(data => {
             console.log('types', data)
+            types_input.attr('disabled', true);
+            submit_button.attr('disabled', true);
             types_input.find("option.items, optgroup.items").remove();
-            let fuel_type = null;
-            for (let i = 0; i < data.length; i++) {
-              if (fuel_type !== data[i].properties.fuel_type) types_input.append('<optgroup class="items" label="' + data[i].properties.fuel_type + '" />')
-              const from = data[i].from ? moment(data[i].from, "YYYY-MM") : null;
-              const to = data[i].to ? moment(data[i].to, "YYYY-MM") : null;
-              const interval = to ? ( from.format('MM/YYYY') + '-' + to.format('MM/YYYY') ) : ( from.format('MM/YYYY') );
-              types_input.append('<option class="items" value="' + data[i].id + '">&#160;' + data[i].name + ' ' + data[i].properties.fuel_type + ' (HP ' + data[i].properties.hp + ', KW ' + data[i].properties.kw + ') (' + interval + ')</option>');
-              fuel_type = data[i].properties.fuel_type;
+            if (data && data.length > 0) {
+              let fuel_type = null;
+              for (let i = 0; i < data.length; i++) {
+                if (fuel_type !== data[i].properties.fuel_type) types_input.append('<optgroup class="items" label="' + data[i].properties.fuel_type + '" />')
+                const from = data[i].from ? moment(data[i].from, "YYYY-MM") : null;
+                const to = data[i].to ? moment(data[i].to, "YYYY-MM") : null;
+                let interval = '';
+                if (to && from) interval = from.format('MM/YYYY') + '-' + to.format('MM/YYYY');
+                if (!to && from) interval = from.format('MM/YYYY');
+                if (interval !== '') interval = '(' + interval + ')';
+                types_input.append('<option class="items" value="' + data[i].id + '">&#160;' + data[i].name + ' ' + data[i].properties.fuel_type + ' (HP ' + data[i].properties.hp + ', KW ' + data[i].properties.kw + ') ' + interval + '</option>');
+                fuel_type = data[i].properties.fuel_type;
+              }
+              types_input.attr('disabled', false);
+              submit_button.attr('disabled', false);
             }
-            types_input.attr('disabled', false);
           })
           .catch(console.error);
       } else {
@@ -281,17 +313,24 @@ $(function() {
   jQuery(document).on("submit", "form#form_autoricambi", function (e) {
     e.preventDefault();
     e.stopImmediatePropagation();
+    window.search_modal.manufacturers_input_val = jQuery('#form_autoricambi select#form_autoricambi_manufacturers').val();
+    window.search_modal.models_input_val = jQuery('#form_autoricambi select#form_autoricambi_models').val();
+    window.search_modal.types_input_val = jQuery('#form_autoricambi select#form_autoricambi_type').val();
     jQuery('#search-popup').modal('show');
-    const manufacturers_input = jQuery('#form_autoricambi select#form_autoricambi_manufacturers').val();
-    const models_input = jQuery('#form_autoricambi select#form_autoricambi_models').val();
-    const types_input = jQuery('#form_autoricambi select#form_autoricambi_type').val();
-    jQuery("#search-popup-contents").load('search-popup.jsp?id_marca=' + manufacturers_input + '&id_modello=' + models_input + '&id_tipo=' + types_input, function(response, status, xhr) {
+  });
+  jQuery('#search-popup').on('show.bs.modal', function (e) {
+    jQuery("#search-popup-contents").load('search-popup.jsp?id_marca=' + window.search_modal.manufacturers_input_val + '&id_modello=' + window.search_modal.models_input_val + '&id_tipo=' + window.search_modal.types_input_val, function(response, status, xhr) {
       if (status === "error") {
         let msg = "Sorry but there was an error: ";
         alert(msg + xhr.status + " " + xhr.statusText);
       }
+      window.search_modal = {
+        manufacturers_input_val: null,
+        models_input_val: null,
+        types_input_val: null
+      };
     });
-  });
+  })
 
 
 });
