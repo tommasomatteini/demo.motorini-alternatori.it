@@ -32,24 +32,26 @@
                             <div class="">
                                 <h5 class="">Ricerca guidata ricambi auto</h5>
                                 <form method="get" class="form" id="form_autoricambi" role="form" action="type.jsp" accept-charset="UTF-8" name="form_autoricambi" autocomplete="off">
-                                    <input type="hidden" >
                                     <div class="form-group">
                                         <label class="sr-only" for="form_autoricambi_manufacturers">Marca</label>
                                         <select name="id_marca" id="form_autoricambi_manufacturers" class="form-control" disabled>
                                             <option value="-1">Marca</option>
                                         </select>
+                                        <div class="loader-line loader-line-manufacturers w-100"></div>
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only" for="form_autoricambi_models">Modello</label>
                                         <select name="id_modello" id="form_autoricambi_models" class="form-control" disabled>
                                             <option value="-1">Modello</option>
                                         </select>
+                                        <div class="loader-line loader-line-models w-100"></div>
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only" for="form_autoricambi_type">Motorizzazione</label>
                                         <select name="id_tipo" class="form-control" id="form_autoricambi_type" disabled>
                                             <option value="-1">Motorizzazione</option>
                                         </select>
+                                        <div class="loader-line loader-line-types w-100"></div>
                                     </div>
                                     <button class="btn btn-primary" disabled>Cerca ricambio</button>
                                 </form>
@@ -100,6 +102,9 @@
                                 motorinialternatori_main.veicoli_marche_visibility
                             JOIN motorinialternatori_main.veicoli_marche_media ON veicoli_marche_visibility.id_marca = veicoli_marche_media.id_marca
                             JOIN tecdoc.veicoli_marche ON veicoli_marche.id = veicoli_marche_visibility.id_marca AND veicoli_marche_visibility.visible_home = 1
+                            INNER JOIN ( SELECT id, id_marca FROM tecdoc.veicoli_modelli GROUP BY id_marca) AS veicoli_modelli ON veicoli_marche.id = veicoli_modelli.id_marca
+                            INNER JOIN ( SELECT id, id_modello FROM tecdoc.veicoli_tipi GROUP BY id_modello ) AS veicoli_tipi ON veicoli_tipi.id_modello = veicoli_modelli.id
+                            WHERE EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori_main.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id )
                         </sql:query>
                         <cache:results lang="${lang}" name="resultmarche_home" value="${resultmarche_home}" />
                     </c:if>
@@ -129,8 +134,8 @@
                                 ANY_VALUE(veicoli_marche.description) AS description_marca,
                                 ANY_VALUE(veicoli_modelli.description) AS description_modello,
                                 ANY_VALUE(veicoli_tipi.description) AS description_tipo,
-                                ANY_VALUE('') AS _from,
-                                ANY_VALUE('') AS _to,
+                                IF(veicoli_tipi._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_tipi._from, '%m-%Y')) AS _from,
+                                IF(veicoli_tipi._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_tipi._to, '%m-%Y')) AS _to,
                                 ANY_VALUE(IF(categorie_synonyms.description IS NOT NULL, categorie_synonyms.description, categorie.description)) AS description_categoria,
                                 ANY_VALUE(articoli_veicoli.id_articolo)
                             FROM
@@ -153,11 +158,16 @@
 
                     <c:set var="tipo_corrente" value="" />
                     <c:forEach var="rowmod" items="${resultmodelli_home.rowsByIndex}" varStatus="status">
+                        <c:set var="interval">
+                            <c:if test="${ not empty rowmod[7] or not empty rowmod[8] }">
+                                <c:if test="${ not empty rowmod[7] }">dal ${rowmod[7]}</c:if>&nbsp;<c:if test="${ not empty rowmod[8] }">al ${rowmod[8]}</c:if>
+                            </c:if>
+                        </c:set>
                         <c:if test="${ !status.first && tipo_corrente != rowmod[3]}">
                             </div>
                         </c:if>
                         <c:if test="${ status.first || tipo_corrente != rowmod[3] }">
-                            <h2><a href="#">${rowmod[9]}</a></h2>
+                            <h2><a href="category.jsp?id_categoria=${rowmod[3]}">${rowmod[9]}</a></h2>
                             <div class="row products-list">
                         </c:if>
                             <div class="col-sm-6 col-md-4 col-lg-3">
@@ -223,7 +233,7 @@
                                         <h6 class="name">${rowmod[9]} ${id}</h6>
                                         <p class="excerpt">
                                             <strong>${description}</strong><br/>
-                                            Compatibile con <strong>${rowmod[4]} ${rowmod[5]} ${rowmod[6]} ()</strong>
+                                            Compatibile con <strong>${rowmod[4]} ${rowmod[5]} ${rowmod[6]} (${interval})</strong>
                                         </p>
                                         <span class="price">€ ${price}<small>iva esclusa</small></span>
                                         <a class="btn btn-primary" href="article.jsp?id_marca=${rowmod[0]}&id_modello=${rowmod[1]}&id_tipo=${rowmod[2]}&id_categoria=${rowmod[3]}&id_articolo=${id}">Vai al prodotto</a>

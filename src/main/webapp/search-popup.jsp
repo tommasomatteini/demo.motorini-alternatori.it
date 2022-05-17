@@ -15,8 +15,8 @@
                 veicoli_modelli.description AS modello_description,
                 veicoli_tipi.id AS id_tipo,
                 veicoli_tipi.description AS tipo_description,
-                '' AS _from,
-                '' AS _to,
+                IF(veicoli_tipi._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_tipi._from, '%m-%Y')) AS _from,
+                IF(veicoli_tipi._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_tipi._to, '%m-%Y')) AS _to,
                 CAST(veicoli_tipi.engine_hp AS UNSIGNED) AS hp,
                 CAST(veicoli_tipi.engine_kw AS UNSIGNED) AS kw,
                 veicoli_tipi.fuel_type AS fuel_type
@@ -45,6 +45,11 @@
     <c:set var="hp" value="${rowtyp[8]}" />
     <c:set var="kw" value="${rowtyp[9]}" />
     <c:set var="fuel_type" value="${rowtyp[10]}" />
+    <c:set var="interval">
+        <c:if test="${ not empty rowtyp[6] or not empty rowtyp[7] }">
+            <c:if test="${ not empty rowtyp[6] }">dal ${rowtyp[6]}</c:if>&nbsp;<c:if test="${ not empty rowtyp[7] }">al ${rowtyp[7]}</c:if>
+        </c:if>
+    </c:set>
 </c:forEach>
 
 <h3 class="h4 mt-0 mb-4">${name_full}<br/><small>(HP: ${hp}, KW: ${kw})</small></h3>
@@ -57,12 +62,12 @@
                 <c:if test="${empty modelimages}">
                     <sql:query var="modelimages">
                         SELECT
-                        veicoli_modelli_media.filename AS filename,
-                        veicoli_modelli_media.ext AS ext
+                            veicoli_modelli_media.filename AS filename,
+                            veicoli_modelli_media.ext AS ext
                         FROM
-                        motorinialternatori_main.veicoli_modelli_media
+                            motorinialternatori_main.veicoli_modelli_media
                         WHERE
-                        veicoli_modelli_media.id_modello = ?
+                            veicoli_modelli_media.id_modello = ?
                         <sql:param value="${id_modello}" />
                     </sql:query>
                     <cache:results lang="${lang}" name="modelimages__${id_marca}_${id_modello}" value="${modelimages}" />
@@ -78,12 +83,12 @@
                 <c:if test="${empty manufacturerlogos}">
                     <sql:query var="manufacturerlogos">
                         SELECT
-                        veicoli_marche_media.filename AS filename,
-                        veicoli_marche_media.ext AS ext
+                            veicoli_marche_media.filename AS filename,
+                            veicoli_marche_media.ext AS ext
                         FROM
-                        motorinialternatori_main.veicoli_marche_media
+                            motorinialternatori_main.veicoli_marche_media
                         WHERE
-                        veicoli_marche_media.id_marca = ?
+                            veicoli_marche_media.id_marca = ?
                         <sql:param value="${id_marca}" />
                     </sql:query>
                     <cache:results lang="${lang}" name="manufacturerlogos_${id_marca}" value="${manufacturerlogos}" />
@@ -113,13 +118,13 @@
                     <c:if test="${empty enginenumbers}">
                         <sql:query var="enginenumbers">
                             SELECT
-                            veicoli_motorizzazioni.code
+                                veicoli_motorizzazioni.code
                             FROM
-                            tecdoc.veicoli_motorizzazioni
+                                tecdoc.veicoli_motorizzazioni
                             WHERE
-                            veicoli_motorizzazioni.id_tipo = ?
+                                veicoli_motorizzazioni.id_tipo = ?
                             GROUP BY
-                            veicoli_motorizzazioni.code
+                                veicoli_motorizzazioni.code
                             <sql:param value="${id}" />
                         </sql:query>
                         <cache:results lang="${lang}" name="type_${id}_enginenumbers" value="${enginenumbers}" />
@@ -143,19 +148,19 @@
             <c:if test="${empty categories}">
                 <sql:query var="categories">
                     SELECT
-                    ANY_VALUE(categorie.id) AS id,
-                    ANY_VALUE(IF(categorie_synonyms.description IS NOT NULL, categorie_synonyms.description, categorie.description)) AS description
+                        ANY_VALUE(categorie.id) AS id,
+                        ANY_VALUE(IF(categorie_synonyms.description IS NOT NULL, categorie_synonyms.description, categorie.description)) AS description
                     FROM
-                    tecdoc.articoli_veicoli
+                        tecdoc.articoli_veicoli
                     JOIN tecdoc.articoli ON articoli.id = articoli_veicoli.id_articolo
                     JOIN kuhner.articles ON articles.id = articoli.id OR articles.id_article = articoli.id
                     JOIN motorinialternatori_main.categorie_visibility ON articoli_veicoli.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1
                     JOIN tecdoc.categorie ON categorie.id = articoli_veicoli.id_categoria
                     LEFT JOIN motorinialternatori_main.categorie_synonyms ON categorie_synonyms.id_categoria = articoli_veicoli.id_categoria
                     WHERE
-                    articoli_veicoli.link_target_id = ?
+                        articoli_veicoli.link_target_id = ?
                     GROUP BY
-                    articoli_veicoli.id_categoria
+                        articoli_veicoli.id_categoria
                     <sql:param value="${id}" />
                 </sql:query>
                 <cache:results lang="${lang}" name="type_${id}_categories" value="${categories}" />
@@ -174,14 +179,14 @@
                                 <c:if test="${empty categoryimages}">
                                     <sql:query var="categoryimages">
                                         SELECT
-                                        filename,
-                                        ext
+                                            filename,
+                                            ext
                                         FROM
-                                        motorinialternatori_main.categorie_media
+                                            motorinialternatori_main.categorie_media
                                         WHERE
-                                        id_categoria = ?
+                                            id_categoria = ?
                                         ORDER BY
-                                        filename ASC
+                                            filename ASC
                                         LIMIT 1
                                         <sql:param value="${rowcat[0]}" />
                                     </sql:query>

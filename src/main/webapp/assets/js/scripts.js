@@ -214,8 +214,13 @@ jQuery(function() {
     const models_input = jQuery('#form_autoricambi select#form_autoricambi_models');
     const types_input = jQuery('#form_autoricambi select#form_autoricambi_type');
     const submit_button = jQuery('#form_autoricambi button');
+    const loader_lines = jQuery('#form_autoricambi .loader-line');
+    const loader_line_manufacturers = jQuery('#form_autoricambi .loader-line-manufacturers');
+    const loader_line_models = jQuery('#form_autoricambi .loader-line-models');
+    const loader_line_types = jQuery('#form_autoricambi .loader-line-types');
 
     const manufacturers = new Request('api/manufacturers');
+    loader_line_manufacturers.addClass('active');
     fetch(manufacturers)
         .then(response => response.json())
         .then(data => {
@@ -225,10 +230,18 @@ jQuery(function() {
             manufacturers_input.append('<option class="items" value="' + data[i].id + '">' + data[i].name + '</option>');
           }
           manufacturers_input.attr('disabled', false);
+          loader_lines.removeClass('active');
         })
         .catch(console.error);
 
     manufacturers_input.on('change', function () {
+      models_input.find("option.items, optgroup.items").remove();
+      models_input.attr('disabled', true);
+      types_input.find("option.items, optgroup.items").remove();
+      types_input.attr('disabled', true);
+      submit_button.attr('disabled', true);
+      loader_line_models.addClass('active');
+
       const value = jQuery(this).val();
       if (value > 0) {
         const models = new Request('api/models/' + value);
@@ -254,19 +267,20 @@ jQuery(function() {
                 series = data[i].series;
               }
               models_input.attr('disabled', false);
+              loader_lines.removeClass('active');
             }
           })
           .catch(console.error);
-      } else {
-        models_input.find("option.items, optgroup.items").remove();
-        models_input.attr('disabled', true);
-        types_input.find("option.items, optgroup.items").remove();
-        types_input.attr('disabled', true);
-        submit_button.attr('disabled', true);
       }
+
     });
 
     models_input.on('change', function () {
+      types_input.find("option.items, optgroup.items").remove();
+      types_input.attr('disabled', true);
+      submit_button.attr('disabled', true);
+      loader_line_types.addClass('active');
+
       const value = jQuery(this).val();
       if (value > 0) {
         const types = new Request('api/types/' + value);
@@ -291,20 +305,23 @@ jQuery(function() {
                 fuel_type = data[i].properties.fuel_type;
               }
               types_input.attr('disabled', false);
+              loader_lines.removeClass('active');
             }
           })
           .catch(console.error);
-      } else {
-        types_input.find("option.items, optgroup.items").remove();
-        types_input.attr('disabled', true);
-        submit_button.attr('disabled', true);
       }
+
     });
 
     types_input.on('change', function () {
+      submit_button.attr('disabled', true);
+
       const value = jQuery(this).val();
-      if (value > 0) submit_button.attr('disabled', false);
-      else submit_button.attr('disabled', true);
+      if (value > 0) {
+        submit_button.attr('disabled', false);
+        loader_lines.removeClass('active');
+      }
+
     });
 
   }

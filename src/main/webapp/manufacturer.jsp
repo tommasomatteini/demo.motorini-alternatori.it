@@ -5,6 +5,8 @@
 
 <%@ taglib prefix="utils" uri="/WEB-INF/tlds/utils.tld" %>
 
+<cache:results-settings duration="604800" />
+
 <c:if test="${not empty param.id_marca}">
     <cache:results lang="${lang}" name="manufacturer_${param.id_marca}" var="manufacturers" />
     <c:if test="${empty manufacturers}">
@@ -94,14 +96,17 @@
                                             veicoli_modelli.id AS id_modello,
                                             veicoli_marche.description AS marca_description,
                                             veicoli_modelli.description AS modello_description,
-                                            '' AS _from,
-                                            '' AS _to,
-                                            veicoli_serie.name
+                                            IF(veicoli_modelli._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._from, '%m-%Y')) AS _from,
+                                            IF(veicoli_modelli._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._to, '%m-%Y')) AS _to,
+                                            IF(veicoli_serie_synonyms.name IS NULL, veicoli_serie.name, veicoli_serie_synonyms.name)
                                         FROM
                                             tecdoc.veicoli_marche
                                         JOIN tecdoc.veicoli_modelli ON veicoli_marche.id = veicoli_modelli.id_marca
                                         JOIN tecdoc.veicoli_serie ON veicoli_modelli.id = veicoli_serie.id_modello
-                                        WHERE
+                                        INNER JOIN ( SELECT veicoli_tipi.id AS id, veicoli_tipi.id_modello AS id_modello FROM tecdoc.veicoli_tipi GROUP BY id_modello ) AS veicoli_tipi ON veicoli_modelli.id = veicoli_tipi.id_modello
+                                        LEFT JOIN motorinialternatori_main.veicoli_serie_synonyms ON veicoli_modelli.id = veicoli_serie_synonyms.id_modello
+                                        WHERE EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori_main.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id )
+                                        AND
                                             veicoli_marche.id = ?
                                         ORDER BY
                                             veicoli_serie.name
@@ -147,7 +152,9 @@
                                             <img alt="${rowmod[2]} ${rowmod[3]}" class="img-responsive" src="${commons.storage("images/models/", image)}" />
                                             <div class="color-choice-description">
                                                 <p>Modello: ${rowmod[3]}</p>
-                                                <p>Anno: </p>
+                                                <c:if test="${ not empty rowmod[4] or not empty rowmod[5] }">
+                                                    <p>Anno:&nbsp;<c:if test="${ not empty rowmod[4] }">dal ${rowmod[4]}</c:if>&nbsp;<c:if test="${ not empty rowmod[5] }">al ${rowmod[5]}</c:if></p>
+                                                </c:if>
                                             </div>
                                         </div>
                                     </a>

@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <aside class="col-lg-3 order-last">
     <div class="sticky">
 
@@ -16,24 +17,26 @@
                 <div class="">
                     <h5 class="">Ricerca guidata ricambi auto</h5>
                     <form method="get" class="form" id="form_autoricambi" role="form" action="type.jsp" accept-charset="UTF-8" name="form_autoricambi" autocomplete="off">
-                        <input type="hidden" >
                         <div class="form-group">
                             <label class="sr-only" for="form_autoricambi_manufacturers">Marca</label>
                             <select name="id_marca" id="form_autoricambi_manufacturers" class="form-control" disabled>
                                 <option value="-1">Marca</option>
                             </select>
+                            <div class="loader-line loader-line-manufacturers w-100"></div>
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for="form_autoricambi_models">Modello</label>
                             <select name="id_modello" id="form_autoricambi_models" class="form-control" disabled>
                                 <option value="-1">Modello</option>
                             </select>
+                            <div class="loader-line loader-line-models w-100"></div>
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for="form_autoricambi_type">Motorizzazione</label>
-                            <select name="id_tipo" class="form-control" id="form_autoricambi_type" disabled>
+                            <select name="id_tipo" class="form-control w-100" id="form_autoricambi_type" disabled>
                                 <option value="-1">Motorizzazione</option>
                             </select>
+                            <div class="loader-line loader-line-type w-100"></div>
                         </div>
                         <button class="btn btn-primary" disabled>Cerca ricambio</button>
                     </form>

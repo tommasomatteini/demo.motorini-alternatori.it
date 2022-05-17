@@ -11,6 +11,9 @@ import it.motorinialternatori.demo.util.Math;
 import it.motorinialternatori.demo.util.Time;
 import it.motorinialternatori.demo.util.Url;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,15 +24,21 @@ import java.sql.*;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 
 @WebServlet(name = "apiTypesServlet", value = "/api/types/*")
 public class VehicleTypeServlet extends HttpServlet {
+
+    public static Cache<String, Collection<VehicleType>> cache = null;
 
     /**
      *
      */
     public void init() {
-
+        if (cache == null) cache = Caffeine.newBuilder()
+                .expireAfterWrite(60*60*24, TimeUnit.SECONDS)
+                .maximumSize(100000)
+                .build();
     }
 
     /**
@@ -39,71 +48,81 @@ public class VehicleTypeServlet extends HttpServlet {
      */
     private static Collection<VehicleType> getVehicleTypes(int id) {
 
-        Collection<VehicleType> types = new ArrayList<VehicleType>();
+        String cache_key = "api_types_" + String.valueOf(id);
+        Collection<VehicleType> types = cache.getIfPresent(cache_key);
 
-        Sql database = new Sql("jdbc/motorinialternatori");
-        Connection connection = database.getConnection();
+        if (types == null) {
 
-        try {
-            String sql = "SELECT " +
-                    " veicoli_tipi.id AS id, " +
-                    " veicoli_tipi.description AS name, " +
-                    " IF(veicoli_tipi._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._from, '%Y-%m-01')) AS _from, " +
-                    " IF(veicoli_tipi._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._to, '%Y-%m-01')) AS _to, " +
-                    " CAST(veicoli_tipi.engine_hp AS UNSIGNED) AS hp, " +
-                    " CAST(veicoli_tipi.engine_kw AS UNSIGNED) AS kw, " +
-                    " veicoli_tipi.fuel_type AS fuel_type, " +
-                    " veicoli_modelli.id AS id_modello, " +
-                    " veicoli_modelli.description AS name_modello, " +
-                    " IF(veicoli_modelli._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._from, '%Y-%m-01')) AS _from__modello, " +
-                    " IF(veicoli_modelli._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._to, '%Y-%m-01')) AS _to__modello, " +
-                    " veicoli_serie.name AS name_serie, " +
-                    " veicoli_marche.id AS id_marca, " +
-                    " veicoli_marche.description AS name_marca " +
-                    "FROM " +
-                    " tecdoc.veicoli_tipi\n" +
-                    "JOIN tecdoc.veicoli_modelli ON veicoli_modelli.id = veicoli_tipi.id_modello " +
-                    "JOIN tecdoc.veicoli_serie ON veicoli_modelli.id = veicoli_serie.id_modello " +
-                    "JOIN tecdoc.veicoli_marche ON veicoli_modelli.id_marca = veicoli_marche.id " +
-                    "WHERE " +
-                    " veicoli_tipi.id_modello = ? " +
-                    "ORDER BY " +
-                    " fuel_type, name";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            types = new ArrayList<>();
 
-                VehicleManufacturer vehicleManufacturer = new VehicleManufacturer(resultSet.getInt("id_marca"), resultSet.getString("name_marca"));
-                VehicleModel vehicleModel = new VehicleModel(vehicleManufacturer, resultSet.getInt("id_modello"), resultSet.getString("name_modello"));
+            Sql database = new Sql("jdbc/motorinialternatori");
+            Connection connection = database.getConnection();
 
-                Date from_model = resultSet.getDate("_from__modello");
-                if (from_model != null) vehicleModel.setFrom(YearMonth.from(Time.tsToLocalDate(from_model.getTime()))); // Must be converted to LocalDate: the extraction to YearMonth is only permitted if the temporal object has an ISO chronology, or can be converted to a LocalDate; see https://docs.oracle.com/javase/8/docs/api/java/time/YearMonth.html#from-java.time.temporal.TemporalAccessor-
+            try {
+                String sql = "SELECT " +
+                        " veicoli_tipi.id AS id, " +
+                        " veicoli_tipi.description AS name, " +
+                        " IF(veicoli_tipi._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._from, '%Y-%m-01')) AS _from, " +
+                        " IF(veicoli_tipi._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._to, '%Y-%m-01')) AS _to, " +
+                        " CAST(veicoli_tipi.engine_hp AS UNSIGNED) AS hp, " +
+                        " CAST(veicoli_tipi.engine_kw AS UNSIGNED) AS kw, " +
+                        " veicoli_tipi.fuel_type AS fuel_type, " +
+                        " veicoli_modelli.id AS id_modello, " +
+                        " veicoli_modelli.description AS name_modello, " +
+                        " IF(veicoli_modelli._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._from, '%Y-%m-01')) AS _from__modello, " +
+                        " IF(veicoli_modelli._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._to, '%Y-%m-01')) AS _to__modello, " +
+                        " veicoli_serie.name AS name_serie, " +
+                        " veicoli_marche.id AS id_marca, " +
+                        " veicoli_marche.description AS name_marca " +
+                        "FROM " +
+                        " tecdoc.veicoli_tipi\n" +
+                        "JOIN tecdoc.veicoli_modelli ON veicoli_modelli.id = veicoli_tipi.id_modello " +
+                        "JOIN tecdoc.veicoli_serie ON veicoli_modelli.id = veicoli_serie.id_modello " +
+                        "JOIN tecdoc.veicoli_marche ON veicoli_modelli.id_marca = veicoli_marche.id " +
+                        "WHERE " +
+                        " veicoli_tipi.id_modello = ? " +
+                        "ORDER BY " +
+                        " fuel_type, name";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, id);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
 
-                Date to_model = resultSet.getDate("_to__modello");
-                if (to_model != null) vehicleModel.setTo(YearMonth.from(Time.tsToLocalDate(to_model.getTime())));
+                    VehicleManufacturer vehicleManufacturer = new VehicleManufacturer(resultSet.getInt("id_marca"), resultSet.getString("name_marca"));
+                    VehicleModel vehicleModel = new VehicleModel(vehicleManufacturer, resultSet.getInt("id_modello"), resultSet.getString("name_modello"));
 
-                vehicleModel.setSeries(resultSet.getString("name_serie"));
+                    Date from_model = resultSet.getDate("_from__modello");
+                    if (from_model != null)
+                        vehicleModel.setFrom(YearMonth.from(Time.tsToLocalDate(from_model.getTime()))); // Must be converted to LocalDate: the extraction to YearMonth is only permitted if the temporal object has an ISO chronology, or can be converted to a LocalDate; see https://docs.oracle.com/javase/8/docs/api/java/time/YearMonth.html#from-java.time.temporal.TemporalAccessor-
 
-                VehicleType vehicleType = new VehicleType(vehicleModel, resultSet.getInt("id"), resultSet.getString("name"));
+                    Date to_model = resultSet.getDate("_to__modello");
+                    if (to_model != null) vehicleModel.setTo(YearMonth.from(Time.tsToLocalDate(to_model.getTime())));
 
-                Date from = resultSet.getDate("_from");
-                if (from != null) vehicleType.setFrom(YearMonth.from(Time.tsToLocalDate(from.getTime())));
+                    vehicleModel.setSeries(resultSet.getString("name_serie"));
 
-                Date to = resultSet.getDate("_to");
-                if (to != null) vehicleType.setTo(YearMonth.from(Time.tsToLocalDate(to.getTime())));
+                    VehicleType vehicleType = new VehicleType(vehicleModel, resultSet.getInt("id"), resultSet.getString("name"));
 
-                vehicleType.setProperty("hp", resultSet.getString("hp"));
-                vehicleType.setProperty("kw", resultSet.getString("kw"));
-                vehicleType.setProperty("fuel_type", resultSet.getString("fuel_type"));
+                    Date from = resultSet.getDate("_from");
+                    if (from != null) vehicleType.setFrom(YearMonth.from(Time.tsToLocalDate(from.getTime())));
 
-                types.add(vehicleType);
+                    Date to = resultSet.getDate("_to");
+                    if (to != null) vehicleType.setTo(YearMonth.from(Time.tsToLocalDate(to.getTime())));
+
+                    vehicleType.setProperty("hp", resultSet.getString("hp"));
+                    vehicleType.setProperty("kw", resultSet.getString("kw"));
+                    vehicleType.setProperty("fuel_type", resultSet.getString("fuel_type"));
+
+                    types.add(vehicleType);
+                }
+                connection.close();
+            } catch (SQLException e) {
+                System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            connection.close();
-        } catch (SQLException e) {
-            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
+
+            cache.put(cache_key, types);
+
         }
 
         return types;

@@ -16,8 +16,8 @@
                 veicoli_modelli.description AS modello_description,
                 veicoli_tipi.id AS id_tipo,
                 veicoli_tipi.description AS tipo_description,
-                '' AS _from,
-                '' AS _to,
+                IF(veicoli_tipi._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_tipi._from, '%m-%Y')) AS _from,
+                IF(veicoli_tipi._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_tipi._to, '%m-%Y')) AS _to,
                 CAST(veicoli_tipi.engine_hp AS UNSIGNED) AS hp,
                 CAST(veicoli_tipi.engine_kw AS UNSIGNED) AS kw,
                 veicoli_tipi.fuel_type AS fuel_type
@@ -46,6 +46,11 @@
     <c:set var="hp" value="${rowtyp[8]}" />
     <c:set var="kw" value="${rowtyp[9]}" />
     <c:set var="fuel_type" value="${rowtyp[10]}" />
+    <c:set var="interval">
+        <c:if test="${ not empty rowtyp[6] or not empty rowtyp[7] }">
+            <c:if test="${ not empty rowtyp[6] }">dal ${rowtyp[6]}</c:if>&nbsp;<c:if test="${ not empty rowtyp[7] }">al ${rowtyp[7]}</c:if>
+        </c:if>
+    </c:set>
 </c:forEach>
 
 <c:if test="${not empty param.id_categoria}">

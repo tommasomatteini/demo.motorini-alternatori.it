@@ -97,26 +97,28 @@
                             <c:if test="${empty types}">
                                 <sql:query var="types">
                                     SELECT
-                                    veicoli_tipi.id AS id_tipo,
-                                    veicoli_tipi.description AS tipo_description,
-                                    veicoli_modelli.id AS id_modello,
-                                    veicoli_modelli.description AS modello_description,
-                                    veicoli_marche.id AS id_marca,
-                                    veicoli_marche.description AS marca_description,
-                                    '' AS _from,
-                                    '' AS _to,
-                                    CAST(veicoli_tipi.engine_hp AS UNSIGNED) AS hp,
-                                    CAST(veicoli_tipi.engine_kw AS UNSIGNED) AS kw,
-                                    veicoli_tipi.fuel_type AS fuel_type,
-                                    veicoli_tipi.id_fuel_type AS id_fuel_type
+                                        veicoli_tipi.id AS id_tipo,
+                                        veicoli_tipi.description AS tipo_description,
+                                        veicoli_modelli.id AS id_modello,
+                                        veicoli_modelli.description AS modello_description,
+                                        veicoli_marche.id AS id_marca,
+                                        veicoli_marche.description AS marca_description,
+                                        IF(veicoli_tipi._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_tipi._from, '%m-%Y')) AS _from,
+                                        IF(veicoli_tipi._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_tipi._to, '%m-%Y')) AS _to,
+                                        CAST(veicoli_tipi.engine_hp AS UNSIGNED) AS hp,
+                                        CAST(veicoli_tipi.engine_kw AS UNSIGNED) AS kw,
+                                        veicoli_tipi.fuel_type AS fuel_type,
+                                        veicoli_tipi.id_fuel_type AS id_fuel_type
                                     FROM
-                                    tecdoc.veicoli_tipi
+                                        tecdoc.veicoli_tipi
                                     JOIN tecdoc.veicoli_modelli ON veicoli_tipi.id_modello = veicoli_modelli.id
                                     JOIN tecdoc.veicoli_marche ON veicoli_modelli.id_marca = veicoli_marche.id
                                     WHERE
-                                    veicoli_marche.id = ? AND veicoli_modelli.id = ?
+                                        EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori_main.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id )
+                                    AND
+                                        veicoli_marche.id = ? AND veicoli_modelli.id = ?
                                     ORDER BY
-                                    fuel_type ASC
+                                        fuel_type ASC
                                     <sql:param value="${id_marca}" />
                                     <sql:param value="${id}" />
                                 </sql:query>
@@ -134,6 +136,11 @@
                                     <c:set var="fuel_type" value="${rowtyp[10]}" />
                                     <c:set var="hp" value="${rowtyp[8]}" />
                                     <c:set var="kw" value="${rowtyp[9]}" />
+                                    <c:set var="interval">
+                                        <c:if test="${ not empty rowtyp[6] or not empty rowtyp[7] }">
+                                            <c:if test="${ not empty rowtyp[6] }">dal ${rowtyp[6]}</c:if>&nbsp;<c:if test="${ not empty rowtyp[7] }">al ${rowtyp[7]}</c:if>
+                                        </c:if>
+                                    </c:set>
 
                                     <cache:results lang="${lang}" name="type_${rowtyp[0]}_enginenumbers" var="enginenumbers" />
                                     <c:if test="${empty enginenumbers}">
