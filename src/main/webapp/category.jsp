@@ -6,22 +6,18 @@
 <%@ taglib prefix="utils" uri="/WEB-INF/tlds/utils.tld" %>
 
 <c:if test="${not empty param.id_categoria}">
-    <cache:results lang="${lang}" name="resultcategories__${param.id_categoria}" var="resultcategories" />
-    <c:if test="${empty resultcategories}">
-        <sql:query var="resultcategories">
-            SELECT
-                categorie.id AS id,
-                IF(categorie_synonyms.description IS NULL, categorie.name, categorie_synonyms.description) AS name
-            FROM
-                tecdoc.categorie
-            INNER JOIN motorinialternatori.categorie_visibility ON ( categorie.id = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 )
-            LEFT JOIN motorinialternatori.categorie_synonyms ON categorie_synonyms.id_categoria = categorie.id
-            WHERE
-                categorie.id = ?
-            <sql:param value="${param.id_categoria}" />
-        </sql:query>
-        <cache:results lang="${lang}" name="resultcategories__${param.id_categoria}" value="${resultcategories}" />
-    </c:if>
+    <sql:query var="resultcategories">
+        SELECT
+            categorie.id AS id,
+            IF(categorie_synonyms.description IS NULL, categorie.name, categorie_synonyms.description) AS name
+        FROM
+            tecdoc.categorie
+        INNER JOIN motorinialternatori.categorie_visibility ON ( categorie.id = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 )
+        LEFT JOIN motorinialternatori.categorie_synonyms ON categorie_synonyms.id_categoria = categorie.id
+        WHERE
+            categorie.id = ?
+        <sql:param value="${param.id_categoria}" />
+    </sql:query>
 </c:if>
 <c:forEach var="row" items="${resultcategories.rowsByIndex}">
     <c:set value="${row[0]}" var="id" />

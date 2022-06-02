@@ -5,26 +5,20 @@
 
 <%@ taglib prefix="utils" uri="/WEB-INF/tlds/utils.tld" %>
 
-<cache:results-settings duration="604800" />
-
 <c:if test="${not empty param.id_marca}">
-    <cache:results lang="${lang}" name="manufacturer_${param.id_marca}" var="manufacturers" />
-    <c:if test="${empty manufacturers}">
-        <sql:query var="manufacturers">
-            SELECT
-                veicoli_marche.id AS id_marca,
-                veicoli_marche.description AS marca_description,
-                veicoli_marche_description.description AS marca_description_full
-            FROM
-                tecdoc.veicoli_marche
-            LEFT JOIN motorinialternatori.veicoli_marche_description ON veicoli_marche.id = veicoli_marche_description.id_marca
-            WHERE
-                veicoli_marche.id = ?
-            LIMIT 1
-            <sql:param value="${param.id_marca}" />
-        </sql:query>
-        <cache:results lang="${lang}" name="manufacturer_${param.id_marca}" value="${manufacturers}" />
-    </c:if>
+    <sql:query var="manufacturers">
+        SELECT
+            veicoli_marche.id AS id_marca,
+            veicoli_marche.description AS marca_description,
+            veicoli_marche_description.description AS marca_description_full
+        FROM
+            tecdoc.veicoli_marche
+        LEFT JOIN motorinialternatori.veicoli_marche_description ON veicoli_marche.id = veicoli_marche_description.id_marca
+        WHERE
+            veicoli_marche.id = ?
+        LIMIT 1
+        <sql:param value="${param.id_marca}" />
+    </sql:query>
 </c:if>
 <c:forEach var="rowman" items="${manufacturers.rowsByIndex}" varStatus="status">
     <c:set var="id" value="${rowman[0]}" />
@@ -57,21 +51,17 @@
                             <p>${description}</p>
                         </div>
 
-                        <c:if test="${not empty id}">
-                            <cache:results lang="${lang}" name="manufacturerlogos_${id}" var="manufacturerlogos" />
-                            <c:if test="${empty manufacturerlogos}">
-                                <sql:query var="manufacturerlogos">
-                                    SELECT
-                                        veicoli_marche_media.filename AS filename,
-                                        veicoli_marche_media.ext AS ext
-                                    FROM
-                                        motorinialternatori.veicoli_marche_media
-                                    WHERE
-                                        veicoli_marche_media.id_marca = ?
-                                    <sql:param value="${id}" />
-                                </sql:query>
-                                <cache:results lang="${lang}" name="manufacturerlogos_${id}" value="${manufacturerlogos}" />
-                            </c:if>
+                        <c:if test="${empty manufacturerlogos}">
+                            <sql:query var="manufacturerlogos">
+                                SELECT
+                                    veicoli_marche_media.filename AS filename,
+                                    veicoli_marche_media.ext AS ext
+                                FROM
+                                    motorinialternatori.veicoli_marche_media
+                                WHERE
+                                    veicoli_marche_media.id_marca = ?
+                                <sql:param value="${id}" />
+                            </sql:query>
                         </c:if>
                         <c:forEach var="rowimg" items="${manufacturerlogos.rowsByIndex}">
                             <c:set var="image" value="${rowimg[0]}.${rowimg[1]}" />
@@ -88,32 +78,28 @@
                         <div class="">
 
                             <c:if test="${not empty id}">
-                                <cache:results lang="${lang}" name="manufacturer_${id}_models" var="models" />
-                                <c:if test="${empty models}">
-                                    <sql:query var="models">
-                                        SELECT
-                                            veicoli_marche.id AS id_marca,
-                                            veicoli_modelli.id AS id_modello,
-                                            veicoli_marche.description AS marca_description,
-                                            veicoli_modelli.description AS modello_description,
-                                            IF(veicoli_modelli._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._from, '%m-%Y')) AS _from,
-                                            IF(veicoli_modelli._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._to, '%m-%Y')) AS _to,
-                                            IF(veicoli_serie_synonyms.name IS NULL, veicoli_serie.name, veicoli_serie_synonyms.name)
-                                        FROM
-                                            tecdoc.veicoli_marche
-                                        JOIN tecdoc.veicoli_modelli ON veicoli_marche.id = veicoli_modelli.id_marca
-                                        JOIN tecdoc.veicoli_serie ON veicoli_modelli.id = veicoli_serie.id_modello
-                                        INNER JOIN ( SELECT veicoli_tipi.id AS id, veicoli_tipi.id_modello AS id_modello FROM tecdoc.veicoli_tipi GROUP BY id_modello ) AS veicoli_tipi ON veicoli_modelli.id = veicoli_tipi.id_modello
-                                        LEFT JOIN motorinialternatori.veicoli_serie_synonyms ON veicoli_modelli.id = veicoli_serie_synonyms.id_modello
-                                        WHERE EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id )
-                                        AND
-                                            veicoli_marche.id = ?
-                                        ORDER BY
-                                            veicoli_serie.name
-                                        <sql:param value="${id}" />
-                                    </sql:query>
-                                    <cache:results lang="${lang}" name="manufacturer_${id}_models" value="${models}" />
-                                </c:if>
+                                <sql:query var="models">
+                                    SELECT
+                                        veicoli_marche.id AS id_marca,
+                                        veicoli_modelli.id AS id_modello,
+                                        veicoli_marche.description AS marca_description,
+                                        veicoli_modelli.description AS modello_description,
+                                        IF(veicoli_modelli._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._from, '%m-%Y')) AS _from,
+                                        IF(veicoli_modelli._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_modelli._to, '%m-%Y')) AS _to,
+                                        IF(veicoli_serie_synonyms.name IS NULL, veicoli_serie.name, veicoli_serie_synonyms.name)
+                                    FROM
+                                        tecdoc.veicoli_marche
+                                    JOIN tecdoc.veicoli_modelli ON veicoli_marche.id = veicoli_modelli.id_marca
+                                    JOIN tecdoc.veicoli_serie ON veicoli_modelli.id = veicoli_serie.id_modello
+                                    INNER JOIN ( SELECT veicoli_tipi.id AS id, veicoli_tipi.id_modello AS id_modello FROM tecdoc.veicoli_tipi GROUP BY id_modello ) AS veicoli_tipi ON veicoli_modelli.id = veicoli_tipi.id_modello
+                                    LEFT JOIN motorinialternatori.veicoli_serie_synonyms ON veicoli_modelli.id = veicoli_serie_synonyms.id_modello
+                                    WHERE EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id )
+                                    AND
+                                        veicoli_marche.id = ?
+                                    ORDER BY
+                                        veicoli_serie.name
+                                    <sql:param value="${id}" />
+                                </sql:query>
                             </c:if>
 
                             <c:set var="modello_corrente" value="" />
@@ -130,20 +116,16 @@
                                         <h6 class="color-choice-name">${rowmod[2]} ${rowmod[3]}</h6>
                                         <div class="color-choice-info">
 
-                                            <cache:results lang="${lang}" name="modelimages__${rowmod[0]}_${rowmod[1]}" var="modelimages" />
-                                            <c:if test="${empty modelimages}">
-                                                <sql:query var="modelimages">
-                                                    SELECT
-                                                        veicoli_modelli_media.filename AS filename,
-                                                        veicoli_modelli_media.ext AS ext
-                                                    FROM
-                                                        motorinialternatori.veicoli_modelli_media
-                                                    WHERE
-                                                        veicoli_modelli_media.id_modello = ?
-                                                    <sql:param value="${rowmod[1]}" />
-                                                </sql:query>
-                                                <cache:results lang="${lang}" name="modelimages__${rowmod[0]}_${rowmod[1]}" value="${modelimages}" />
-                                            </c:if>
+                                            <sql:query var="modelimages">
+                                                SELECT
+                                                    veicoli_modelli_media.filename AS filename,
+                                                    veicoli_modelli_media.ext AS ext
+                                                FROM
+                                                    motorinialternatori.veicoli_modelli_media
+                                                WHERE
+                                                    veicoli_modelli_media.id_modello = ?
+                                                <sql:param value="${rowmod[1]}" />
+                                            </sql:query>
                                             <c:forEach var="rowimg" items="${modelimages.rowsByIndex}">
                                                 <c:set var="image" value="${rowimg[0]}.${rowimg[1]}" />
                                             </c:forEach>
