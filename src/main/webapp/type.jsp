@@ -88,7 +88,7 @@
                                                 veicoli_modelli_media.filename AS filename,
                                                 veicoli_modelli_media.ext AS ext
                                             FROM
-                                                motorinialternatori_main.veicoli_modelli_media
+                                                motorinialternatori.veicoli_modelli_media
                                             WHERE
                                                 veicoli_modelli_media.id_modello = ?
                                             <sql:param value="${id_modello}" />
@@ -109,7 +109,7 @@
                                                 veicoli_marche_media.filename AS filename,
                                                 veicoli_marche_media.ext AS ext
                                             FROM
-                                                motorinialternatori_main.veicoli_marche_media
+                                                motorinialternatori.veicoli_marche_media
                                             WHERE
                                                 veicoli_marche_media.id_marca = ?
                                             <sql:param value="${id_marca}" />
@@ -178,9 +178,9 @@
                                             tecdoc.articoli_veicoli
                                         JOIN tecdoc.articoli ON articoli.id = articoli_veicoli.id_articolo
                                         JOIN kuhner.articles ON articles.id = articoli.id OR articles.id_article = articoli.id
-                                        JOIN motorinialternatori_main.categorie_visibility ON articoli_veicoli.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1
+                                        JOIN motorinialternatori.categorie_visibility ON articoli_veicoli.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1
                                         JOIN tecdoc.categorie ON categorie.id = articoli_veicoli.id_categoria
-                                        LEFT JOIN motorinialternatori_main.categorie_synonyms ON categorie_synonyms.id_categoria = articoli_veicoli.id_categoria
+                                        LEFT JOIN motorinialternatori.categorie_synonyms ON categorie_synonyms.id_categoria = articoli_veicoli.id_categoria
                                         WHERE
                                             articoli_veicoli.link_target_id = ?
                                         GROUP BY
@@ -207,7 +207,7 @@
                                                                     filename,
                                                                     ext
                                                                 FROM
-                                                                    motorinialternatori_main.categorie_media
+                                                                    motorinialternatori.categorie_media
                                                                 WHERE
                                                                     id_categoria = ?
                                                                 ORDER BY

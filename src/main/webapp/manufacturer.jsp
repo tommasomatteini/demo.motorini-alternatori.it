@@ -17,7 +17,7 @@
                 veicoli_marche_description.description AS marca_description_full
             FROM
                 tecdoc.veicoli_marche
-            LEFT JOIN motorinialternatori_main.veicoli_marche_description ON veicoli_marche.id = veicoli_marche_description.id_marca
+            LEFT JOIN motorinialternatori.veicoli_marche_description ON veicoli_marche.id = veicoli_marche_description.id_marca
             WHERE
                 veicoli_marche.id = ?
             LIMIT 1
@@ -65,7 +65,7 @@
                                         veicoli_marche_media.filename AS filename,
                                         veicoli_marche_media.ext AS ext
                                     FROM
-                                        motorinialternatori_main.veicoli_marche_media
+                                        motorinialternatori.veicoli_marche_media
                                     WHERE
                                         veicoli_marche_media.id_marca = ?
                                     <sql:param value="${id}" />
@@ -104,8 +104,8 @@
                                         JOIN tecdoc.veicoli_modelli ON veicoli_marche.id = veicoli_modelli.id_marca
                                         JOIN tecdoc.veicoli_serie ON veicoli_modelli.id = veicoli_serie.id_modello
                                         INNER JOIN ( SELECT veicoli_tipi.id AS id, veicoli_tipi.id_modello AS id_modello FROM tecdoc.veicoli_tipi GROUP BY id_modello ) AS veicoli_tipi ON veicoli_modelli.id = veicoli_tipi.id_modello
-                                        LEFT JOIN motorinialternatori_main.veicoli_serie_synonyms ON veicoli_modelli.id = veicoli_serie_synonyms.id_modello
-                                        WHERE EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori_main.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id )
+                                        LEFT JOIN motorinialternatori.veicoli_serie_synonyms ON veicoli_modelli.id = veicoli_serie_synonyms.id_modello
+                                        WHERE EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id )
                                         AND
                                             veicoli_marche.id = ?
                                         ORDER BY
@@ -137,7 +137,7 @@
                                                         veicoli_modelli_media.filename AS filename,
                                                         veicoli_modelli_media.ext AS ext
                                                     FROM
-                                                        motorinialternatori_main.veicoli_modelli_media
+                                                        motorinialternatori.veicoli_modelli_media
                                                     WHERE
                                                         veicoli_modelli_media.id_modello = ?
                                                     <sql:param value="${rowmod[1]}" />

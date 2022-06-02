@@ -67,8 +67,8 @@ public class VehicleModelsServlet extends HttpServlet {
                         "JOIN tecdoc.veicoli_marche ON veicoli_modelli.id_marca = veicoli_marche.id " +
                         "JOIN tecdoc.veicoli_serie ON veicoli_modelli.id = veicoli_serie.id_modello " +
                         "INNER JOIN ( SELECT veicoli_tipi.id AS id, veicoli_tipi.id_modello AS id_modello FROM tecdoc.veicoli_tipi GROUP BY id_modello ) AS veicoli_tipi ON veicoli_modelli.id = veicoli_tipi.id_modello " +
-                        "LEFT JOIN motorinialternatori_main.veicoli_serie_synonyms ON veicoli_modelli.id = veicoli_serie_synonyms.id_modello " +
-                        "WHERE EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori_main.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id ) " +
+                        "LEFT JOIN motorinialternatori.veicoli_serie_synonyms ON veicoli_modelli.id = veicoli_serie_synonyms.id_modello " +
+                        "WHERE EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id ) " +
                         "AND " +
                         " veicoli_marche.id = ? " +
                         "ORDER BY " +

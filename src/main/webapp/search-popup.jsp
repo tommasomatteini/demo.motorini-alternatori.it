@@ -54,93 +54,6 @@
 
 <h3 class="h4 mt-0 mb-4">${name_full}<br/><small>(HP: ${hp}, KW: ${kw})</small></h3>
 <div class="row color-main-info">
-    <div class="col-12 mb-5">
-        <div class="product-image p-2">
-
-            <c:if test="${not empty id_marca and not empty id_modello}">
-                <cache:results lang="${lang}" name="modelimages__${id_marca}_${id_modello}" var="modelimages" />
-                <c:if test="${empty modelimages}">
-                    <sql:query var="modelimages">
-                        SELECT
-                            veicoli_modelli_media.filename AS filename,
-                            veicoli_modelli_media.ext AS ext
-                        FROM
-                            motorinialternatori_main.veicoli_modelli_media
-                        WHERE
-                            veicoli_modelli_media.id_modello = ?
-                        <sql:param value="${id_modello}" />
-                    </sql:query>
-                    <cache:results lang="${lang}" name="modelimages__${id_marca}_${id_modello}" value="${modelimages}" />
-                </c:if>
-            </c:if>
-            <c:forEach var="rowimg" items="${modelimages.rowsByIndex}">
-                <c:set var="model_image" value="${rowimg[0]}.${rowimg[1]}" />
-            </c:forEach>
-            <img class="mb-2" alt="${name_full}" src="${commons.storage("images/models/", model_image)}" />
-
-            <c:if test="${not empty id_marca}">
-                <cache:results lang="${lang}" name="manufacturerlogos_${id_marca}" var="manufacturerlogos" />
-                <c:if test="${empty manufacturerlogos}">
-                    <sql:query var="manufacturerlogos">
-                        SELECT
-                            veicoli_marche_media.filename AS filename,
-                            veicoli_marche_media.ext AS ext
-                        FROM
-                            motorinialternatori_main.veicoli_marche_media
-                        WHERE
-                            veicoli_marche_media.id_marca = ?
-                        <sql:param value="${id_marca}" />
-                    </sql:query>
-                    <cache:results lang="${lang}" name="manufacturerlogos_${id_marca}" value="${manufacturerlogos}" />
-                </c:if>
-            </c:if>
-            <c:forEach var="rowimg" items="${manufacturerlogos.rowsByIndex}">
-                <c:set var="manufacturer_image" value="${rowimg[0]}.${rowimg[1]}" />
-            </c:forEach>
-            <img alt="${name_marca}" src="${commons.storage("images/brands/", manufacturer_image)}" />
-
-            <h5 class="mb-2">${name}</h5>
-        </div>
-    </div>
-    <div class="col-12 mb-3">
-        <h5 class="h5 mb-2">Informazioni</h5>
-        <div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>Marca:</strong> <a href="manufacturer.jsp?id_marca=${id_marca}">${name_marca}</a></li>
-                <li class="list-group-item"><strong>Modello:</strong> <a href="model.jsp?id_marca=${id_marca}&id_modello=${id_modello}">${name_modello}</a></li>
-                <li class="list-group-item"><strong>Motorizzazione:</strong> <a href="type.jsp?id_marca=${id_marca}&id_modello=${id_modello}&id_tipo=${id}">${name}</a></li>
-                <li class="list-group-item"><strong>Intervallo:</strong> ${interval}</li>
-                <li class="list-group-item"><strong>Potenza:</strong> HP: ${hp}, KW: ${kw}</li>
-                <li class="list-group-item"><strong>Alimentazione:</strong> ${fuel_type}</li>
-
-                <c:if test="${not empty id}">
-                    <cache:results lang="${lang}" name="type_${id}_enginenumbers" var="enginenumbers" />
-                    <c:if test="${empty enginenumbers}">
-                        <sql:query var="enginenumbers">
-                            SELECT
-                                veicoli_motorizzazioni.code
-                            FROM
-                                tecdoc.veicoli_motorizzazioni
-                            WHERE
-                                veicoli_motorizzazioni.id_tipo = ?
-                            GROUP BY
-                                veicoli_motorizzazioni.code
-                            <sql:param value="${id}" />
-                        </sql:query>
-                        <cache:results lang="${lang}" name="type_${id}_enginenumbers" value="${enginenumbers}" />
-                    </c:if>
-                </c:if>
-
-                <c:set var="engine_numbers" value="" />
-                <c:forEach var="rowen" items="${enginenumbers.rowsByIndex}" varStatus="status">
-                    <c:set var="engine_numbers">${engine_numbers}<c:if test="${!status.first}">,</c:if> ${rowen[0]} </c:set>
-                </c:forEach>
-                <c:set var="enginenumbers" value="" /><%-- svuoto la variabile per il loop --%>
-
-                <li class="list-group-item"><strong>Codice motore:</strong> ${engine_numbers}</li>
-            </ul>
-        </div>
-    </div> <!-- col-md-9 mb-5 -->
     <div class="col-md-12 mb-2">
 
         <c:if test="${not empty id}">
@@ -154,9 +67,9 @@
                         tecdoc.articoli_veicoli
                     JOIN tecdoc.articoli ON articoli.id = articoli_veicoli.id_articolo
                     JOIN kuhner.articles ON articles.id = articoli.id OR articles.id_article = articoli.id
-                    JOIN motorinialternatori_main.categorie_visibility ON articoli_veicoli.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1
+                    JOIN motorinialternatori.categorie_visibility ON articoli_veicoli.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1
                     JOIN tecdoc.categorie ON categorie.id = articoli_veicoli.id_categoria
-                    LEFT JOIN motorinialternatori_main.categorie_synonyms ON categorie_synonyms.id_categoria = articoli_veicoli.id_categoria
+                    LEFT JOIN motorinialternatori.categorie_synonyms ON categorie_synonyms.id_categoria = articoli_veicoli.id_categoria
                     WHERE
                         articoli_veicoli.link_target_id = ?
                     GROUP BY
@@ -182,7 +95,7 @@
                                             filename,
                                             ext
                                         FROM
-                                            motorinialternatori_main.categorie_media
+                                            motorinialternatori.categorie_media
                                         WHERE
                                             id_categoria = ?
                                         ORDER BY

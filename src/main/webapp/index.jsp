@@ -99,12 +99,12 @@
                                 veicoli_marche_media.filename AS filename,
                                 veicoli_marche_media.ext AS ext
                             FROM
-                                motorinialternatori_main.veicoli_marche_visibility
-                            JOIN motorinialternatori_main.veicoli_marche_media ON veicoli_marche_visibility.id_marca = veicoli_marche_media.id_marca
+                                motorinialternatori.veicoli_marche_visibility
+                            JOIN motorinialternatori.veicoli_marche_media ON veicoli_marche_visibility.id_marca = veicoli_marche_media.id_marca
                             JOIN tecdoc.veicoli_marche ON veicoli_marche.id = veicoli_marche_visibility.id_marca AND veicoli_marche_visibility.visible_home = 1
                             INNER JOIN ( SELECT id, id_marca FROM tecdoc.veicoli_modelli GROUP BY id_marca) AS veicoli_modelli ON veicoli_marche.id = veicoli_modelli.id_marca
                             INNER JOIN ( SELECT id, id_modello FROM tecdoc.veicoli_tipi GROUP BY id_modello ) AS veicoli_tipi ON veicoli_tipi.id_modello = veicoli_modelli.id
-                            WHERE EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori_main.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id )
+                            WHERE EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id )
                         </sql:query>
                         <cache:results lang="${lang}" name="resultmarche_home" value="${resultmarche_home}" />
                     </c:if>
@@ -139,12 +139,12 @@
                                 ANY_VALUE(IF(categorie_synonyms.description IS NOT NULL, categorie_synonyms.description, categorie.description)) AS description_categoria,
                                 ANY_VALUE(articoli_veicoli.id_articolo)
                             FROM
-                                motorinialternatori_main.articoli_home
+                                motorinialternatori.articoli_home
                             JOIN tecdoc.categorie ON articoli_home.id_categoria = categorie.id
                             JOIN tecdoc.veicoli_tipi ON veicoli_tipi.id = articoli_home.id_tipo
                             JOIN tecdoc.veicoli_modelli ON veicoli_tipi.id_modello = veicoli_modelli.id
                             JOIN tecdoc.veicoli_marche ON veicoli_modelli.id_marca = veicoli_marche.id
-                            LEFT JOIN motorinialternatori_main.categorie_synonyms ON categorie_synonyms.id_categoria = categorie.id
+                            LEFT JOIN motorinialternatori.categorie_synonyms ON categorie_synonyms.id_categoria = categorie.id
                             JOIN tecdoc.articoli_veicoli ON articoli_veicoli.link_target_id = articoli_home.id_tipo AND articoli_veicoli.id_categoria = articoli_home.id_categoria
                             JOIN kuhner.articles ON articles.id = articoli_veicoli.id_articolo
                             GROUP BY
@@ -209,7 +209,7 @@
                                                 filename,
                                                 ext
                                             FROM
-                                                motorinialternatori_main.articoli_media
+                                                motorinialternatori.articoli_media
                                             WHERE
                                                 id_articolo = ?
                                             ORDER BY filename ASC

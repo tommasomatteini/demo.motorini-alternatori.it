@@ -62,9 +62,9 @@
                 ANY_VALUE(IF(categorie_synonyms.description IS NOT NULL, categorie_synonyms.description, categorie.description)) AS description
             FROM
                 tecdoc.articoli_veicoli
-            JOIN motorinialternatori_main.categorie_visibility ON articoli_veicoli.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1
+            JOIN motorinialternatori.categorie_visibility ON articoli_veicoli.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1
             JOIN tecdoc.categorie ON categorie.id = articoli_veicoli.id_categoria
-            LEFT JOIN motorinialternatori_main.categorie_synonyms ON categorie_synonyms.id_categoria = articoli_veicoli.id_categoria
+            LEFT JOIN motorinialternatori.categorie_synonyms ON categorie_synonyms.id_categoria = articoli_veicoli.id_categoria
             WHERE
                 articoli_veicoli.id_categoria = ?
             LIMIT 1
@@ -107,7 +107,7 @@
             SELECT
                 articoli_description.description
             FROM
-                motorinialternatori_main.articoli_description
+                motorinialternatori.articoli_description
             WHERE
                 articoli_description.id_categoria = ?
             <sql:param value="${param.id_categoria}" />
@@ -220,7 +220,7 @@
                                                                 filename,
                                                                 ext
                                                             FROM
-                                                                motorinialternatori_main.articoli_media
+                                                                motorinialternatori.articoli_media
                                                             WHERE
                                                                 id_articolo = ?
                                                             ORDER BY filename ASC

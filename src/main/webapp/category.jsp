@@ -14,8 +14,8 @@
                 IF(categorie_synonyms.description IS NULL, categorie.name, categorie_synonyms.description) AS name
             FROM
                 tecdoc.categorie
-            INNER JOIN motorinialternatori_main.categorie_visibility ON ( categorie.id = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 )
-            LEFT JOIN motorinialternatori_main.categorie_synonyms ON categorie_synonyms.id_categoria = categorie.id
+            INNER JOIN motorinialternatori.categorie_visibility ON ( categorie.id = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 )
+            LEFT JOIN motorinialternatori.categorie_synonyms ON categorie_synonyms.id_categoria = categorie.id
             WHERE
                 categorie.id = ?
             <sql:param value="${param.id_categoria}" />

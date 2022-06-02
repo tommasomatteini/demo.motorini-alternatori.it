@@ -20,7 +20,7 @@
             FROM
                 tecdoc.veicoli_modelli
             JOIN tecdoc.veicoli_marche ON veicoli_modelli.id_marca = veicoli_marche.id
-            LEFT JOIN motorinialternatori_main.veicoli_modelli_description ON veicoli_modelli.id = veicoli_modelli_description.id_modello
+            LEFT JOIN motorinialternatori.veicoli_modelli_description ON veicoli_modelli.id = veicoli_modelli_description.id_modello
             WHERE
                 veicoli_marche.id = ? AND veicoli_modelli.id = ?
             LIMIT 1
@@ -74,7 +74,7 @@
                                             veicoli_modelli_media.filename AS filename,
                                             veicoli_modelli_media.ext AS ext
                                         FROM
-                                            motorinialternatori_main.veicoli_modelli_media
+                                            motorinialternatori.veicoli_modelli_media
                                         WHERE
                                             veicoli_modelli_media.id_modello = ?
                                         <sql:param value="${id}" />
@@ -114,7 +114,7 @@
                                     JOIN tecdoc.veicoli_modelli ON veicoli_tipi.id_modello = veicoli_modelli.id
                                     JOIN tecdoc.veicoli_marche ON veicoli_modelli.id_marca = veicoli_marche.id
                                     WHERE
-                                        EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori_main.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id )
+                                        EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id )
                                     AND
                                         veicoli_marche.id = ? AND veicoli_modelli.id = ?
                                     ORDER BY
@@ -178,7 +178,7 @@
                                                             fuel_type_media.ext AS ext,
                                                             fuel_type_media.alt AS alt
                                                         FROM
-                                                            motorinialternatori_main.fuel_type_media
+                                                            motorinialternatori.fuel_type_media
                                                         WHERE
                                                             fuel_type_media.id_fuel_type = ?
                                                         <sql:param value="${rowtyp[11]}" />

@@ -13,7 +13,7 @@
         removeAbandonedOnMaintenance="true"
         removeAbandonedOnBorrow="true"
         removeAbandonedTimeout="60"
-        validationQuery="select * from contenuti where id = 0"
+        validationQuery="select 1 = 1"
     />
 
 </Context>
