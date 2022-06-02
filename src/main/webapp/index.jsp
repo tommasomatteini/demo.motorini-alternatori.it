@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ include file="/WEB-INF/core/commons.jspf" %>
 <%@ include file="/WEB-INF/core/sql.jspf" %>
 <%@ include file="/WEB-INF/core/routes.jspf" %>
@@ -98,11 +98,9 @@
                             veicoli_marche_media.ext AS ext
                         FROM
                             motorinialternatori.veicoli_marche_visibility
-                        JOIN motorinialternatori.veicoli_marche_media ON veicoli_marche_visibility.id_marca = veicoli_marche_media.id_marca
-                        JOIN tecdoc.veicoli_marche ON veicoli_marche.id = veicoli_marche_visibility.id_marca AND veicoli_marche_visibility.visible_home = 1
-                        INNER JOIN ( SELECT id, id_marca FROM tecdoc.veicoli_modelli GROUP BY id_marca) AS veicoli_modelli ON veicoli_marche.id = veicoli_modelli.id_marca
-                        INNER JOIN ( SELECT id, id_modello FROM tecdoc.veicoli_tipi GROUP BY id_modello ) AS veicoli_tipi ON veicoli_tipi.id_modello = veicoli_modelli.id
-                        WHERE EXISTS( SELECT article_id FROM kuhner.articles_vehicles INNER JOIN tecdoc.articoli_categorie ON articoli_categorie.id_articolo = articles_vehicles.article_id INNER JOIN motorinialternatori.categorie_visibility ON ( articoli_categorie.id_categoria = categorie_visibility.id_categoria AND categorie_visibility.visible = 1 ) WHERE veicoli_tipi.id = articles_vehicles.link_target_id )
+                        INNER JOIN motorinialternatori.veicoli_marche_media ON veicoli_marche_visibility.id_marca = veicoli_marche_media.id_marca
+                        INNER JOIN tecdoc.veicoli_marche ON veicoli_marche.id = veicoli_marche_visibility.id_marca AND veicoli_marche_visibility.visible_home = 1
+                        INNER JOIN tecdoc.utility__veicoli_marche ON veicoli_marche.id = utility__veicoli_marche.id
                     </sql:query>
                     <div class="brands-box">
                         <c:forEach var="rowma" items="${resultmarche_home.rowsByIndex}">
@@ -131,16 +129,25 @@
                             IF(veicoli_tipi._from = '0000-00-00', NULL, DATE_FORMAT(veicoli_tipi._from, '%m-%Y')) AS _from,
                             IF(veicoli_tipi._to = '0000-00-00', NULL, DATE_FORMAT(veicoli_tipi._to, '%m-%Y')) AS _to,
                             ANY_VALUE(IF(categorie_synonyms.description IS NOT NULL, categorie_synonyms.description, categorie.description)) AS description_categoria,
-                            ANY_VALUE(articoli_veicoli.id_articolo)
+                            ANY_VALUE(articoli_veicoli.id_articolo),
+                            ANY_VALUE(articoli_produttori.name),
+                            ANY_VALUE(articoli.name),
+                            ANY_VALUE(articles.description),
+                            ANY_VALUE(articles.price),
+                            ANY_VALUE(articles.price_wreck),
+                            ANY_VALUE(articles.availability)
                         FROM
                             motorinialternatori.articoli_home
-                        JOIN tecdoc.categorie ON articoli_home.id_categoria = categorie.id
-                        JOIN tecdoc.veicoli_tipi ON veicoli_tipi.id = articoli_home.id_tipo
-                        JOIN tecdoc.veicoli_modelli ON veicoli_tipi.id_modello = veicoli_modelli.id
-                        JOIN tecdoc.veicoli_marche ON veicoli_modelli.id_marca = veicoli_marche.id
+                        INNER JOIN tecdoc.categorie ON articoli_home.id_categoria = categorie.id
+                        INNER JOIN tecdoc.veicoli_tipi ON veicoli_tipi.id = articoli_home.id_tipo
+                        INNER JOIN tecdoc.veicoli_modelli ON veicoli_tipi.id_modello = veicoli_modelli.id
+                        INNER JOIN tecdoc.veicoli_marche ON veicoli_modelli.id_marca = veicoli_marche.id
+                        INNER JOIN tecdoc.utility__veicoli_marche ON veicoli_marche.id = utility__veicoli_marche.id
                         LEFT JOIN motorinialternatori.categorie_synonyms ON categorie_synonyms.id_categoria = categorie.id
-                        JOIN tecdoc.articoli_veicoli ON articoli_veicoli.link_target_id = articoli_home.id_tipo AND articoli_veicoli.id_categoria = articoli_home.id_categoria
-                        JOIN kuhner.articles ON articles.id = articoli_veicoli.id_articolo
+                        INNER JOIN tecdoc.articoli_veicoli ON articoli_veicoli.link_target_id = articoli_home.id_tipo AND articoli_veicoli.id_categoria = articoli_home.id_categoria
+                        INNER JOIN kuhner.articles ON articles.id = articoli_veicoli.id_articolo
+                        LEFT JOIN tecdoc.articoli ON articoli.id = articles.id
+                        LEFT JOIN tecdoc.articoli_produttori ON articoli.id_produttore = articoli_produttori.id
                         GROUP BY
                             articoli_home.id_tipo,
                             categorie.id
@@ -150,6 +157,9 @@
 
                     <c:set var="tipo_corrente" value="" />
                     <c:forEach var="rowmod" items="${resultmodelli_home.rowsByIndex}" varStatus="status">
+                        <c:set var="id" value="${rowmod[10]}" />
+                        <c:set var="price" value="${rowmod[14]}" /><!-- @TODO -->
+                        <c:set var="description" value="${rowmod[13]}" />
                         <c:set var="interval">
                             <c:if test="${ not empty rowmod[7] or not empty rowmod[8] }">
                                 <c:if test="${ not empty rowmod[7] }">dal ${rowmod[7]}</c:if>&nbsp;<c:if test="${ not empty rowmod[8] }">al ${rowmod[8]}</c:if>
@@ -164,31 +174,6 @@
                         </c:if>
                             <div class="col-sm-6 col-md-4 col-lg-3">
                                 <div class="product-thumb">
-
-                                    <sql:query var="resultarticoli_home">
-                                        SELECT
-                                            articoli.id,
-                                            articoli_produttori.name,
-                                            articoli.name,
-                                            articles.description,
-                                            articles.price,
-                                            articles.price_wreck,
-                                            articles.availability
-                                        FROM
-                                            tecdoc.articoli
-                                        JOIN kuhner.articles ON articles.id_article = articoli.id
-                                        JOIN tecdoc.articoli_produttori ON articoli.id_produttore = articoli_produttori.id
-                                        WHERE
-                                            articoli.id = ?
-                                        LIMIT 1
-                                        <sql:param value="${rowmod[10]}" />
-                                    </sql:query>
-                                    <c:forEach var="rowart" items="${resultarticoli_home.rowsByIndex}">
-                                        <c:set var="id" value="${rowart[0]}" />
-                                        <c:set var="price" value="${rowart[4]}" /><!-- @TODO -->
-                                        <c:set var="description" value="${rowart[3]}" />
-                                    </c:forEach>
-                                    <c:set var="resultarticoli_home" value="" /><%-- svuoto la variabile per il loop --%>
 
                                     <sql:query var="resultartimages_home">
                                         SELECT
