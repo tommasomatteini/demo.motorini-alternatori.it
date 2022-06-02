@@ -107,8 +107,8 @@ jQuery(function() {
   // Hide tabs on aside
 
   if( window.screen.width < 767 ) {
-    $('aside .search-tabs .search-car-colors').removeClass('active');
-    $('aside .search-tabs-content .tab-pane').removeClass('active show');
+    // $('aside .search-tabs .search-car-colors').removeClass('active');
+    // $('aside .search-tabs-content .tab-pane').removeClass('active show');
   }
 
 
